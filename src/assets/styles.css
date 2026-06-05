@@ -375,9 +375,26 @@ pre code, pre[class*="language-"] code { display: block; background: none; color
 }
 .site-footer p { max-width: none; margin: .3rem 0; }
 .site-footer a { color: var(--ink); }
-.site-footer p:last-child {
-  font-family: var(--mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .12em;
-  margin-top: 1rem;
+
+.footer-cols {
+  display: grid; gap: 1.5rem 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  padding-bottom: 1.5rem; margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--hairline);
+}
+.footer-col h2 {
+  font-family: var(--mono); font-size: .72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .14em; color: var(--seal);
+  margin: 0 0 .7rem; padding: 0; border: 0;
+}
+.footer-col ul { list-style: none; margin: 0; padding: 0; }
+.footer-col li { margin: .35rem 0; }
+.footer-col a { text-decoration: none; color: var(--ink-soft); }
+.footer-col a:hover { color: var(--seal); }
+
+.footer-meta {
+  font-family: var(--mono); font-size: .72rem; text-transform: uppercase;
+  letter-spacing: .12em; margin-top: 1rem;
 }
 
 /* ============================ RESPONSIVE ============================ */

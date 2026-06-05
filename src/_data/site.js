@@ -9,7 +9,7 @@ export default {
   url: process.env.SITE_URL || 'https://learnvc.org',
   tagline: 'Issue and verify W3C Verifiable Credentials — without vendor lock-in.',
   description:
-    'A developer-first guide to issuing and verifying W3C Verifiable ' +
+    'A guide to issuing and verifying W3C Verifiable ' +
     'Credentials with VCALM (the VC API). Pick a vertical, see how it ' +
     'works, ship.',
   company: {

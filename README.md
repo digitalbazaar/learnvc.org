@@ -1,6 +1,6 @@
 # learnvc.org
 
-A developer-facing companion site for W3C Verifiable Credentials and
+A companion site for W3C Verifiable Credentials and
 [VCALM](https://www.w3.org/TR/vcalm/). Vertical-first entry points
 ("would this work for our business?") that funnel into role-scoped quick
 starts. Built with [Eleventy](https://www.11ty.dev/).

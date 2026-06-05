@@ -8,7 +8,8 @@ export default function(eleventyConfig) {
   eleventyConfig.addPlugin(syntaxHighlight);
 
   // Pass static assets straight through.
-  eleventyConfig.addPassthroughCopy({'src/assets': 'assets'});
+  eleventyConfig.addPassthroughCopy({ 'src/assets': 'assets' });
+  eleventyConfig.addPassthroughCopy({ "src/assets/favicons/favicon.ico": "favicon.ico" });
   // GitHub Pages custom-domain marker — copy verbatim to the site root.
   eleventyConfig.addPassthroughCopy('src/CNAME');
 

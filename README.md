@@ -5,9 +5,6 @@ A companion site for W3C Verifiable Credentials and
 ("would this work for our business?") that funnel into role-scoped quick
 starts. Built with [Eleventy](https://www.11ty.dev/).
 
-See [`ia-education-flagship.md`](./ia-education-flagship.md) for the information
-architecture this site implements.
-
 ## Quick start
 
 ```bash

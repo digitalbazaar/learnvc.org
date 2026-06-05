@@ -19,8 +19,10 @@ title: false
     {% for v in collections.verticals %}
     <li>
       <a href="{{ v.url }}">
-        <h3>{{ v.data.title }}</h3>
-        <p>{{ v.data.summary or v.data.description }}</p>
+        <div class="vert-body">
+          <h3>{{ v.data.cardTitle or v.data.title }}</h3>
+          <p>{{ v.data.summary or v.data.description }}</p>
+        </div>
       </a>
     </li>
     {% endfor %}

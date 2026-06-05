@@ -225,12 +225,14 @@ p { max-width: var(--measure); }
 }
 .vertical-grid li a::before {
   content: counter(vert, decimal-leading-zero);
-  font-family: var(--mono); font-size: .85rem; color: var(--seal); padding-top: .4rem;
+  font-family: var(--mono); font-size: .85rem; color: var(--seal);
+  padding-top: .5rem; line-height: 1;
 }
 .vertical-grid { counter-reset: vert; }
 .vertical-grid li a:hover { background: var(--paper-2); padding-left: .9rem; }
-.vertical-grid h3 { font-size: 1.6rem; font-weight: 900; }
-.vertical-grid p { color: var(--ink-soft); margin: .2rem 0 0; }
+.vertical-grid .vert-body { min-width: 0; }   /* the single column-2 cell */
+.vertical-grid h3 { font-size: 1.5rem; font-weight: 900; margin: 0; }
+.vertical-grid p { color: var(--ink-soft); margin: .35rem 0 0; max-width: 42rem; }
 
 /* ============================ ROLE PICKER ============================ */
 .role-grid { grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); }

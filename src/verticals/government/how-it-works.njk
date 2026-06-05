@@ -1,0 +1,38 @@
+---
+title: "How it works — mobile driver's license & digital ID"
+description: "The 5-minute mental model: issue, hold, and verify a mobile driver's license. One loop, three actors."
+permalink: /government/how-it-works/
+---
+{# Layer 2 — 5-minute mental model. Same exchange loop, government actors. #}
+<article class="prose">
+  <h1>How it works</h1>
+  <p>One diagram, three actors, one loop.</p>
+
+  <pre class="diagram">
+     DMV                   RESIDENT              RELYING PARTY
+  (issuer)             (wallet of choice)         (verifier)
+     |                      |                          |
+     | -- delivers -->      |                          |
+     |  mobile license VC   |                          |
+     |                      | &lt;-- asks for --           |
+     |                      |   proof of age / validity |
+     |                      | -- presents -->           |
+     |                      |   only what's needed      |
+     |                      |                     verifies (ok)
+  </pre>
+
+  <ul>
+    <li>A mobile license is signed JSON the resident holds and controls.</li>
+    <li>
+      <strong>Delivery</strong> (DMV → resident) and
+      <strong>presentation</strong> (resident → verifier) are the same simple
+      exchange loop: POST, read what the server wants, POST back.
+    </li>
+    <li>
+      With selective disclosure, the resident can prove a single fact —
+      "over 21," "license valid" — without revealing name, address, or birthdate.
+    </li>
+  </ul>
+
+  <p class="cta"><a class="btn primary" href="/government/build/">Build your part →</a></p>
+</article>

@@ -1,0 +1,13 @@
+node_modules/
+_site/
+.env
+.DS_Store
+
+# Local tooling caches
+.fastembed_cache/
+.claude/
+
+# Internal planning / private material — must NOT land in a public repo
+raw-materials.md
+ia-education-flagship.md
+seo-targets.md

@@ -1,0 +1,38 @@
+---
+title: "How it works — academic credentials"
+description: "The 5-minute mental model: issue, present, verify. One loop, three actors."
+permalink: /education/how-it-works/
+---
+{# Layer 2 — 5-minute mental model. One diagram, three actors, one loop. #}
+<article class="prose">
+  <h1>How it works</h1>
+  <p>One diagram, three actors, one loop.</p>
+
+  <pre class="diagram">
+   ISSUER                 WALLET                 VERIFIER
+ (university)         (student's choice)     (admissions office)
+     |                      |                       |
+     | -- delivers -->      |                       |
+     |   diploma VC         |                       |
+     |                      | &lt;-- asks for --        |
+     |                      |   proof of diploma     |
+     |                      | -- presents -->        |
+     |                      |   diploma VC           |
+     |                      |                  verifies (ok)
+  </pre>
+
+  <ul>
+    <li>A credential is just signed JSON the holder carries.</li>
+    <li>
+      <strong>Delivery</strong> (issuer → wallet) and
+      <strong>presentation</strong> (wallet → verifier) are the same simple
+      exchange loop: POST, read what the server wants, POST back.
+    </li>
+    <li>
+      That loop is the entire "VCALM delivery" surface — the part that competes
+      with OID4VCI/OID4VP, and it's short.
+    </li>
+  </ul>
+
+  <p class="cta"><a class="btn primary" href="/education/build/">Build your part →</a></p>
+</article>

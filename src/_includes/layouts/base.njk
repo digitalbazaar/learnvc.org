@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if title %}{{ title }} · {{ site.name }}{% else %}{{ site.name }} · {{ site.tagline }}{% endif %}</title>
+
+  {# --- SEO / social meta. `description` falls back to the site default. --- #}
+  <meta name="description" content="{{ description or site.description }}">
+  <link rel="canonical" href="{{ page.url | absoluteUrl(site.url) }}">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ site.name }}">
+  <meta property="og:title" content="{{ title or site.name }}">
+  <meta property="og:description" content="{{ description or site.description }}">
+  <meta property="og:url" content="{{ page.url | absoluteUrl(site.url) }}">
+  <meta name="twitter:card" content="summary_large_image">
+
+  {# --- Structured data: site-wide Organization + WebSite entity --- #}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "{{ site.url }}#org",
+        "name": "{{ site.company.name }}",
+        "url": "{{ site.company.url }}",
+        "description": "{{ site.company.blurb }}"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "{{ site.url }}#website",
+        "url": "{{ site.url }}",
+        "name": "{{ site.name }}",
+        "description": "{{ site.description }}",
+        "publisher": {"@id": "{{ site.url }}#org"}
+      }
+    ]
+  }
+  </script>
+  {# Per-page structured data (TechArticle, FAQPage, etc.) #}
+  {% if structuredData %}<script type="application/ld+json">{{ structuredData | dump | safe }}</script>{% endif %}
+
+  {# Self-hosted fonts (no third-party CDN — privacy + speed). Preload the
+     two most-used faces to cut first-paint flash. #}
+  <link rel="preload" href="/assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  {% include "partials/header.njk" %}
+  <main>
+    {{ content | safe }}
+  </main>
+  {% include "partials/footer.njk" %}
+</body>
+</html>

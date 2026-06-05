@@ -1,0 +1,37 @@
+---
+layout: layouts/base.njk
+title: false
+---
+<section class="hero">
+  <p class="kicker">An open standard · W3C Verifiable Credentials &amp; VCALM</p>
+  <h1>{{ site.tagline }}</h1>
+  <p class="promise">{{ site.description }}</p>
+  <p class="cta">
+    <a class="btn primary" href="/why-vcalm/">Why VCALM</a>
+    <a class="btn" href="/education/">See an example</a>
+  </p>
+</section>
+
+<section class="verticals">
+  <h2>Pick your use case</h2>
+  <p>Each guide answers "would this work for us?" — then shows you how to build it.</p>
+  <ul class="vertical-grid">
+    {% for v in collections.verticals %}
+    <li>
+      <a href="{{ v.url }}">
+        <h3>{{ v.data.title }}</h3>
+        <p>{{ v.data.summary or v.data.description }}</p>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section class="why">
+  <h2>Why VCALM?</h2>
+  <p>
+    You pick a VCALM provider and can swap it. You aren't locked to one wallet
+    vendor or one stack. The standard is open; your software stays yours.
+  </p>
+  <p><a href="{{ site.company.url }}">About {{ site.company.name }} →</a></p>
+</section>

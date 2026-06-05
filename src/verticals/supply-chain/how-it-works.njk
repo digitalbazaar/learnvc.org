@@ -1,0 +1,38 @@
+---
+title: "How it works — product provenance"
+description: "The 5-minute mental model: issue, carry, verify a provenance credential. One loop, three actors."
+permalink: /supply-chain/how-it-works/
+---
+{# Layer 2 — 5-minute mental model. Same exchange loop, supply-chain actors. #}
+<article class="prose">
+  <h1>How it works</h1>
+  <p>One diagram, three actors, one loop.</p>
+
+  <pre class="diagram">
+    BRAND                  PRODUCT               BUYER / RETAILER
+  (issuer)             (its credential)          (verifier)
+     |                      |                          |
+     | -- delivers -->      |                          |
+     |  authenticity VC     |                          |
+     |                      | &lt;-- asks for --           |
+     |                      |   proof of origin         |
+     |                      | -- presents -->           |
+     |                      |   authenticity VC         |
+     |                      |                     verifies (ok)
+  </pre>
+
+  <ul>
+    <li>A provenance credential is signed JSON that travels with the product.</li>
+    <li>
+      <strong>Delivery</strong> (brand → product/owner) and
+      <strong>presentation</strong> (owner → buyer) are the same simple
+      exchange loop: POST, read what the server wants, POST back.
+    </li>
+    <li>
+      The credential proves origin without exposing a central database — each
+      check is cryptographic, not a lookup someone can tamper with.
+    </li>
+  </ul>
+
+  <p class="cta"><a class="btn primary" href="/supply-chain/build/">Build your part →</a></p>
+</article>

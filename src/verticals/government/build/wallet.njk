@@ -1,0 +1,73 @@
+---
+title: "VCALM tutorial: build a wallet — mobile driver's license"
+description: "Make your wallet speak VCALM in 3 steps: dereference, POST to start, loop. HTTP example for mobile driver's licenses and digital ID."
+permalink: /government/build/wallet/
+---
+{# Layer 4 — exchange client. Same VCALM loop, mDL credential. #}
+<article class="prose">
+  <h1>Build a wallet</h1>
+  <p>Make your wallet speak VCALM: pick up and present a mobile license over an exchange.</p>
+
+  <h2>You'll do exactly 3 things</h2>
+  <ol>
+    <li>Dereference an interaction URL to discover protocols.</li>
+    <li>POST to the exchange URL to start.</li>
+    <li>Loop: read <code>verifiablePresentationRequest</code> /
+        <code>verifiablePresentation</code>, POST back, until done.</li>
+  </ol>
+
+  <h2>1. Discover protocols</h2>
+  <p>A scanned QR code encodes an interaction URL with <code>iuv=1</code>. GET it:</p>
+  {% highlight "http" %}
+GET /interactions/mdl-456?iuv=1
+Host: dmv.state.example
+Accept: application/json
+  {% endhighlight %}
+  <p>The response lists supported protocols; pick <code>vcapi</code> for VCALM:</p>
+  {% highlight "json" %}
+{
+  "protocols": {
+    "vcapi": "https://vcapi.dmv.state.example/exchanges/mdl-456"
+  }
+}
+  {% endhighlight %}
+
+  <h2>2. Start the exchange</h2>
+  <p>POST an empty body to the <code>vcapi</code> URL:</p>
+  {% highlight "http" %}
+POST /exchanges/mdl-456
+Host: vcapi.dmv.state.example
+Content-Type: application/json
+
+{}
+  {% endhighlight %}
+
+  <h2>3. Run the loop</h2>
+  <p>
+    When the server returns a <code>verifiablePresentationRequest</code>, find
+    the matching license, build a signed Verifiable Presentation — disclosing
+    only the requested fields — and POST it back to the <strong>same exchange
+    URL</strong>. When the server returns a <code>verifiablePresentation</code>,
+    store the delivered credential. The exchange is done when the server stops
+    asking.
+  </p>
+
+  <h2>That's it</h2>
+  <p>A conformant mobile-license wallet is this loop. Nothing more.</p>
+
+  <details class="future">
+    <summary>Prefer a library to raw HTTP?</summary>
+    <p>
+      A dogfooded open-source VCALM exchange-client library is planned. Until
+      it ships, the HTTP flow above is the supported path.
+    </p>
+  </details>
+
+  <h2>Go deeper</h2>
+  <ul>
+    <li><a href="https://www.w3.org/TR/vcalm/#verifiable-presentation-request">VCALM: verifiable presentation request</a></li>
+    <li><a href="https://www.w3.org/TR/vcalm/">VCALM specification</a></li>
+  </ul>
+
+  <p class="cta"><a class="btn" href="/government/build/">← Back to roles</a></p>
+</article>

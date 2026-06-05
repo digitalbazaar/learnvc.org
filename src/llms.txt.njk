@@ -1,0 +1,25 @@
+---
+permalink: /llms.txt
+eleventyExcludeFromCollections: true
+discoverable: false
+---
+# {{ site.name }}
+
+> {{ site.description | asciiDashes | safe }}
+
+This file is generated at build time from site content. Do not edit by hand;
+it regenerates whenever pages are added or changed.
+
+## Verticals
+
+{% for v in collections.verticals -%}
+- [{{ v.data.title | asciiDashes | safe }}]({{ v.url | absoluteUrl(site.url) }}): {{ (v.data.summary or v.data.description) | asciiDashes | safe }}
+{% endfor %}
+## Pages
+
+{% for p in collections.discoverable -%}
+- [{% if p.data.title %}{{ p.data.title | asciiDashes | safe }}{% elif p.url == "/" %}Home{% else %}{{ p.fileSlug }}{% endif %}]({{ p.url | absoluteUrl(site.url) }})
+{% endfor %}
+## About
+
+{{ site.company.name }} - {{ site.company.blurb | asciiDashes | safe }}

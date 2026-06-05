@@ -1,0 +1,18 @@
+{
+  "name": "vcbuilder-site",
+  "version": "0.1.0",
+  "description": "vcbuilder.org — a developer-facing companion site for W3C Verifiable Credentials and VCALM.",
+  "type": "module",
+  "private": true,
+  "license": "BSD-3-Clause",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve",
+    "clean": "rm -rf _site",
+    "lint": "echo \"(add @digitalbazaar/eslint-config when JS lands)\""
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2"
+  }
+}

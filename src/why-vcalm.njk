@@ -1,0 +1,118 @@
+---
+layout: layouts/base.njk
+title: "VCALM vs OID4VCI / OID4VP — Why VCALM"
+description: "VCALM vs OID4VP and OID4VCI: a clear comparison for issuing and verifying Verifiable Credentials. Wallet choice, no vendor lock-in, one simple flow, native W3C VC support."
+permalink: /why-vcalm/
+---
+<article class="prose why-vcalm">
+  <h1>Why VCALM</h1>
+  <p class="lede">
+    Both VCALM and the OpenID-based specs (OID4VCI and OID4VP) move credentials
+    between issuers, wallets, and verifiers. The difference is who stays in
+    control — the user, or the vendor. Here's what you get with VCALM, and where
+    the OpenID approach differs.
+  </p>
+
+  <section>
+    <h2>1. Users keep their choice of wallet</h2>
+    <p>
+      <strong>With VCALM:</strong> a credential works with any conformant wallet.
+      The user picks the app they trust; the issuer doesn't get to decide for
+      them.
+    </p>
+    <p>
+      <strong>The OpenID approach:</strong> its high-assurance profile (HAIP)
+      leans on wallet "attestation" and allow-lists — issuers and regulators can
+      restrict which wallet apps are accepted. That recreates the old
+      identity-provider model the technology was meant to replace: if only
+      approved wallets work, the user's choice is gone.
+    </p>
+  </section>
+
+  <section>
+    <h2>2. No vendor lock-in across the stack</h2>
+    <p>
+      <strong>With VCALM:</strong> interoperability is defined across the whole
+      lifecycle — issuance, verification, status, delivery. You can swap your
+      provider (if they raise prices or cause trouble) and keep working with
+      every wallet and every other party.
+    </p>
+    <p>
+      <strong>The OpenID approach:</strong> interoperability is mainly at the
+      wallet layer. The rest of the issuance and verification stack can still
+      lock you to one vendor.
+    </p>
+  </section>
+
+  <section>
+    <h2>3. One simple flow, not two protocols</h2>
+    <p>
+      <strong>With VCALM:</strong> presentation and delivery are the same simple
+      exchange loop. A real interaction — "prove who you are, then receive a
+      credential" — happens in one continuous flow.
+    </p>
+    <p>
+      <strong>The OpenID approach:</strong> issuance (OID4VCI) and presentation
+      (OID4VP) are separate protocols. You pick one per interaction, so common
+      "present-then-receive" journeys become awkward and stitched together.
+    </p>
+  </section>
+
+  <section>
+    <h2>4. Built for credentials, not retrofitted from login</h2>
+    <p>
+      <strong>With VCALM:</strong> the model treats the holder as a full
+      participant who controls their data and consents to each share.
+    </p>
+    <p>
+      <strong>The OpenID approach:</strong> it inherits OAuth's shape, where a
+      verifier is treated like an app "acting on your behalf with your data."
+      That's a poor fit for how credentials actually work, and it shows up as
+      friction in the user experience.
+    </p>
+  </section>
+
+  <section>
+    <h2>5. Works with real W3C Verifiable Credentials</h2>
+    <p>
+      <strong>With VCALM:</strong> standards-compliant W3C Verifiable Credentials
+      travel natively — and VCALM can even carry other protocols over its
+      exchanges, so you aren't forced to choose sides.
+    </p>
+    <p>
+      <strong>The OpenID approach:</strong> its high-assurance profile is scoped
+      to specific credential formats (SD-JWT, ISO mdoc) and does not include W3C
+      Verifiable Credentials. If you've standardized on W3C VCs, that's a hard
+      wall.
+    </p>
+  </section>
+
+  <section class="summary-table">
+    <h2>At a glance</h2>
+    <table>
+      <thead>
+        <tr><th>What you care about</th><th>VCALM</th><th>OID4VCI / OID4VP</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>User picks their wallet</td><td>Yes</td><td>Often restricted by allow-lists (HAIP)</td></tr>
+        <tr><td>Swap providers without re-integrating</td><td>Yes, across the stack</td><td>Mainly at the wallet layer</td></tr>
+        <tr><td>Present and receive in one flow</td><td>One exchange loop</td><td>Two separate protocols</td></tr>
+        <tr><td>Designed around the credential holder</td><td>Yes</td><td>Inherits an OAuth/login shape</td></tr>
+        <tr><td>Carries W3C Verifiable Credentials</td><td>Natively</td><td>Excluded from the high-assurance profile</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="callout">
+    <p>The simplest way to judge for yourself: look at what a developer actually implements.</p>
+    <p>
+      <a class="btn primary" href="/education/build/wallet/">See the VCALM delivery flow</a>
+      <a class="btn" href="/education/experience/">See the user experience</a>
+    </p>
+  </div>
+
+  <p class="footnote">
+    Want the formal details? Read the
+    <a href="https://www.w3.org/TR/vcalm/">VCALM specification</a>.
+  </p>
+</article>

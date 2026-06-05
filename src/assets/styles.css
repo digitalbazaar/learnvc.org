@@ -1,0 +1,388 @@
+/*!
+ * Copyright (c) 2026 Digital Bazaar, Inc. All rights reserved.
+ *
+ * Aesthetic: "technical broadsheet / cryptographic ledger" —
+ * editorial, document-grade, ink-on-paper with a vermilion seal accent.
+ */
+
+/* ============================ FONTS (self-hosted) ============================ */
+/* Variable woff2 files, latin subset. One file per family covers all weights. */
+@font-face {
+  font-family: "Fraunces";
+  src: url("/assets/fonts/fraunces-latin.woff2") format("woff2");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url("/assets/fonts/fraunces-italic-latin.woff2") format("woff2");
+  font-weight: 400 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Newsreader";
+  src: url("/assets/fonts/newsreader-latin.woff2") format("woff2");
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Newsreader";
+  src: url("/assets/fonts/newsreader-italic-latin.woff2") format("woff2");
+  font-weight: 400 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Spline Sans Mono";
+  src: url("/assets/fonts/spline-sans-mono-latin.woff2") format("woff2");
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================ TOKENS ============================ */
+:root {
+  --paper:      #f4f0e6;   /* warm broadsheet paper */
+  --paper-2:    #ece6d6;   /* sunk panel */
+  --ink:        #1b1a17;   /* near-black ink */
+  --ink-soft:   #514c43;   /* secondary text */
+  --hairline:   #c9c0ab;   /* rule lines */
+  --seal:       #c0341d;   /* vermilion — the stamp/seal accent */
+  --seal-deep:  #9a2614;
+  --verify:     #2f6b4f;   /* verifier green */
+  --gold:       #9a7b2e;
+
+  --maxw: 60rem;
+  --measure: 40rem;        /* reading measure */
+
+  --display: "Fraunces", Georgia, serif;
+  --body:    "Newsreader", Georgia, serif;
+  --mono:    "Spline Sans Mono", ui-monospace, Menlo, monospace;
+
+  /* code block (kept dark — a "terminal slab" set into the paper) */
+  --code-bg: #211f1a;
+  --code-fg: #d8cfba;
+  --code-comment: #8a8270;
+  --code-punct: #b6ad98;
+  --code-keyword: #d98b5f;
+  --code-string: #9bb06a;
+  --code-number: #d3b85c;
+  --code-prop:   #d76b5a;
+  --code-func:   #8ab2c9;
+  --code-operator:#c0a05a;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--body);
+  font-size: 1.12rem;
+  line-height: 1.65;
+  color: var(--ink);
+  background:
+    radial-gradient(120% 80% at 50% -10%, #f9f6ee 0%, var(--paper) 55%) fixed,
+    var(--paper);
+  font-feature-settings: "liga" 1, "onum" 1, "kern" 1;
+}
+
+/* film grain overlay for paper texture */
+.grain {
+  pointer-events: none; position: fixed; inset: 0; z-index: 9999;
+  opacity: .035; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection { background: var(--seal); color: var(--paper); }
+
+a { color: var(--seal); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { color: var(--seal-deep); }
+
+main {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 3rem 1.5rem 6rem;
+  animation: rise .7s cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes rise { from { opacity: 0; transform: translateY(12px); } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ============================ HEADER ============================ */
+.site-header {
+  max-width: var(--maxw); margin: 0 auto;
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 1rem; padding: 1.4rem 1.5rem 1.1rem;
+  border-bottom: 2px solid var(--ink);
+  position: relative;
+}
+.site-header::after {                 /* the thin second rule — broadsheet masthead */
+  content: ""; position: absolute; left: 1.5rem; right: 1.5rem; bottom: -5px;
+  border-bottom: 1px solid var(--ink);
+}
+.site-header .brand {
+  font-family: var(--display);
+  font-weight: 900; font-size: 1.5rem; letter-spacing: -.02em;
+  color: var(--ink); text-decoration: none;
+  font-optical-sizing: auto;
+}
+.site-header .brand::first-letter { color: var(--seal); }
+.site-header nav ul {
+  display: flex; gap: 1.4rem; list-style: none; margin: 0; padding: 0;
+  font-family: var(--mono); font-size: .72rem; text-transform: uppercase;
+  letter-spacing: .12em;
+}
+.site-header nav a { color: var(--ink-soft); text-decoration: none; }
+.site-header nav a:hover { color: var(--seal); }
+
+/* ============================ TYPE ============================ */
+h1, h2, h3 { font-family: var(--display); font-optical-sizing: auto; line-height: 1.05; letter-spacing: -.015em; }
+h1 { font-weight: 900; font-size: clamp(2.4rem, 6vw, 3.8rem); margin: .2em 0 .3em; }
+h2 { font-weight: 600; font-size: clamp(1.5rem, 3vw, 2rem); margin: 2.4rem 0 .6rem; }
+h3 { font-weight: 600; font-size: 1.25rem; margin: 0 0 .35rem; }
+p { max-width: var(--measure); }
+
+/* eyebrow / kicker labels */
+.kicker, .prose .eyebrow {
+  font-family: var(--mono); font-size: .72rem; text-transform: uppercase;
+  letter-spacing: .18em; color: var(--seal); font-weight: 600;
+}
+
+.prose { }
+.prose p, .prose li { max-width: var(--measure); }
+.prose h2 { padding-top: .4rem; border-top: 1px solid var(--hairline); }
+
+/* ============================ HERO ============================ */
+.hero { position: relative; padding: 1rem 0 1.5rem; }
+.hero::before {                       /* "SPEC" seal stamp in the corner */
+  content: "✔ VCALM";
+  position: absolute; top: -.5rem; right: 0;
+  font-family: var(--mono); font-size: .7rem; letter-spacing: .14em;
+  color: var(--seal); border: 1.5px solid var(--seal);
+  padding: .35rem .6rem; border-radius: 3px; transform: rotate(4deg);
+  opacity: 0; animation: stamp .5s .5s cubic-bezier(.2,1.4,.4,1) forwards;
+}
+@keyframes stamp {
+  from { opacity: 0; transform: rotate(4deg) scale(1.6); }
+  to   { opacity: .9; transform: rotate(4deg) scale(1); }
+}
+.hero h1 { max-width: 16ch; }
+.hero .promise { font-size: 1.3rem; color: var(--ink-soft); max-width: var(--measure); }
+
+/* drop-cap on the lead promise of vertical landings */
+.hero .promise::first-letter {
+  font-family: var(--display); font-weight: 900; font-size: 3.2em;
+  float: left; line-height: .8; padding: .05em .12em 0 0; color: var(--seal);
+}
+
+/* ============================ SCENARIO / PULLQUOTE ============================ */
+.scenario { margin: 2rem 0; }
+.scenario blockquote {
+  margin: 0; padding: 1.3rem 1.6rem;
+  font-family: var(--display); font-weight: 400; font-style: italic;
+  font-size: 1.35rem; line-height: 1.4; color: var(--ink);
+  border-left: 3px solid var(--seal);
+  background: linear-gradient(90deg, var(--paper-2), transparent 80%);
+}
+
+/* ============================ BUTTONS ============================ */
+.cta { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.6rem 0; }
+.btn {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-family: var(--mono); font-size: .8rem; letter-spacing: .04em;
+  padding: .65rem 1.1rem; border-radius: 2px; text-decoration: none;
+  border: 1.5px solid var(--ink); color: var(--ink); background: transparent;
+  transition: transform .15s ease, background .15s ease, color .15s ease;
+}
+.btn:hover { transform: translateY(-2px); background: var(--ink); color: var(--paper); }
+.btn.primary { background: var(--seal); border-color: var(--seal); color: var(--paper); }
+.btn.primary:hover { background: var(--seal-deep); border-color: var(--seal-deep); }
+
+/* ============================ LISTS / FIT ============================ */
+.fit ul, .benefits { list-style: none; padding: 0; }
+.fit ul li {
+  position: relative; padding-left: 1.6rem; margin: .5rem 0; max-width: var(--measure);
+}
+.fit ul li::before {
+  content: "✔"; position: absolute; left: 0; color: var(--verify); font-weight: 700;
+}
+
+/* ============================ VERTICAL GRID (home) ============================ */
+.verticals h2 { border-top: 1px solid var(--hairline); padding-top: .8rem; }
+.vertical-grid, .role-grid { list-style: none; padding: 0; display: grid; gap: 0; }
+.vertical-grid { grid-template-columns: 1fr; border-top: 1px solid var(--ink); }
+.vertical-grid li a {
+  display: grid; grid-template-columns: auto 1fr; gap: 1.2rem; align-items: baseline;
+  padding: 1.4rem .3rem; border-bottom: 1px solid var(--hairline);
+  text-decoration: none; color: var(--ink); transition: padding-left .2s ease, background .2s ease;
+  counter-increment: vert;
+}
+.vertical-grid li a::before {
+  content: counter(vert, decimal-leading-zero);
+  font-family: var(--mono); font-size: .85rem; color: var(--seal); padding-top: .4rem;
+}
+.vertical-grid { counter-reset: vert; }
+.vertical-grid li a:hover { background: var(--paper-2); padding-left: .9rem; }
+.vertical-grid h3 { font-size: 1.6rem; font-weight: 900; }
+.vertical-grid p { color: var(--ink-soft); margin: .2rem 0 0; }
+
+/* ============================ ROLE PICKER ============================ */
+.role-grid { grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); }
+.role-grid li a, .role-grid li .role-card {
+  display: block; height: 100%; padding: 1.3rem; background: var(--paper);
+  text-decoration: none; color: inherit; transition: background .15s ease;
+}
+.role-grid li a:hover { background: var(--paper-2); }
+.role-grid h3 { color: var(--seal-deep); }
+.role-grid .effort { font-family: var(--mono); font-size: .72rem; color: var(--ink-soft); margin-top: .6rem; }
+.role-card.disabled { opacity: .5; }
+.note {
+  font-family: var(--mono); font-size: .82rem; letter-spacing: .02em;
+  border: 1.5px dashed var(--seal); color: var(--seal-deep);
+  padding: .7rem 1rem; display: inline-block; margin-top: 1.2rem;
+}
+
+/* ============================ JOURNEY (experience) ============================ */
+.lede { font-family: var(--display); font-style: italic; font-size: 1.4rem; color: var(--ink-soft); max-width: var(--measure); }
+.journey { list-style: none; counter-reset: step; padding: 0; margin: 1.5rem 0; }
+.journey > li {
+  counter-increment: step; position: relative;
+  padding: 0 0 1.6rem 3.2rem; margin: 0;
+  border-left: 1px solid var(--hairline);
+}
+.journey > li:last-child { border-left-color: transparent; }
+.journey > li::before {
+  content: counter(step); position: absolute; left: -.95rem; top: 0;
+  width: 1.9rem; height: 1.9rem; border-radius: 50%;
+  background: var(--paper); border: 1.5px solid var(--ink); color: var(--ink);
+  font-family: var(--mono); font-size: .85rem; font-weight: 600;
+  display: grid; place-items: center;
+}
+.journey .aside { color: var(--seal-deep); font-style: italic; margin: .4rem 0 0; font-size: .98rem; }
+
+.benefits { display: grid; gap: 0; border-top: 1px solid var(--ink); max-width: var(--measure); }
+.benefits li {
+  padding: .8rem 0 .8rem 1.6rem; border-bottom: 1px solid var(--hairline); position: relative;
+}
+.benefits li::before { content: "—"; position: absolute; left: 0; color: var(--seal); }
+
+/* ============================ CALLOUT ============================ */
+.callout {
+  margin: 2.5rem 0; padding: 1.6rem 1.8rem; position: relative;
+  background: var(--ink); color: var(--paper); border-radius: 3px;
+}
+.callout::before {
+  content: "§"; position: absolute; top: .6rem; right: 1rem;
+  font-family: var(--display); font-size: 2rem; color: var(--seal); opacity: .7;
+}
+.callout p { color: var(--paper); margin: .3rem 0; max-width: none; }
+.callout .btn { border-color: var(--paper); color: var(--paper); }
+.callout .btn:hover { background: var(--paper); color: var(--ink); }
+.callout .btn.primary { background: var(--seal); border-color: var(--seal); }
+
+/* ============================ WHY-VCALM ============================ */
+.why-vcalm section { margin: 0; padding: 1.6rem 0; border-top: 1px solid var(--hairline); }
+.why-vcalm section h2 { border: 0; padding: 0; margin: 0 0 .5rem; }
+.why-vcalm section h2::before {
+  content: ""; display: inline-block; width: .7rem; height: .7rem;
+  background: var(--seal); margin-right: .6rem; transform: rotate(45deg);
+}
+.why-vcalm strong { font-variant: small-caps; letter-spacing: .02em; }
+
+.summary-table { margin-top: 2.5rem; }
+.summary-table table {
+  width: 100%; border-collapse: collapse; font-size: 1rem; margin-top: 1rem;
+  border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+}
+.summary-table th, .summary-table td {
+  text-align: left; padding: .7rem .8rem; border-bottom: 1px solid var(--hairline);
+  vertical-align: top;
+}
+.summary-table thead th {
+  font-family: var(--mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .1em;
+  background: var(--paper-2);
+}
+.summary-table td:nth-child(2) { color: var(--verify); font-weight: 500; }
+.summary-table td:nth-child(3) { color: var(--ink-soft); }
+.summary-table tbody tr:hover { background: var(--paper-2); }
+.footnote { color: var(--ink-soft); font-size: .95rem; font-style: italic; margin-top: 2.5rem; }
+
+/* "VCALM = VC API" clarifier on the definition page */
+.aside-note {
+  max-width: var(--measure); margin: 1.2rem 0; padding: .9rem 1.1rem;
+  background: var(--paper-2); border-left: 3px solid var(--gold);
+  font-size: .98rem; color: var(--ink-soft);
+}
+.aside-note strong { color: var(--ink); }
+
+/* ============================ CODE BLOCKS ============================ */
+.diagram, pre[class*="language-"], pre {
+  background: var(--code-bg); color: var(--code-fg);
+  padding: 1.1rem 1.2rem; border-radius: 3px;
+  overflow-x: auto; font-size: .82rem; line-height: 1.7;
+  font-family: var(--mono); tab-size: 2; max-width: none;
+  border: 1px solid #000; box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 4px 4px 0 var(--paper-2);
+}
+.diagram { white-space: pre; color: var(--code-fg); }
+pre code, pre[class*="language-"] code { display: block; background: none; color: inherit; padding: 0; font: inherit; white-space: pre; }
+:not(pre) > code {
+  font-family: var(--mono); font-size: .85em;
+  background: var(--paper-2); color: var(--seal-deep);
+  padding: .1rem .35rem; border-radius: 2px; border: 1px solid var(--hairline);
+}
+
+/* numbered step headings in tutorials */
+.prose ol { counter-reset: li; }
+
+/* PrismJS tokens (One Dark-ish, warmed for the slab) */
+.token.comment, .token.prolog, .token.doctype, .token.cdata { color: var(--code-comment); font-style: italic; }
+.token.punctuation { color: var(--code-punct); }
+.token.property, .token.tag, .token.deleted { color: var(--code-prop); }
+.token.boolean, .token.number, .token.constant, .token.symbol { color: var(--code-number); }
+.token.selector, .token.attr-name, .token.string, .token.char, .token.builtin, .token.inserted { color: var(--code-string); }
+.token.operator, .token.entity, .token.url { color: var(--code-operator); }
+.token.atrule, .token.attr-value, .token.keyword { color: var(--code-keyword); }
+.token.function, .token.class-name { color: var(--code-func); }
+.token.regex, .token.important, .token.variable { color: var(--code-number); }
+.token.important, .token.bold { font-weight: 700; }
+.language-http .token.property { color: var(--code-func); }
+.language-http .token.attr-name { color: var(--code-keyword); }
+.token.header-name { color: var(--code-keyword); }
+.token.header-value { color: var(--code-string); }
+.token.method { color: var(--code-func); font-weight: 700; }
+.token.application-json { color: var(--code-string); }
+
+.future {
+  margin: 1.6rem 0; padding: 0; max-width: var(--measure);
+}
+.future summary {
+  font-family: var(--mono); font-size: .78rem; letter-spacing: .03em;
+  cursor: pointer; color: var(--seal-deep); padding: .6rem 0;
+  border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+}
+.future p { padding: .8rem 0 0; color: var(--ink-soft); }
+
+/* ============================ FOOTER ============================ */
+.site-footer {
+  max-width: var(--maxw); margin: 4rem auto 0; padding: 2rem 1.5rem 3rem;
+  border-top: 2px solid var(--ink); color: var(--ink-soft); font-size: .95rem;
+}
+.site-footer p { max-width: none; margin: .3rem 0; }
+.site-footer a { color: var(--ink); }
+.site-footer p:last-child {
+  font-family: var(--mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .12em;
+  margin-top: 1rem;
+}
+
+/* ============================ RESPONSIVE ============================ */
+@media (max-width: 40rem) {
+  body { font-size: 1.05rem; }
+  .site-header { flex-direction: column; align-items: flex-start; gap: .6rem; }
+  .hero .promise::first-letter { font-size: 2.4em; }
+}

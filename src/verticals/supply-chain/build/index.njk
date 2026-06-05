@@ -1,0 +1,39 @@
+---
+title: "What are you building? — product provenance"
+description: "Pick your role: product wallet, issuer (brand), or verifier (buyer/retailer). You only implement your piece."
+permalink: /supply-chain/build/
+---
+{# Layer 3 — role picker = conformance-class scoping. #}
+<article class="prose">
+  <h1>What are you building?</h1>
+  <p>Each role sets your scope <em>before</em> you see any code.</p>
+
+  <ul class="role-grid">
+    <li>
+      <a href="/supply-chain/build/wallet/">
+        <h3>Product wallet</h3>
+        <p>The app or registry that carries a product's credential.</p>
+        <p><strong>You implement:</strong> an exchange client — POST, handle VPRs, return VPs.</p>
+        <p class="effort">~3 things, a few days</p>
+      </a>
+    </li>
+    <li>
+      <a href="/supply-chain/build/issuer/">
+        <h3>Issuer (brand)</h3>
+        <p>The brand or manufacturer issuing authenticity.</p>
+        <p><strong>You implement:</strong> start an exchange, deliver a signed VC.</p>
+        <p class="effort">small, separate piece</p>
+      </a>
+    </li>
+    <li>
+      <a href="/supply-chain/build/verifier/">
+        <h3>Verifier (buyer/retailer)</h3>
+        <p>Whoever checks the product is genuine.</p>
+        <p><strong>You implement:</strong> request a presentation, verify the proof.</p>
+        <p class="effort">small, separate piece</p>
+      </a>
+    </li>
+  </ul>
+
+  <p class="note"><strong>You do NOT need to implement the other two.</strong></p>
+</article>

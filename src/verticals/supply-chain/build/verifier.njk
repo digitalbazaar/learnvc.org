@@ -1,0 +1,119 @@
+---
+title: "Build a verifier (buyer/retailer) — product provenance"
+description: "Verify product authenticity over VCALM in 3 steps: request a presentation, receive it, verify the proof. Server-side HTTP quick start."
+permalink: /supply-chain/build/verifier/
+---
+{# Layer 4 — verifier coordinator. Server side of the VCALM exchange loop. #}
+<article class="prose">
+  <h1>Build a verifier</h1>
+  <p>
+    You run the buyer or retailer side: ask the product's wallet to present its
+    authenticity credential, then verify the proof — over the same VCALM
+    exchange loop the wallet speaks.
+  </p>
+
+  <h2>You'll do exactly 3 things</h2>
+  <ol>
+    <li>Expose an interaction URL that advertises <code>vcapi</code>.</li>
+    <li>When the wallet POSTs to start, respond with a
+        <code>verifiablePresentationRequest</code> describing the credential you
+        need.</li>
+    <li>Receive the <code>verifiablePresentation</code> and verify its proof,
+        challenge, and domain.</li>
+  </ol>
+
+  <h2>1. Request the credential</h2>
+  <p>
+    When the wallet POSTs an empty body to your exchange URL, respond with a
+    <code>QueryByExample</code> asking for the credential type you need:
+  </p>
+  {% highlight "json" %}
+{
+  "verifiablePresentationRequest": {
+    "query": [{
+      "type": "QueryByExample",
+      "credentialQuery": [{
+        "reason": "Please present this product's authenticity credential.",
+        "example": {
+          "@context": [
+            "https://www.w3.org/ns/credentials/v2",
+            "https://w3id.org/traceability/v1"
+          ],
+          "type": "ProductPassportCredential"
+        },
+        "trustedIssuer": [{
+          "required": true,
+          "issuer": "did:web:brand.example"
+        }]
+      }]
+    }],
+    "challenge": "3182bdea-63d9-11ea-b6de-3b7c1404d57f",
+    "domain": "retailer.example"
+  }
+}
+  {% endhighlight %}
+  <p>
+    The <code>challenge</code> and <code>domain</code> are what you'll verify in
+    the returned proof — they stop a captured presentation from being replayed.
+    Use <code>trustedIssuer</code> to require the credential come from the real
+    brand.
+  </p>
+
+  <h2>2. Receive the presentation</h2>
+  <p>
+    The wallet POSTs the signed presentation back to the same exchange URL:
+  </p>
+  {% highlight "json" %}
+{
+  "verifiablePresentation": {
+    "@context": ["https://www.w3.org/ns/credentials/v2"],
+    "type": ["VerifiablePresentation"],
+    "holder": "did:example:bag-456",
+    "verifiableCredential": [{ "...": "the authenticity VC" }],
+    "proof": {
+      "challenge": "3182bdea-63d9-11ea-b6de-3b7c1404d57f",
+      "domain": "retailer.example",
+      "...": "holder signature"
+    }
+  }
+}
+  {% endhighlight %}
+
+  <h2>3. Verify the proof</h2>
+  <p>Before you trust the product is genuine, check all of the following:</p>
+  <ul>
+    <li>The presentation <strong>proof</strong> is valid and the
+        <code>challenge</code> / <code>domain</code> match what you sent.</li>
+    <li>The credential's <strong>proof</strong> is valid and the issuer is the
+        brand you trust.</li>
+    <li>The credential is not <strong>revoked</strong> (e.g. reported stolen or
+        recalled) — check its status.</li>
+    <li>The credential is <strong>unexpired</strong> and the type matches your
+        request.</li>
+  </ul>
+
+  <h2>That's it</h2>
+  <p>
+    A conformant provenance verifier is this exchange: request, receive, verify.
+    The cryptographic verification is your verifier instance's job — the
+    coordinator just runs the exchange.
+  </p>
+
+  <details class="future">
+    <summary>Prefer a library to raw HTTP?</summary>
+    <p>
+      Verifier-side helpers live in Digital Bazaar's Bedrock VC modules. A
+      dogfooded standalone VCALM client is planned; until it ships, the HTTP
+      flow above is the supported path.
+    </p>
+  </details>
+
+  <h2>Go deeper</h2>
+  <ul>
+    <li><a href="https://www.w3.org/TR/vcalm/#query-by-example">VCALM: QueryByExample</a></li>
+    <li><a href="https://www.w3.org/TR/vcalm/#verifiable-presentation-request">VCALM: Verifiable Presentation Request</a></li>
+    <li><a href="https://www.w3.org/TR/vcalm/">VCALM specification</a></li>
+  </ul>
+
+  <p class="cta"><a class="btn" href="/supply-chain/build/">← Back to roles</a></p>
+</article>

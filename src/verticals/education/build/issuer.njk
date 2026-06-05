@@ -1,0 +1,113 @@
+---
+title: "Build an issuer — academic credentials"
+description: "Issue diplomas over VCALM in 3 steps: start an exchange, deliver a signed VC, confirm. Server-side HTTP quick start."
+permalink: /education/build/issuer/
+---
+{# Layer 4 — issuer coordinator quick start. Server side of the same VCALM
+   exchange loop the wallet talks to. HTTP-only (no client library yet). #}
+<article class="prose">
+  <h1>Build an issuer</h1>
+  <p>
+    You run the university side: start an exchange and deliver a signed diploma
+    credential into the graduate's wallet — over the same VCALM exchange loop
+    the wallet speaks.
+  </p>
+
+  <h2>You'll do exactly 3 things</h2>
+  <ol>
+    <li>Expose an interaction URL (in a QR code or link) that advertises
+        <code>vcapi</code>.</li>
+    <li>When the wallet POSTs to your exchange URL, respond with the
+        diploma in a <code>verifiablePresentation</code>.</li>
+    <li>Optionally ask the wallet to authenticate first (DID Auth), then
+        deliver; finish the exchange.</li>
+  </ol>
+
+  <h2>1. Advertise the exchange</h2>
+  <p>
+    The wallet dereferences your interaction URL (<code>iuv=1</code>) and you
+    return the protocols you support. Offer <code>vcapi</code> for VCALM:
+  </p>
+  {% highlight "json" %}
+{
+  "protocols": {
+    "vcapi": "https://issuer.university.example/exchanges/diploma-789"
+  }
+}
+  {% endhighlight %}
+
+  <h2>2. Deliver the credential</h2>
+  <p>
+    The wallet POSTs an empty body to start. You respond with the signed diploma
+    wrapped in a <code>verifiablePresentation</code>:
+  </p>
+  {% highlight "json" %}
+{
+  "verifiablePresentation": {
+    "@context": ["https://www.w3.org/ns/credentials/v2"],
+    "type": ["VerifiablePresentation"],
+    "verifiableCredential": [{
+      "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://w3id.org/education/v2"
+      ],
+      "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+      "issuer": "did:web:university.example",
+      "credentialSubject": {
+        "id": "did:example:graduate123",
+        "degree": {"type": "BachelorDegree", "name": "B.Sc. Computer Science"}
+      },
+      "proof": { "...": "issuer signature" }
+    }]
+  }
+}
+  {% endhighlight %}
+  <p>
+    The exchange is complete when you return no
+    <code>verifiablePresentationRequest</code>.
+  </p>
+
+  <h2>3. (Optional) Authenticate the holder first</h2>
+  <p>
+    To bind the diploma to a holder, respond to the wallet's first POST with a
+    <code>verifiablePresentationRequest</code> for DID Authentication, then
+    deliver on the next turn:
+  </p>
+  {% highlight "json" %}
+{
+  "verifiablePresentationRequest": {
+    "query": [{
+      "type": "DIDAuthentication",
+      "acceptedMethods": [{"method": "example"}]
+    }],
+    "challenge": "99612b24-63d9-11ea-b99f-4f66f3e4f81a",
+    "domain": "issuer.university.example"
+  }
+}
+  {% endhighlight %}
+
+  <h2>That's it</h2>
+  <p>
+    A conformant education issuer is this exchange: advertise, deliver, confirm.
+    The signing of the credential itself is your issuer instance's job — the
+    coordinator just runs the exchange.
+  </p>
+
+  <details class="future">
+    <summary>Prefer a library to raw HTTP?</summary>
+    <p>
+      Issuer-side helpers live in Digital Bazaar's Bedrock VC modules. A
+      dogfooded standalone VCALM client is planned; until it ships, the HTTP
+      flow above is the supported path.
+    </p>
+  </details>
+
+  <h2>Go deeper</h2>
+  <ul>
+    <li><a href="https://www.w3.org/TR/vcalm/#did-authentication">VCALM: DID Authentication</a></li>
+    <li><a href="https://www.w3.org/TR/vc-data-model-2.0/">W3C Verifiable Credentials Data Model 2.0</a></li>
+    <li><a href="https://www.w3.org/TR/vcalm/">VCALM specification</a></li>
+  </ul>
+
+  <p class="cta"><a class="btn" href="/education/build/">← Back to roles</a></p>
+</article>

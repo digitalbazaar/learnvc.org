@@ -1,0 +1,122 @@
+---
+layout: layouts/base.njk
+title: "What is VCALM? (the W3C VC API)"
+description: "VCALM (Verifiable Credentials API Lifecycle Management), also called the VC API or vc-api, is an open W3C protocol for issuing, presenting, and verifying Verifiable Credentials — explained simply."
+permalink: /what-is-vcalm/
+structuredData:
+  "@context": "https://schema.org"
+  "@type": "TechArticle"
+  headline: "What is VCALM?"
+  about: "VCALM (Verifiable Credentials API Lifecycle Management)"
+  description: "An explanation of VCALM, the W3C protocol for issuing, presenting, and verifying Verifiable Credentials."
+  author:
+    "@type": "Organization"
+    name: "Digital Bazaar, Inc."
+---
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What does VCALM stand for?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Verifiable Credentials API Lifecycle Management."}},
+    {"@type": "Question", "name": "Is VCALM the same as the VC API?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Yes. VCALM and the VC API (vc-api) refer to the same W3C protocol. The specification defines the VC API endpoints, and vcapi is the protocol key a wallet selects to use it."}},
+    {"@type": "Question", "name": "Is VCALM a W3C standard?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Yes. VCALM is developed in the W3C Verifiable Credentials Working Group and published as a specification at w3.org/TR/vcalm."}},
+    {"@type": "Question", "name": "How is VCALM different from OID4VCI / OID4VP?",
+     "acceptedAnswer": {"@type": "Answer", "text": "OID4VCI (issuance) and OID4VP (presentation) are two separate OpenID-based protocols. VCALM handles both delivery and presentation in one exchange loop, keeps user choice of wallet, and works natively with W3C Verifiable Credentials."}},
+    {"@type": "Question", "name": "What can you build with VCALM?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Anything that issues or verifies credentials: academic diplomas, product authenticity and digital product passports, professional licenses, and more."}},
+    {"@type": "Question", "name": "Is VCALM hard to implement?",
+     "acceptedAnswer": {"@type": "Answer", "text": "The delivery piece is short - a wallet implements three things: dereference an interaction URL, POST to start, and run the exchange loop."}}
+  ]
+}
+</script>
+<article class="prose what-is">
+  <p class="kicker">Definition · W3C Verifiable Credentials</p>
+  <h1>What is VCALM?</h1>
+
+  <p class="lede">
+    VCALM — <strong>Verifiable Credentials API Lifecycle Management</strong>, also
+    known as the <strong>VC API</strong> — is an open W3C protocol for issuing,
+    presenting, and verifying Verifiable Credentials over a single, simple
+    exchange.
+  </p>
+
+  <p class="aside-note">
+    You'll see this protocol called both <strong>VCALM</strong> and the
+    <strong>VC&nbsp;API</strong> (or <code>vc-api</code>). They're the same thing:
+    the spec defines the VC API endpoints, and <code>vcapi</code> is the protocol
+    key you select on the wire. This site uses "VCALM" and "VC API"
+    interchangeably.
+  </p>
+
+  <p>
+    Think of it as the standard "plumbing" that moves a credential — a diploma, a
+    product passport, a license — between three parties: the <strong>issuer</strong>
+    who creates it, the <strong>wallet</strong> that holds it for the user, and the
+    <strong>verifier</strong> who checks it. VCALM defines how those parties talk,
+    so any conformant wallet works with any conformant issuer or verifier.
+  </p>
+
+  <h2>VCALM in one sentence for developers</h2>
+  <p>
+    The core delivery flow is a short HTTP loop: <code>POST</code> to an exchange
+    URL, read what the server asks for, <code>POST</code> the response back —
+    repeat until done. That's the entire piece that overlaps with the
+    OpenID-based specs (OID4VCI / OID4VP), and it's far smaller.
+  </p>
+
+  <h2>Common questions</h2>
+
+  <div class="faq">
+    <h3>What does VCALM stand for?</h3>
+    <p>Verifiable Credentials API Lifecycle Management.</p>
+
+    <h3>Is VCALM the same as the VC API?</h3>
+    <p>
+      Yes. "VCALM" and the "VC API" (or <code>vc-api</code>) refer to the same
+      W3C protocol. The specification defines the VC API endpoints, and
+      <code>vcapi</code> is the protocol key a wallet selects to use it.
+    </p>
+
+    <h3>Is VCALM a W3C standard?</h3>
+    <p>
+      Yes. VCALM is developed in the W3C Verifiable Credentials Working Group and
+      published as a specification at
+      <a href="https://www.w3.org/TR/vcalm/">w3.org/TR/vcalm</a>.
+    </p>
+
+    <h3>How is VCALM different from OID4VCI / OID4VP?</h3>
+    <p>
+      OID4VCI (issuance) and OID4VP (presentation) are two separate
+      OpenID-based protocols. VCALM handles both delivery and presentation in one
+      exchange loop, keeps user choice of wallet, and works natively with W3C
+      Verifiable Credentials. See <a href="/why-vcalm/">Why VCALM</a> for a full
+      comparison.
+    </p>
+
+    <h3>What can you build with VCALM?</h3>
+    <p>
+      Anything that issues or verifies credentials: academic diplomas, product
+      authenticity / digital product passports, professional licenses, and more.
+      See the <a href="/">use-case guides</a>.
+    </p>
+
+    <h3>Is VCALM hard to implement?</h3>
+    <p>
+      The delivery piece is short — a wallet implements three things. Start with
+      the <a href="/education/build/wallet/">wallet quick start</a>.
+    </p>
+  </div>
+
+  <div class="callout">
+    <p>Ready to see it in practice?</p>
+    <p>
+      <a class="btn primary" href="/why-vcalm/">Why VCALM</a>
+      <a class="btn" href="/education/build/wallet/">Build a wallet</a>
+      <a class="btn" href="https://www.w3.org/TR/vcalm/">Read the spec</a>
+    </p>
+  </div>
+</article>

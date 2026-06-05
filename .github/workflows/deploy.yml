@@ -23,7 +23,7 @@ jobs:
         env:
           # Custom domain (learnvc.org). Override via the SITE_URL repo variable.
           SITE_URL: ${{ vars.SITE_URL || 'https://learnvc.org' }}
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
@@ -38,4 +38,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

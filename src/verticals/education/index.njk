@@ -1,13 +1,14 @@
 ---
-title: "Issue and verify academic credentials with Verifiable Credentials"
+title: "Issue and verify Diplomas, Certificates and other credentials with VCALM"
 shortName: "Education"
-cardTitle: "Academic credentials"
+cardTitle: "Academic Credentials"
 summary: "Issue diplomas, transcripts, and enrollment proofs any wallet can hold and any institution can verify."
 description: "Issue and verify diplomas, transcripts, and enrollment proofs with W3C Verifiable Credentials over VCALM — no central identity provider."
 order: 1
 permalink: /education/
 ---
-{# Layer 1 — the SERP magnet. Answers "would this work for us?" in one screen. #}
+{# Single-page vertical: SERP magnet, human journey, and technical model on one
+   screen. Answers "would this work for us?" without forcing a click-through. #}
 <section class="hero">
   <h1>{{ title }}</h1>
   <p class="promise">
@@ -16,13 +17,106 @@ permalink: /education/
   </p>
 </section>
 
-<section class="scenario">
-  <blockquote>
-    A US university issues a diploma. A graduate stores it in the wallet of
-    their choice. An Austrian master's program verifies it in seconds — no
-    phone calls, no PDF forwarding, no central authority.
-  </blockquote>
+<section class="flow">
+  {% set flowSteps = [
+    {icon: flowIcons.educationIssue, label: "University issues a diploma",   caption: "Graduate clicks Add to wallet -- lands in seconds"},
+    {icon: flowIcons.educationHold,  label: "Graduate holds it",             caption: "In their wallet, on their phone, under their control"},
+    {icon: flowIcons.educationVerify,label: "Admissions office verifies",    caption: "Cryptographic proof -- no calls to the registrar"}
+  ] %}
+  {% set flowFooter = "Works across borders -- any wallet -- no phone calls" %}
+  {% include "partials/flow-diagram.njk" %}
 </section>
+
+<article class="prose experience">
+  <h2>What it feels like to use</h2>
+  <p class="lede">
+    The technology is invisible by design. Here's what each person actually
+    does — and what they no longer have to.
+  </p>
+
+  <ol class="journey">
+    <li>
+      <h3>The university issues a diploma</h3>
+      <p>
+        A graduate clicks <em>"Add to wallet"</em> on the university portal — or
+        scans a QR code at the ceremony. They pick the wallet app they already
+        use. The diploma lands in it in seconds.
+      </p>
+      <p class="aside">No new account. No vendor the university chose for them.</p>
+    </li>
+    <li>
+      <h3>The graduate holds it</h3>
+      <p>
+        The diploma now lives in the graduate's wallet, on their phone, under
+        their control — like a boarding pass or a payment card. It works even if
+        the university's website is down years later.
+      </p>
+      <p class="aside">They can move it to a different wallet whenever they like.</p>
+    </li>
+    <li>
+      <h3>An admissions office verifies it</h3>
+      <p>
+        The graduate applies to a master's program abroad. The application page
+        asks for proof of their degree. They tap <em>"Share diploma"</em>,
+        approve once, and the admissions office confirms it instantly —
+        cryptographically, no phone calls to the registrar.
+      </p>
+      <p class="aside">Verified in seconds, across borders, in any language.</p>
+    </li>
+  </ol>
+
+  <div class="benefits-cols">
+    <div class="benefits-col">
+      <h3><span class="benefits-icon">{{ flowIcons.person | safe }}</span>What the graduate experiences</h3>
+      <ul class="benefits">
+        <li><strong>Three taps, not three weeks.</strong> Receive, hold, share.</li>
+        <li><strong>Their choice of wallet.</strong> Not dictated by the school or a government list.</li>
+        <li><strong>They stay in control.</strong> Nothing is shared without an explicit, one-time approval.</li>
+        <li><strong>It keeps working.</strong> The credential doesn't depend on the issuer staying online.</li>
+      </ul>
+    </div>
+    <div class="benefits-col">
+      <h3><span class="benefits-icon">{{ flowIcons.institution | safe }}</span>What the institution experiences</h3>
+      <ul class="benefits">
+        <li><strong>No identity silo to run.</strong> You issue a credential; you don't host the user's login.</li>
+        <li><strong>Instant, tamper-evident verification.</strong> No manual transcript checks.</li>
+        <li><strong>No vendor lock-in.</strong> Pick a provider, swap it later, keep working with every wallet.</li>
+        <li><strong>Cross-border by default.</strong> A diploma issued here verifies anywhere that reads the standard.</li>
+      </ul>
+    </div>
+  </div>
+</article>
+
+<article class="prose">
+  <h2>How it works</h2>
+  <p>One diagram, three actors, one loop.</p>
+
+  <pre class="diagram">
+   ISSUER                 WALLET                 VERIFIER
+ (university)         (student's choice)     (admissions office)
+     |                      |                       |
+     | -- delivers -->      |                       |
+     |   diploma VC         |                       |
+     |                      | &lt;-- asks for --        |
+     |                      |   proof of diploma     |
+     |                      | -- presents -->        |
+     |                      |   diploma VC           |
+     |                      |                  verifies (ok)
+  </pre>
+
+  <ul>
+    <li>A credential is just signed JSON the holder carries.</li>
+    <li>
+      <strong>Delivery</strong> (issuer → wallet) and
+      <strong>presentation</strong> (wallet → verifier) are the same simple
+      exchange loop: POST, read what the server wants, POST back.
+    </li>
+    <li>
+      That loop is the entire "VCALM delivery" surface — the part that competes
+      with OID4VCI/OID4VP, and it's short.
+    </li>
+  </ul>
+</article>
 
 <section class="fit">
   <h2>A good fit if…</h2>
@@ -32,9 +126,7 @@ permalink: /education/
     <li>You need verification that works across wallets.</li>
   </ul>
   <p class="cta">
-    <a class="btn primary" href="/education/experience/">See the user experience</a>
-    <a class="btn" href="/education/how-it-works/">See how it works</a>
-    <a class="btn" href="/education/build/">Start building</a>
+    <a class="btn primary" href="/education/build/">Start building</a>
   </p>
 </section>
 
@@ -42,6 +134,6 @@ permalink: /education/
   <h2>Why VCALM vs. the alternative</h2>
   <p>
     You pick a VCALM provider and can swap it. You aren't locked to one wallet
-    vendor or one stack.
+    vendor or one stack. <a href="/why-vcalm/">See the full comparison.</a>
   </p>
 </section>

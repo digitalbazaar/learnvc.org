@@ -97,11 +97,20 @@ permalink: /government/build/verifier/
   </p>
 
   <details class="future">
-    <summary>Prefer a library to raw HTTP?</summary>
+    <summary>Prefer a server to raw HTTP?</summary>
     <p>
-      Verifier-side helpers live in Digital Bazaar's Bedrock VC modules. A
-      dogfooded standalone VCALM client is planned; until it ships, the HTTP
-      flow above is the supported path.
+      You don't have to build the coordinator by hand. Digital Bazaar's
+      <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>
+      runs this exact exchange loop for you today
+      (<code>npm install @bedrock/vc-delivery</code>). It serves VCALM
+      (<code>vcapi</code>) and also speaks OID4VCI and OID4VP, so one workflow
+      can request and verify presentations over whichever protocol a wallet
+      selects.
+    </p>
+    <p>
+      A standalone client-side VCALM library (for the wallet end) is still
+      planned; until it ships, the HTTP flow above is the supported path on
+      that side.
     </p>
   </details>
 

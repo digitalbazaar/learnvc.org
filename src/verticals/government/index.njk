@@ -1,5 +1,5 @@
 ---
-title: "Mobile driver's licenses & digital ID with Verifiable Credentials"
+title: "Mobile driver's licenses & digital ID with VCALM"
 shortName: "Government & digital ID"
 cardTitle: "Mobile driver's licenses & digital ID"
 summary: "Issue mobile driver's licenses and digital IDs residents control — verifiable anywhere, with any wallet."
@@ -7,7 +7,7 @@ description: "Issue mobile driver's licenses (mDL) and digital identity credenti
 order: 3
 permalink: /government/
 ---
-{# Layer 1 — government/DMV SERP magnet. Anchor: mobile driver's license (mDL).
+{# Single-page government/DMV vertical. Anchor: mobile driver's license (mDL).
    Lean on wallet-choice / no-allow-list / privacy — the user-liberty angle. #}
 <section class="hero">
   <h1>{{ title }}</h1>
@@ -18,14 +18,105 @@ permalink: /government/
   </p>
 </section>
 
-<section class="scenario">
-  <blockquote>
-    A state DMV issues a mobile driver's license. The resident keeps it in any
-    conformant wallet they trust. At a bar, an airport, or a checkout, they prove
-    they're over 21 — or that the license is valid — without handing over their
-    full identity, and without the verifier phoning the state.
-  </blockquote>
+<section class="flow">
+  {% set flowSteps = [
+    {icon: flowIcons.govIssue,    label: "DMV issues a mobile license",    caption: "Resident picks their own wallet -- no state-mandated app"},
+    {icon: flowIcons.govHold,     label: "Resident holds and controls it", caption: "Nothing shared without one-tap, explicit consent"},
+    {icon: flowIcons.govDisclose, label: "Proves one fact",                caption: "Over 21 -- no name, address, or birthdate revealed"}
+  ] %}
+  {% set flowFooter = "Any conformant wallet -- no state-mandated app -- selective disclosure by design" %}
+  {% include "partials/flow-diagram.njk" %}
 </section>
+
+<article class="prose experience">
+  <h2>What it feels like to use</h2>
+  <p class="lede">
+    The technology is invisible by design. Here's what each person actually
+    does — and what they no longer have to.
+  </p>
+
+  <ol class="journey">
+    <li>
+      <h3>The DMV issues a mobile license</h3>
+      <p>
+        A resident requests their mobile driver's license from the DMV portal or
+        app. They authenticate once, pick the wallet they already use, and the
+        license lands in it — alongside their existing physical card.
+      </p>
+      <p class="aside">No state-mandated app. Their wallet, their choice.</p>
+    </li>
+    <li>
+      <h3>The resident holds and controls it</h3>
+      <p>
+        The license lives on their phone, under their control. Nothing is shared
+        automatically — every presentation needs an explicit, one-time approval
+        the resident sees and consents to.
+      </p>
+      <p class="aside">The state can't watch where it's used.</p>
+    </li>
+    <li>
+      <h3>They prove just one thing, when needed</h3>
+      <p>
+        At a bar, the resident taps to prove <em>"over 21"</em> — and reveals
+        nothing else. No name, no address, no birthdate. At an airport or a
+        website, they share exactly the fields asked for, and no more.
+      </p>
+      <p class="aside">Selective disclosure: minimum data, every time.</p>
+    </li>
+  </ol>
+
+  <div class="benefits-cols">
+    <div class="benefits-col">
+      <h3><span class="benefits-icon">{{ flowIcons.person | safe }}</span>What the resident experiences</h3>
+      <ul class="benefits">
+        <li><strong>Their choice of wallet.</strong> Not a single government-approved app.</li>
+        <li><strong>Prove a fact, not your identity.</strong> "Over 21" without your birthdate.</li>
+        <li><strong>One-tap consent.</strong> Nothing leaves the phone without approval.</li>
+        <li><strong>No tracking.</strong> The state doesn't see each place it's used.</li>
+      </ul>
+    </div>
+    <div class="benefits-col">
+      <h3><span class="benefits-icon">{{ flowIcons.institution | safe }}</span>What the agency experiences</h3>
+      <ul class="benefits">
+        <li><strong>Privacy by design.</strong> Data minimization is built into every request.</li>
+        <li><strong>Instant, tamper-evident checks.</strong> No call-backs to the DMV.</li>
+        <li><strong>No vendor or wallet lock-in.</strong> Works with every conformant wallet.</li>
+        <li><strong>Standards-based.</strong> Built on open W3C Verifiable Credentials.</li>
+      </ul>
+    </div>
+  </div>
+</article>
+
+<article class="prose">
+  <h2>How it works</h2>
+  <p>One diagram, three actors, one loop.</p>
+
+  <pre class="diagram">
+     DMV                   RESIDENT              RELYING PARTY
+  (issuer)             (wallet of choice)         (verifier)
+     |                      |                          |
+     | -- delivers -->      |                          |
+     |  mobile license VC   |                          |
+     |                      | &lt;-- asks for --           |
+     |                      |   proof of age / validity |
+     |                      | -- presents -->           |
+     |                      |   only what's needed      |
+     |                      |                     verifies (ok)
+  </pre>
+
+  <ul>
+    <li>A mobile license is signed JSON the resident holds and controls.</li>
+    <li>
+      <strong>Delivery</strong> (DMV → resident) and
+      <strong>presentation</strong> (resident → verifier) are the same simple
+      exchange loop: POST, read what the server wants, POST back.
+    </li>
+    <li>
+      With selective disclosure, the resident can prove a single fact —
+      "over 21," "license valid" — without revealing name, address, or birthdate.
+    </li>
+  </ul>
+</article>
 
 <section class="fit">
   <h2>A good fit if…</h2>
@@ -35,9 +126,7 @@ permalink: /government/
     <li>You need selective disclosure — prove a fact without revealing everything.</li>
   </ul>
   <p class="cta">
-    <a class="btn primary" href="/government/experience/">See the user experience</a>
-    <a class="btn" href="/government/how-it-works/">See how it works</a>
-    <a class="btn" href="/government/build/">Start building</a>
+    <a class="btn primary" href="/government/build/">Start building</a>
   </p>
 </section>
 

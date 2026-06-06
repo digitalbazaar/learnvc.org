@@ -126,5 +126,22 @@ export default {
     <rect x="36" y="30" width="38" height="26" rx="2" fill="#f4f0e6" stroke="#2f6b4f" stroke-width="2"/>
     <text x="55" y="42" text-anchor="middle" font-size="9" fill="#2f6b4f" font-family="Georgia,serif" font-weight="bold">OVER 21</text>
     <text x="55" y="52" text-anchor="middle" font-size="8" fill="#2f6b4f" font-family="Georgia,serif">&#x2713; verified</text>
+  </svg>`,
+
+  // Small heading glyphs for the "What X experiences" columns.
+  // Individual holder (resident / graduate / buyer).
+  person: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="12" cy="8" r="4" fill="none" stroke="#c0341d" stroke-width="1.6"/>
+    <path d="M4,21 a8,8 0 0,1 16,0" fill="none" stroke="#c0341d" stroke-width="1.6" stroke-linecap="round"/>
+  </svg>`,
+
+  // Institution / agency (issuer or verifier organization).
+  institution: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <polygon points="12,3 21,8 3,8" fill="none" stroke="#c0341d" stroke-width="1.6" stroke-linejoin="round"/>
+    <line x1="5" y1="11" x2="5" y2="18" stroke="#c0341d" stroke-width="1.6" stroke-linecap="round"/>
+    <line x1="10" y1="11" x2="10" y2="18" stroke="#c0341d" stroke-width="1.6" stroke-linecap="round"/>
+    <line x1="14" y1="11" x2="14" y2="18" stroke="#c0341d" stroke-width="1.6" stroke-linecap="round"/>
+    <line x1="19" y1="11" x2="19" y2="18" stroke="#c0341d" stroke-width="1.6" stroke-linecap="round"/>
+    <line x1="3" y1="21" x2="21" y2="21" stroke="#c0341d" stroke-width="1.6" stroke-linecap="round"/>
   </svg>`
 };

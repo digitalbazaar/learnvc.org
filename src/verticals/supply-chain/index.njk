@@ -1,5 +1,5 @@
 ---
-title: "Supply chain traceability & provenance with Verifiable Credentials"
+title: "Supply chain traceability & provenance with VCALM"
 shortName: "Supply chain & traceability"
 cardTitle: "Supply chain traceability"
 summary: "Issue tamper-evident traceability and provenance credentials buyers, retailers, and auditors can verify."
@@ -7,7 +7,7 @@ description: "Build supply chain traceability and provenance with W3C Verifiable
 order: 2
 permalink: /supply-chain/
 ---
-{# Layer 1 — supply-chain SERP magnet. US-first: lead with "supply chain
+{# Single-page supply-chain vertical. US-first: lead with "supply chain
    traceability / provenance" (US vocabulary; DSCSA/FSMA/UFLPA drivers).
    "Digital product passport" / DPP is the secondary EU framing. #}
 <section class="hero">
@@ -19,14 +19,106 @@ permalink: /supply-chain/
   </p>
 </section>
 
-<section class="scenario">
-  <blockquote>
-    A manufacturer issues an origin credential for each batch. It moves with the
-    goods through distributors and resale. A buyer or auditor scans it and
-    confirms — in seconds — where it came from and that it's genuine. No central
-    database to breach, no single vendor to trust blindly.
-  </blockquote>
+<section class="flow">
+  {% set flowSteps = [
+    {icon: flowIcons.supplyIssue,  label: "Manufacturer issues",       caption: "Provenance credential attached to each batch"},
+    {icon: flowIcons.supplyCarry,  label: "Product carries it",        caption: "Through distributors, retailers, and resale"},
+    {icon: flowIcons.supplyVerify, label: "Buyer or auditor verifies", caption: "Scan -- origin confirmed, tamper-evident"}
+  ] %}
+  {% set flowFooter = "No central database -- proof travels with the product -- DSCSA / FSMA / UFLPA ready" %}
+  {% include "partials/flow-diagram.njk" %}
 </section>
+
+<article class="prose experience">
+  <h2>What it feels like to use</h2>
+  <p class="lede">
+    The technology is invisible by design. Here's what each person actually
+    does — and what they no longer have to.
+  </p>
+
+  <ol class="journey">
+    <li>
+      <h3>The brand issues an authenticity credential</h3>
+      <p>
+        At the point of manufacture, each product gets a signed provenance
+        credential — origin, materials, date — linked to a tag or QR on the
+        item. It's issued once and travels with the product.
+      </p>
+      <p class="aside">No shared central database for counterfeiters to mimic.</p>
+    </li>
+    <li>
+      <h3>The product carries it through the supply chain</h3>
+      <p>
+        As the item moves through distributors, retailers, and resale, the
+        credential moves with it. Each handoff can add its own signed event
+        without anyone rewriting history.
+      </p>
+      <p class="aside">Ownership can transfer without phoning the brand.</p>
+    </li>
+    <li>
+      <h3>A buyer or auditor verifies it</h3>
+      <p>
+        A buyer, retailer, or compliance auditor scans the tag, taps
+        <em>"Verify"</em>, and instantly sees where it came from and that it's
+        genuine — cryptographically, not a website or spreadsheet that could be
+        faked.
+      </p>
+      <p class="aside">Proof of origin in seconds, even years later.</p>
+    </li>
+  </ol>
+
+  <div class="benefits-cols">
+    <div class="benefits-col">
+      <h3><span class="benefits-icon">{{ flowIcons.person | safe }}</span>What the buyer experiences</h3>
+      <ul class="benefits">
+        <li><strong>One scan, real proof.</strong> Authenticity you can check yourself.</li>
+        <li><strong>No counterfeit guesswork.</strong> The proof is cryptographic, not a logo.</li>
+        <li><strong>Works on resale.</strong> Provenance survives every change of hands.</li>
+        <li><strong>Their choice of app.</strong> Any conformant wallet or scanner works.</li>
+      </ul>
+    </div>
+    <div class="benefits-col">
+      <h3><span class="benefits-icon">{{ flowIcons.institution | safe }}</span>What the manufacturer experiences</h3>
+      <ul class="benefits">
+        <li><strong>Counterfeits lose their cover.</strong> Fakes can't produce a valid credential.</li>
+        <li><strong>No central honeypot.</strong> Nothing to breach; proofs are self-contained.</li>
+        <li><strong>No vendor lock-in.</strong> Pick a provider, swap it later, work with every scanner.</li>
+        <li><strong>Provenance across borders.</strong> Verifiable anywhere that reads the standard.</li>
+      </ul>
+    </div>
+  </div>
+</article>
+
+<article class="prose">
+  <h2>How it works</h2>
+  <p>One diagram, three actors, one loop.</p>
+
+  <pre class="diagram">
+    BRAND                  PRODUCT               BUYER / RETAILER
+  (issuer)             (its credential)          (verifier)
+     |                      |                          |
+     | -- delivers -->      |                          |
+     |  authenticity VC     |                          |
+     |                      | &lt;-- asks for --           |
+     |                      |   proof of origin         |
+     |                      | -- presents -->           |
+     |                      |   authenticity VC         |
+     |                      |                     verifies (ok)
+  </pre>
+
+  <ul>
+    <li>A provenance credential is signed JSON that travels with the product.</li>
+    <li>
+      <strong>Delivery</strong> (brand → product/owner) and
+      <strong>presentation</strong> (owner → buyer) are the same simple
+      exchange loop: POST, read what the server wants, POST back.
+    </li>
+    <li>
+      The credential proves origin without exposing a central database — each
+      check is cryptographic, not a lookup someone can tamper with.
+    </li>
+  </ul>
+</article>
 
 <section class="fit">
   <h2>A good fit if…</h2>
@@ -37,9 +129,7 @@ permalink: /supply-chain/
     <li>You want verification without a single central database as a target.</li>
   </ul>
   <p class="cta">
-    <a class="btn primary" href="/supply-chain/experience/">See the user experience</a>
-    <a class="btn" href="/supply-chain/how-it-works/">See how it works</a>
-    <a class="btn" href="/supply-chain/build/">Start building</a>
+    <a class="btn primary" href="/supply-chain/build/">Start building</a>
   </p>
 </section>
 

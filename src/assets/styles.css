@@ -483,10 +483,135 @@ p {
     margin: 1.5rem 0 2rem;
     padding: 0;
 }
-.flow-diagram img {
-    width: 100%;
-    height: auto;
+
+.flow-panels {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid var(--hairline);
+    box-shadow: 3px 3px 0 var(--paper-2);
+}
+
+/* On mobile stack vertically */
+@media (max-width: 600px) {
+    .flow-panels {
+        grid-template-columns: 1fr;
+    }
+}
+
+.flow-panel {
+    position: relative;
+    background: var(--paper-2);
+    padding: 1.25rem 1rem 1rem;
+    border-right: 1px solid var(--hairline);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+}
+
+.flow-panel:last-child {
+    border-right: none;
+    border-color: var(--verify);
+    outline: 1.5px solid var(--verify);
+    outline-offset: -1px;
+}
+
+/* On mobile, replace right border with bottom border between steps */
+@media (max-width: 600px) {
+    .flow-panel {
+        border-right: none;
+        border-bottom: 1px solid var(--hairline);
+    }
+    .flow-panel:last-child {
+        border-bottom: none;
+    }
+}
+
+/* Arrow between panels (hidden on mobile) */
+.flow-panel:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -9px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-left: 8px solid var(--hairline);
+    z-index: 1;
+}
+
+@media (max-width: 600px) {
+    .flow-panel:not(:last-child)::after {
+        display: none;
+    }
+}
+
+.flow-step-num {
+    position: absolute;
+    top: .6rem;
+    left: .7rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    background: var(--seal);
+    color: var(--paper);
+    font-family: var(--display);
+    font-size: .75rem;
+    font-weight: 700;
+    line-height: 1.4rem;
+    text-align: center;
     display: block;
+}
+
+.flow-panel:nth-child(2) .flow-step-num {
+    background: var(--ink);
+}
+
+.flow-panel:nth-child(3) .flow-step-num {
+    background: var(--verify);
+}
+
+.flow-icon {
+    margin: .5rem 0 .25rem;
+    line-height: 0;
+}
+
+.flow-icon svg {
+    width: 80px;
+    height: 80px;
+}
+
+.flow-label {
+    font-family: var(--body);
+    font-size: .9rem;
+    color: var(--ink);
+    margin: 0;
+}
+
+.flow-caption {
+    font-family: var(--body);
+    font-size: .8rem;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin: 0;
+}
+
+.flow-footer {
+    font-family: var(--body);
+    font-size: .75rem;
+    font-style: italic;
+    color: var(--ink-soft);
+    text-align: center;
+    padding: .5rem 0 0;
+    border-top: .5px solid var(--hairline);
+    margin-top: 0;
 }
 
 /* ============================ JOURNEY (experience) ============================ */

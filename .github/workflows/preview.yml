@@ -1,0 +1,63 @@
+name: Deploy PR preview to Cloudflare Pages
+
+# Builds the site for each pull request and deploys it to a Cloudflare Pages
+# preview, so reviewers can see the rendered result at a live URL without
+# checking out the branch. Production continues to deploy to GitHub Pages via
+# deploy.yml; this workflow does not touch it.
+#
+# Setup (one time, by someone with repo admin + a Cloudflare account):
+#   1. Create a Cloudflare Pages project named "learnvc-org".
+#   2. Add repository secrets:
+#        CLOUDFLARE_API_TOKEN   - token scoped to "Cloudflare Pages: Edit".
+#        CLOUDFLARE_ACCOUNT_ID  - your Cloudflare account id.
+# Until both secrets exist the deploy step is skipped, so merging this file
+# changes nothing.
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          # Each PR preview is served from its own *.pages.dev root, so
+          # absolute URLs resolve correctly. SITE_URL is left at its default.
+          SITE_URL: ${{ vars.PREVIEW_SITE_URL || 'https://learnvc-org.pages.dev' }}
+
+      - name: Check for Cloudflare credentials
+        id: creds
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -n "$CF_TOKEN" ] && [ -n "$CF_ACCOUNT" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Cloudflare secrets not set; skipping preview deploy."
+          fi
+
+      - name: Deploy to Cloudflare Pages
+        if: steps.creds.outputs.ready == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: >-
+            pages deploy _site
+            --project-name=learnvc-org
+            --branch=${{ github.head_ref }}

@@ -6,7 +6,7 @@ name: Deploy PR preview to Cloudflare Pages
 # deploy.yml; this workflow does not touch it.
 #
 # Setup (one time, by someone with repo admin + a Cloudflare account):
-#   1. Create a Cloudflare Pages project named "learnvc-org".
+#   1. Create a Cloudflare Pages project named "learnvcorg".
 #   2. Add repository secrets:
 #        CLOUDFLARE_API_TOKEN   - token scoped to "Cloudflare Pages: Edit".
 #        CLOUDFLARE_ACCOUNT_ID  - your Cloudflare account id.
@@ -45,7 +45,7 @@ jobs:
         env:
           # Each PR preview is served from its own *.pages.dev root, so
           # absolute URLs resolve correctly. SITE_URL is left at its default.
-          SITE_URL: ${{ vars.PREVIEW_SITE_URL || 'https://learnvc-org.pages.dev' }}
+          SITE_URL: ${{ vars.PREVIEW_SITE_URL || 'https://learnvcorg.pages.dev' }}
 
       - name: Check for Cloudflare credentials
         id: creds
@@ -68,5 +68,5 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: >-
             pages deploy _site
-            --project-name=learnvc-org
+            --project-name=learnvcorg
             --branch=${{ github.head_ref }}

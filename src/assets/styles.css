@@ -938,6 +938,47 @@ pre[class*="language-"] code {
     color: var(--ink-soft);
 }
 
+/* Recommended path — the default route, surfaced (not hidden in a dropdown). */
+.recommended {
+    margin: 1.8rem 0 2.6rem;
+    padding: 1.4rem 1.6rem;
+    max-width: var(--measure);
+    background: var(--paper-2);
+    border-left: 3px solid var(--seal);
+    border-radius: 3px;
+}
+.recommended .kicker {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--seal-deep);
+    margin: 0 0 0.5rem;
+}
+.recommended h2 {
+    margin: 0 0 0.6rem;
+    border: 0;
+    padding: 0;
+}
+.recommended p {
+    margin: 0.4rem 0;
+    max-width: none;
+}
+.recommended .install {
+    display: inline-block;
+    margin: 0.4rem 0;
+    padding: 0.4rem 0.7rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    border-radius: 3px;
+}
+.recommended .note {
+    font-size: 0.86rem;
+    color: var(--ink-soft);
+}
+
 /* ============================ FOOTER ============================ */
 .site-footer {
     max-width: var(--maxw);

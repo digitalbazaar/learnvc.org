@@ -3,7 +3,8 @@ title: "Build a verifier (relying party) — mobile driver's license"
 description: "Verify a mobile driver's license over VCALM in 3 steps: request, receive, verify. Selective disclosure — prove age without revealing identity. HTTP quick start."
 permalink: /government/build/verifier/
 ---
-{# Layer 4 — verifier coordinator. Server side of the VCALM exchange loop.
+{# Layer 4 — verifier coordinator. The recommended path is the
+   @bedrock/vc-delivery server; the raw HTTP loop below shows what it runs.
    Highlights selective disclosure (prove "over 21" without birthdate). #}
 <article class="prose">
   <h1>Build a verifier</h1>
@@ -13,7 +14,28 @@ permalink: /government/build/verifier/
     the same VCALM exchange loop the wallet speaks.
   </p>
 
-  <h2>You'll do exactly 3 things</h2>
+  <aside class="recommended">
+    <p class="kicker">Recommended</p>
+    <h2>Run the coordinator with @bedrock/vc-delivery</h2>
+    <p>
+      You don't have to build the exchange loop by hand. Digital Bazaar's
+      <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>
+      runs it for you today and is the supported path for verifiers.
+    </p>
+    <p><code class="install">npm install @bedrock/vc-delivery</code></p>
+    <p>
+      You define a <em>workflow</em> (a reusable verification config) and the
+      module handles each <em>exchange</em>. It serves VCALM (<code>vcapi</code>)
+      and also speaks OID4VCI and OID4VP, so one workflow requests and verifies
+      presentations over whichever protocol a wallet selects.
+    </p>
+  </aside>
+
+  <h2>Under the hood: the raw VCALM exchange</h2>
+  <p>
+    Want to build your own coordinator, or just see exactly what the server does
+    on the wire? It's a short HTTP loop — three things:
+  </p>
   <ol>
     <li>Expose an interaction URL that advertises <code>vcapi</code>.</li>
     <li>When the wallet POSTs to start, respond with a
@@ -96,14 +118,12 @@ permalink: /government/build/verifier/
     coordinator just runs the exchange.
   </p>
 
-  <details class="future">
-    <summary>Prefer a library to raw HTTP?</summary>
-    <p>
-      Verifier-side helpers live in Digital Bazaar's Bedrock VC modules. A
-      dogfooded standalone VCALM client is planned; until it ships, the HTTP
-      flow above is the supported path.
-    </p>
-  </details>
+  <p class="future">
+    On the wallet end, a standalone client-side VCALM library is still planned;
+    until it ships, the raw HTTP flow is the supported path there. For the
+    verifier/coordinator side shown here, use
+    <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>.
+  </p>
 
   <h2>Go deeper</h2>
   <ul>

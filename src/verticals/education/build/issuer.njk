@@ -3,8 +3,8 @@ title: "Build an issuer — academic credentials"
 description: "Issue diplomas over VCALM in 3 steps: start an exchange, deliver a signed VC, confirm. Server-side HTTP quick start."
 permalink: /education/build/issuer/
 ---
-{# Layer 4 — issuer coordinator quick start. Server side of the same VCALM
-   exchange loop the wallet talks to. HTTP-only (no client library yet). #}
+{# Layer 4 — issuer coordinator quick start. The recommended path is the
+   @bedrock/vc-delivery server; the raw HTTP loop below shows what it runs. #}
 <article class="prose">
   <h1>Build an issuer</h1>
   <p>
@@ -13,7 +13,28 @@ permalink: /education/build/issuer/
     the wallet speaks.
   </p>
 
-  <h2>You'll do exactly 3 things</h2>
+  <aside class="recommended">
+    <p class="kicker">Recommended</p>
+    <h2>Run the coordinator with @bedrock/vc-delivery</h2>
+    <p>
+      You don't have to build the exchange loop by hand. Digital Bazaar's
+      <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>
+      runs it for you today and is the supported path for issuers.
+    </p>
+    <p><code class="install">npm install @bedrock/vc-delivery</code></p>
+    <p>
+      You define a <em>workflow</em> (a reusable issuance config) and the module
+      handles each <em>exchange</em>. It serves VCALM (<code>vcapi</code>) and
+      also speaks OID4VCI and OID4VP, so one workflow delivers credentials over
+      whichever protocol a wallet selects.
+    </p>
+  </aside>
+
+  <h2>Under the hood: the raw VCALM exchange</h2>
+  <p>
+    Want to build your own coordinator, or just see exactly what the server does
+    on the wire? It's a short HTTP loop — three things:
+  </p>
   <ol>
     <li>Expose an interaction URL (in a QR code or link) that advertises
         <code>vcapi</code>.</li>
@@ -93,22 +114,12 @@ permalink: /education/build/issuer/
     coordinator just runs the exchange.
   </p>
 
-  <details class="future">
-    <summary>Prefer a server to raw HTTP?</summary>
-    <p>
-      You don't have to build the coordinator by hand. Digital Bazaar's
-      <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>
-      runs this exact exchange loop for you today
-      (<code>npm install @bedrock/vc-delivery</code>). It serves VCALM
-      (<code>vcapi</code>) and also speaks OID4VCI and OID4VP, so one workflow
-      can deliver credentials over whichever protocol a wallet selects.
-    </p>
-    <p>
-      A standalone client-side VCALM library (for the wallet end) is still
-      planned; until it ships, the HTTP flow above is the supported path on
-      that side.
-    </p>
-  </details>
+  <p class="future">
+    On the wallet end, a standalone client-side VCALM library is still planned;
+    until it ships, the raw HTTP flow is the supported path there. For the
+    issuer/coordinator side shown here, use
+    <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>.
+  </p>
 
   <h2>Go deeper</h2>
   <ul>

@@ -1,0 +1,95 @@
+<svg width="720" height="200" viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three-step diagram: DMV issues a mobile driver's license; Resident holds it in their wallet; They prove just one fact — over 21 — without revealing anything else">
+  <defs>
+    <filter id="gov-shadow">
+      <feDropShadow dx="3" dy="3" stdDeviation="0" flood-color="#c9c0ab" flood-opacity="1"/>
+    </filter>
+  </defs>
+
+  <!-- Panel 1: DMV issues -->
+  <rect x="10" y="20" width="196" height="156" rx="3" fill="#ece6d6" stroke="#c9c0ab" stroke-width="1" filter="url(#gov-shadow)"/>
+  <!-- Government building / columns -->
+  <rect x="76" y="82" width="64" height="30" rx="0" fill="none" stroke="#1b1a17" stroke-width="1.5"/>
+  <!-- columns -->
+  <line x1="88" y1="82" x2="88" y2="112" stroke="#1b1a17" stroke-width="1.5"/>
+  <line x1="100" y1="82" x2="100" y2="112" stroke="#1b1a17" stroke-width="1.5"/>
+  <line x1="116" y1="82" x2="116" y2="112" stroke="#1b1a17" stroke-width="1.5"/>
+  <line x1="128" y1="82" x2="128" y2="112" stroke="#1b1a17" stroke-width="1.5"/>
+  <!-- pediment -->
+  <polygon points="70,82 108,52 146,82" fill="none" stroke="#1b1a17" stroke-width="1.5"/>
+  <!-- star in pediment -->
+  <text x="108" y="76" text-anchor="middle" font-size="10" fill="#1b1a17" font-family="Georgia,serif">★</text>
+  <!-- DMV label on building -->
+  <text x="108" y="102" text-anchor="middle" font-size="8" fill="#514c43" font-family="Georgia,serif" letter-spacing=".06em">DMV</text>
+  <!-- base steps -->
+  <rect x="68" y="112" width="80" height="4" fill="#1b1a17" opacity=".2"/>
+  <rect x="64" y="116" width="88" height="4" fill="#1b1a17" opacity=".1"/>
+  <!-- Step number -->
+  <circle cx="32" cy="40" r="13" fill="#c0341d"/>
+  <text x="32" y="45" text-anchor="middle" font-size="12" fill="#f4f0e6" font-family="Georgia,serif" font-weight="bold">1</text>
+  <!-- Label -->
+  <text x="108" y="148" text-anchor="middle" font-size="11" fill="#1b1a17" font-family="Georgia,serif" font-weight="bold">DMV</text>
+  <text x="108" y="163" text-anchor="middle" font-size="10" fill="#514c43" font-family="Georgia,serif" font-style="italic">issues a mobile license</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="214" y1="98" x2="238" y2="98" stroke="#c9c0ab" stroke-width="1.5"/>
+  <polygon points="235,93 245,98 235,103" fill="#c9c0ab"/>
+
+  <!-- Panel 2: Resident holds it -->
+  <rect x="252" y="20" width="196" height="156" rx="3" fill="#ece6d6" stroke="#c9c0ab" stroke-width="1" filter="url(#gov-shadow)"/>
+  <!-- Phone -->
+  <rect x="320" y="42" width="42" height="70" rx="6" fill="#1b1a17"/>
+  <rect x="325" y="48" width="32" height="54" rx="2" fill="#f4f0e6"/>
+  <!-- License card inside screen -->
+  <rect x="327" y="50" width="28" height="18" rx="1" fill="#ece6d6" stroke="#1b1a17" stroke-width=".75"/>
+  <!-- license photo placeholder -->
+  <rect x="329" y="52" width="8" height="10" rx="1" fill="#c9c0ab"/>
+  <!-- license lines -->
+  <line x1="339" y1="54" x2="353" y2="54" stroke="#c9c0ab" stroke-width="1"/>
+  <line x1="339" y1="58" x2="351" y2="58" stroke="#c9c0ab" stroke-width="1"/>
+  <line x1="339" y1="62" x2="353" y2="62" stroke="#c9c0ab" stroke-width="1"/>
+  <text x="356" y="68" font-size="6" fill="#c0341d" font-family="Georgia,serif">DL</text>
+  <!-- shield/lock for control -->
+  <path d="M337,80 l7,-4 l7,4 v8 a7,7 0 0,1 -14,0 z" fill="none" stroke="#9a7b2e" stroke-width="1.5"/>
+  <circle cx="344" cy="87" r="2" fill="#9a7b2e"/>
+  <!-- home bar -->
+  <rect x="334" y="104" width="14" height="2" rx="1" fill="#c9c0ab"/>
+  <!-- Step number -->
+  <circle cx="274" cy="40" r="13" fill="#1b1a17"/>
+  <text x="274" y="45" text-anchor="middle" font-size="12" fill="#f4f0e6" font-family="Georgia,serif" font-weight="bold">2</text>
+  <!-- Label -->
+  <text x="350" y="148" text-anchor="middle" font-size="11" fill="#1b1a17" font-family="Georgia,serif" font-weight="bold">Resident</text>
+  <text x="350" y="163" text-anchor="middle" font-size="10" fill="#514c43" font-family="Georgia,serif" font-style="italic">holds and controls it</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="456" y1="98" x2="480" y2="98" stroke="#c9c0ab" stroke-width="1.5"/>
+  <polygon points="477,93 487,98 477,103" fill="#c9c0ab"/>
+
+  <!-- Panel 3: Selective disclosure -->
+  <rect x="494" y="20" width="216" height="156" rx="3" fill="#ece6d6" stroke="#2f6b4f" stroke-width="1.5" filter="url(#gov-shadow)"/>
+  <!-- Two overlapping cards: full ID (muted) and "over 21" only (highlighted) -->
+  <!-- Full ID card (behind, muted) -->
+  <rect x="516" y="50" width="60" height="76" rx="2" fill="#ece6d6" stroke="#c9c0ab" stroke-width="1" opacity=".6"/>
+  <line x1="522" y1="60" x2="570" y2="60" stroke="#c9c0ab" stroke-width="1"/>
+  <line x1="522" y1="67" x2="568" y2="67" stroke="#c9c0ab" stroke-width="1"/>
+  <line x1="522" y1="74" x2="570" y2="74" stroke="#c9c0ab" stroke-width="1"/>
+  <line x1="522" y1="81" x2="566" y2="81" stroke="#c9c0ab" stroke-width="1"/>
+  <line x1="522" y1="88" x2="570" y2="88" stroke="#c9c0ab" stroke-width="1"/>
+  <text x="546" y="114" text-anchor="middle" font-size="7" fill="#c9c0ab" font-family="Georgia,serif" font-style="italic">full ID</text>
+  <!-- Small card in front: only "OVER 21" -->
+  <rect x="572" y="58" width="110" height="52" rx="3" fill="#f4f0e6" stroke="#2f6b4f" stroke-width="2"/>
+  <text x="627" y="80" text-anchor="middle" font-size="13" fill="#2f6b4f" font-family="Georgia,serif" font-weight="bold">OVER 21</text>
+  <text x="627" y="96" text-anchor="middle" font-size="9" fill="#2f6b4f" font-family="Georgia,serif">✓ verified</text>
+  <!-- X marks on the full ID (hidden fields) -->
+  <line x1="525" y1="63" x2="535" y2="73" stroke="#c0341d" stroke-width="1" opacity=".4"/>
+  <line x1="535" y1="63" x2="525" y2="73" stroke="#c0341d" stroke-width="1" opacity=".4"/>
+  <!-- Step number -->
+  <circle cx="516" cy="40" r="13" fill="#2f6b4f"/>
+  <text x="516" y="45" text-anchor="middle" font-size="12" fill="#f4f0e6" font-family="Georgia,serif" font-weight="bold">3</text>
+  <!-- Label -->
+  <text x="602" y="148" text-anchor="middle" font-size="11" fill="#1b1a17" font-family="Georgia,serif" font-weight="bold">Proves one fact</text>
+  <text x="602" y="163" text-anchor="middle" font-size="10" fill="#514c43" font-family="Georgia,serif" font-style="italic">nothing else revealed</text>
+
+  <!-- Bottom caption -->
+  <line x1="10" y1="185" x2="710" y2="185" stroke="#c9c0ab" stroke-width=".5"/>
+  <text x="360" y="197" text-anchor="middle" font-size="8.5" fill="#514c43" font-family="Georgia,serif" font-style="italic" letter-spacing=".02em">Any conformant wallet · no state-mandated app · selective disclosure by design</text>
+</svg>

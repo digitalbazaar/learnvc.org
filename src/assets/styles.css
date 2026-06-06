@@ -478,6 +478,17 @@ p {
     margin-top: 1.2rem;
 }
 
+/* ============================ FLOW DIAGRAM ============================ */
+.flow-diagram {
+    margin: 1.5rem 0 2rem;
+    padding: 0;
+}
+.flow-diagram img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
 /* ============================ JOURNEY (experience) ============================ */
 .lede {
     font-family: var(--display);

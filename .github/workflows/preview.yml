@@ -21,6 +21,15 @@ permissions: {}
 
 jobs:
   preview:
+    # Only run for PRs opened by repo owners, org members, or collaborators.
+    # This is a public repo, so anyone can open a PR; without this guard an
+    # outside fork PR could spin up a preview deploy on our infrastructure.
+    # Outsider PRs (association NONE/CONTRIBUTOR) skip the job entirely.
+    if: >-
+      contains(
+        fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'),
+        github.event.pull_request.author_association
+      )
     runs-on: ubuntu-latest
     permissions:
       contents: read

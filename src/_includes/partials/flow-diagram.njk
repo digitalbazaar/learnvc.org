@@ -1,0 +1,21 @@
+{#
+  flow-diagram.njk — postcard-row step diagram, responsive.
+  Parameters (set in calling template before include):
+    flowSteps  — array of {icon (svg string), label, caption}
+    flowFooter — caption text shown below the panels (optional)
+#}
+<figure class="flow-diagram" aria-label="Step-by-step flow diagram">
+  <ol class="flow-panels">
+    {% for step in flowSteps %}
+    <li class="flow-panel{% if loop.last %} flow-panel--verify{% endif %}">
+      <span class="flow-step-num" aria-hidden="true">{{ loop.index }}</span>
+      <div class="flow-icon" aria-hidden="true">{{ step.icon | safe }}</div>
+      <p class="flow-label"><strong>{{ step.label }}</strong></p>
+      <p class="flow-caption">{{ step.caption }}</p>
+    </li>
+    {% endfor %}
+  </ol>
+  {% if flowFooter %}
+  <figcaption class="flow-footer">{{ flowFooter }}</figcaption>
+  {% endif %}
+</figure>

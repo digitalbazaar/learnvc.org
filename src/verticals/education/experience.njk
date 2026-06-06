@@ -14,6 +14,14 @@ permalink: /education/experience/
     does — and what they no longer have to.
   </p>
 
+  {% set flowSteps = [
+    {icon: flowIcons.educationIssue, label: "University issues a diploma",   caption: "Graduate clicks Add to wallet -- lands in seconds"},
+    {icon: flowIcons.educationHold,  label: "Graduate holds it",             caption: "In their wallet, on their phone, under their control"},
+    {icon: flowIcons.educationVerify,label: "Admissions office verifies",    caption: "Cryptographic proof -- no calls to the registrar"}
+  ] %}
+  {% set flowFooter = "Works across borders -- any wallet -- no phone calls" %}
+  {% include "partials/flow-diagram.njk" %}
+
   <h2>The story, end to end</h2>
   <ol class="journey">
     <li>

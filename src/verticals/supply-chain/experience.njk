@@ -13,6 +13,14 @@ permalink: /supply-chain/experience/
     does — and what they no longer have to.
   </p>
 
+  {% set flowSteps = [
+    {icon: flowIcons.supplyIssue,  label: "Manufacturer issues",       caption: "Provenance credential attached to each batch"},
+    {icon: flowIcons.supplyCarry,  label: "Product carries it",        caption: "Through distributors, retailers, and resale"},
+    {icon: flowIcons.supplyVerify, label: "Buyer or auditor verifies", caption: "Scan -- origin confirmed, tamper-evident"}
+  ] %}
+  {% set flowFooter = "No central database -- proof travels with the product -- DSCSA / FSMA / UFLPA ready" %}
+  {% include "partials/flow-diagram.njk" %}
+
   <h2>The story, end to end</h2>
   <ol class="journey">
     <li>

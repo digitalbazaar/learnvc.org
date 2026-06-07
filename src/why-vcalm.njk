@@ -3,14 +3,41 @@ layout: layouts/base.njk
 title: "VCALM vs OID4VCI / OID4VP — Why VCALM"
 description: "VCALM vs OID4VP and OID4VCI: a clear comparison for issuing and verifying Verifiable Credentials. Wallet choice, no vendor lock-in, one simple flow, native W3C VC support."
 permalink: /why-vcalm/
+structuredData:
+  "@context": "https://schema.org"
+  "@type": "TechArticle"
+  headline: "VCALM vs OID4VCI / OID4VP"
+  about: "Comparison of VCALM (the VC API) with the OpenID4VC protocols"
+  description: "How VCALM compares to OID4VCI and OID4VP for issuing and verifying Verifiable Credentials: wallet choice, vendor lock-in, flow, and W3C VC support."
+  author:
+    "@type": "Organization"
+    name: "Digital Bazaar, Inc."
 ---
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What is the difference between VCALM and OID4VCI / OID4VP?",
+     "acceptedAnswer": {"@type": "Answer", "text": "OID4VCI handles issuance and OID4VP handles presentation as two separate OpenID-based protocols. VCALM handles both in one exchange loop, lets the user keep their choice of wallet, and carries W3C Verifiable Credentials natively. The OpenID high-assurance profile (HAIP) can restrict which wallets are accepted via attestation and allow-lists."}},
+    {"@type": "Question", "name": "Is VCALM an alternative to OpenID4VP?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Yes. VCALM is a W3C protocol that covers the same ground as OID4VCI and OID4VP for moving credentials between issuers, wallets, and verifiers, while keeping wallet choice with the user and avoiding vendor lock-in across the lifecycle."}},
+    {"@type": "Question", "name": "Does OID4VCI support W3C Verifiable Credentials?",
+     "acceptedAnswer": {"@type": "Answer", "text": "The OpenID4VC high-assurance interoperability profile (HAIP) is scoped to SD-JWT and ISO mdoc credential formats and does not include W3C Verifiable Credentials. VCALM carries standards-compliant W3C Verifiable Credentials natively."}},
+    {"@type": "Question", "name": "Why choose VCALM over the OpenID approach?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Choose VCALM when you want users to keep their choice of wallet, want to swap providers without re-integrating across the stack, want issuance and presentation in one flow, and have standardized on W3C Verifiable Credentials."}}
+  ]
+}
+</script>
 <article class="prose why-vcalm">
   <h1>Why VCALM</h1>
   <p class="lede">
-    Both VCALM and the OpenID-based specs (OID4VCI and OID4VP) move credentials
-    between issuers, wallets, and verifiers. The difference is who stays in
-    control — the user, or the vendor. Here's what you get with VCALM, and where
-    the OpenID approach differs.
+    <strong>VCALM is an alternative to OID4VCI and OID4VP.</strong> All three
+    move credentials between issuers, wallets, and verifiers, but VCALM does it
+    in one exchange loop, keeps the user's choice of wallet, and carries W3C
+    Verifiable Credentials natively — where the OpenID specs split issuance and
+    presentation across two protocols and can restrict which wallets are
+    accepted. The difference is who stays in control: the user, or the vendor.
   </p>
 
   <section>
@@ -101,6 +128,34 @@ permalink: /why-vcalm/
         <tr><td>Carries W3C Verifiable Credentials</td><td>Natively</td><td>Excluded from the high-assurance profile</td></tr>
       </tbody>
     </table>
+  </section>
+
+  <section>
+    <h2>Common questions</h2>
+    <div class="faq">
+      <h3>Is VCALM an alternative to OpenID4VP?</h3>
+      <p>
+        Yes. VCALM covers the same ground as OID4VCI and OID4VP — moving
+        credentials between issuers, wallets, and verifiers — while keeping
+        wallet choice with the user and avoiding vendor lock-in across the
+        lifecycle.
+      </p>
+
+      <h3>Does OID4VCI support W3C Verifiable Credentials?</h3>
+      <p>
+        The OpenID4VC high-assurance profile (HAIP) is scoped to SD-JWT and ISO
+        mdoc formats and does not include W3C Verifiable Credentials. VCALM
+        carries standards-compliant W3C Verifiable Credentials natively.
+      </p>
+
+      <h3>When should I choose VCALM?</h3>
+      <p>
+        When you want users to keep their choice of wallet, want to swap
+        providers without re-integrating across the stack, want issuance and
+        presentation in one flow, and have standardized on W3C Verifiable
+        Credentials.
+      </p>
+    </div>
   </section>
 
   <div class="callout">

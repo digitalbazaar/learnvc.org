@@ -299,6 +299,19 @@ p {
     color: var(--seal);
 }
 
+/* Answer-first paragraph: a direct, extractable answer to the page's primary
+   query, placed right under the hero. Tuned for SEO/GEO (answer engines read
+   the top of the page first), so keep it visually quieter than the promise. */
+.hero .direct-answer {
+    margin-top: 1.25rem;
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: var(--measure);
+    border-left: 3px solid var(--seal);
+    padding-left: 1rem;
+}
+
 /* ============================ SCENARIO / PULLQUOTE ============================ */
 .scenario {
     margin: 2rem 0;

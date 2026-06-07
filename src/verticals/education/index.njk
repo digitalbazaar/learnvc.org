@@ -9,11 +9,36 @@ permalink: /education/
 ---
 {# Single-page vertical: SERP magnet, human journey, and technical model on one
    screen. Answers "would this work for us?" without forcing a click-through. #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "How do you issue a digital diploma?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Issue the diploma as a W3C Verifiable Credential over VCALM (the VC API). The university signs the credential and delivers it to the graduate's wallet over a short HTTP exchange. Any conformant wallet can hold it, and any institution can verify it cryptographically — no central identity provider required."}},
+    {"@type": "Question", "name": "Can you verify academic credentials online?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Yes. When a credential is issued as a W3C Verifiable Credential, an admissions office or employer verifies it instantly by checking its cryptographic proof and the issuer's identity — no phone calls to the registrar and no PDF forwarding, including across borders."}},
+    {"@type": "Question", "name": "Is there an API to issue student credentials?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Yes. VCALM (the VC API) is an open W3C HTTP API for issuing, presenting, and verifying credentials such as diplomas, transcripts, and enrollment proofs. You pick a VCALM provider and can swap it later without re-integrating."}},
+    {"@type": "Question", "name": "Can verifiable credentials verify a foreign degree?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Yes. A diploma issued as a W3C Verifiable Credential verifies anywhere that reads the standard, so a degree issued in one country can be verified by an institution in another in seconds, without contacting the issuer."}},
+    {"@type": "Question", "name": "Why VCALM vs. OID4?",
+     "acceptedAnswer": {"@type": "Answer", "text": "You pick a VCALM provider and can swap it. You aren't locked to one wallet vendor or one stack, unlike the OID4VCI / OID4VP approach where interoperability is mainly at the wallet layer."}}
+  ]
+}
+</script>
 <section class="hero">
   <h1>{{ title }}</h1>
   <p class="promise">
     Issue diplomas, transcripts, and enrollment proofs that any wallet can hold
     and any institution can verify — without a central identity provider.
+  </p>
+  <p class="direct-answer">
+    To issue a digital diploma, a university signs it as a
+    <strong>W3C Verifiable Credential</strong> and delivers it to the graduate's
+    wallet over <strong>VCALM</strong> (the VC API). Any conformant wallet holds
+    it; any institution verifies it cryptographically — instantly, across
+    borders, with no central identity provider.
   </p>
 </section>
 
@@ -130,10 +155,33 @@ permalink: /education/
   </p>
 </section>
 
-<section class="why">
-  <h2>Why VCALM vs. the alternative</h2>
-  <p>
-    You pick a VCALM provider and can swap it. You aren't locked to one wallet
-    vendor or one stack. <a href="/why-vcalm/">See the full comparison.</a>
-  </p>
-</section>
+<article class="prose">
+  <h2>Common questions</h2>
+  <div class="faq">
+    <h3>How do you issue a digital diploma?</h3>
+    <p>
+      The university signs the diploma as a W3C Verifiable Credential and
+      delivers it to the graduate's wallet over VCALM (the VC API). See the
+      <a href="/education/build/issuer/">issuer quick start</a>.
+    </p>
+
+    <h3>Can you verify academic credentials online?</h3>
+    <p>
+      Yes — an admissions office or employer checks the credential's
+      cryptographic proof and the issuer's identity instantly, with no calls to
+      the registrar, including across borders.
+    </p>
+
+    <h3>Is there an API to issue student credentials?</h3>
+    <p>
+      Yes. VCALM (the VC API) is an open W3C HTTP API for issuing, presenting,
+      and verifying credentials. <a href="/what-is-vcalm/">What is VCALM?</a>
+    </p>
+
+    <h3>Why VCALM vs. OID4?</h3>
+    <p>
+      You pick a VCALM provider and can swap it. You aren't locked to one wallet
+      vendor or one stack. <a href="/why-vcalm/">See the full comparison.</a>
+    </p>
+  </div>
+</article>

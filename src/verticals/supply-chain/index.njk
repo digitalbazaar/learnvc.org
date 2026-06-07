@@ -10,12 +10,38 @@ permalink: /supply-chain/
 {# Single-page supply-chain vertical. US-first: lead with "supply chain
    traceability / provenance" (US vocabulary; DSCSA/FSMA/UFLPA drivers).
    "Digital product passport" / DPP is the secondary EU framing. #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "How do you build a digital product passport with verifiable credentials?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Issue the product passport as a W3C Verifiable Credential over VCALM (the VC API). The manufacturer signs a provenance credential — origin, materials, conformity — and links it to a tag or QR on the item. The credential travels with the product, and any buyer, retailer, or auditor can verify it cryptographically without a central database."}},
+    {"@type": "Question", "name": "What is a digital product passport (DPP)?",
+     "acceptedAnswer": {"@type": "Answer", "text": "A Digital Product Passport is a tamper-evident, portable record of a product's origin, materials, and conformity, mandated in the EU by the Ecodesign for Sustainable Products Regulation (ESPR). Issued as a W3C Verifiable Credential, it is the same capability the US calls supply chain traceability and provenance."}},
+    {"@type": "Question", "name": "How do verifiable credentials prevent counterfeiting?",
+     "acceptedAnswer": {"@type": "Answer", "text": "A genuine product carries a cryptographically signed authenticity credential that a counterfeiter cannot forge. Anyone can scan and verify it without contacting the brand, so fakes cannot produce a valid credential and have nowhere to hide."}},
+    {"@type": "Question", "name": "Does this meet DSCSA, FSMA, or UFLPA requirements?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Verifiable Credentials over VCALM provide the tamper-evident, portable provenance records these US supply-chain rules require — proof of sourcing and origin that travels with the product, with no central database to breach."}},
+    {"@type": "Question", "name": "Why VCALM vs. OID4?",
+     "acceptedAnswer": {"@type": "Answer", "text": "You pick a VCALM provider and can swap it. The credential works with any conformant wallet or scanner, so you aren't locked to one vendor's app across your whole supply chain, unlike the OID4VCI / OID4VP approach."}}
+  ]
+}
+</script>
 <section class="hero">
   <h1>{{ title }}</h1>
   <p class="promise">
     Issue provenance and traceability credentials that travel with a product —
     so buyers, retailers, auditors, and customs can verify origin instantly,
     and counterfeits have nowhere to hide.
+  </p>
+  <p class="direct-answer">
+    To build a digital product passport, a manufacturer signs a provenance
+    credential as a <strong>W3C Verifiable Credential</strong> over
+    <strong>VCALM</strong> (the VC API) and links it to the item. The credential
+    travels with the product; any buyer, retailer, or auditor verifies origin
+    cryptographically — no central database. The same record is called a
+    <strong>Digital Product Passport (DPP)</strong> in the EU.
   </p>
 </section>
 
@@ -147,11 +173,37 @@ permalink: /supply-chain/
   </p>
 </section>
 
-<section class="why">
-  <h2>Why VCALM vs. the alternative</h2>
-  <p>
-    You pick a VCALM provider and can swap it. The credential works with any
-    conformant wallet or scanner — you aren't locked to one vendor's app across
-    your whole supply chain.
-  </p>
-</section>
+<article class="prose">
+  <h2>Common questions</h2>
+  <div class="faq">
+    <h3>What is a digital product passport (DPP)?</h3>
+    <p>
+      A tamper-evident, portable record of a product's origin, materials, and
+      conformity — mandated in the EU by the ESPR, and issued as a W3C
+      Verifiable Credential. It's the same capability the US calls supply chain
+      traceability and provenance.
+    </p>
+
+    <h3>How do verifiable credentials prevent counterfeiting?</h3>
+    <p>
+      A genuine product carries a signed authenticity credential a counterfeiter
+      can't forge. Anyone can verify it without contacting the brand, so fakes
+      can't produce a valid credential.
+    </p>
+
+    <h3>Does this meet DSCSA, FSMA, or UFLPA requirements?</h3>
+    <p>
+      Verifiable Credentials over VCALM provide the tamper-evident, portable
+      provenance these rules require — proof that travels with the product, with
+      no central database to breach.
+    </p>
+
+    <h3>Why VCALM vs. OID4?</h3>
+    <p>
+      You pick a VCALM provider and can swap it. The credential works with any
+      conformant wallet or scanner — you aren't locked to one vendor's app
+      across your whole supply chain. <a href="/why-vcalm/">See the full
+      comparison.</a>
+    </p>
+  </div>
+</article>

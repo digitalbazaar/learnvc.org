@@ -9,12 +9,38 @@ permalink: /government/
 ---
 {# Single-page government/DMV vertical. Anchor: mobile driver's license (mDL).
    Lean on wallet-choice / no-allow-list / privacy — the user-liberty angle. #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "How is a mobile driver's license (mDL) issued and verified?",
+     "acceptedAnswer": {"@type": "Answer", "text": "The DMV signs the license as a W3C Verifiable Credential and delivers it to the resident's wallet of choice over VCALM (the VC API). A relying party verifies it cryptographically in person or online — no callbacks to the DMV — and the resident approves each share with one tap."}},
+    {"@type": "Question", "name": "Can a digital ID prove age without revealing a birthdate?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Yes. With selective disclosure, a resident can prove a single fact — such as 'over 21' or 'license valid' — without revealing name, address, or birthdate. Only the field requested is shared."}},
+    {"@type": "Question", "name": "Does a mobile driver's license lock residents to a government app?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Not with VCALM. The license works with any conformant wallet, so residents keep their choice of app. The OpenID/mdoc approach often pairs with wallet attestation and allow-lists, which let the state decide which apps are accepted."}},
+    {"@type": "Question", "name": "Is a VCALM mobile driver's license private?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Yes. Data minimization is built into every request, nothing is shared without explicit one-tap consent, and the state cannot observe where the credential is used."}},
+    {"@type": "Question", "name": "Why VCALM vs. OID4?",
+     "acceptedAnswer": {"@type": "Answer", "text": "The OID4VCI / OID4VP, mdoc-centric approach often pairs with wallet attestation and allow-lists, which means the DMV has to certify, build, and maintain an integration for every wallet it supports. With VCALM you issue once to an open standard and any conformant wallet works, so there is no per-wallet integration to own."}}
+  ]
+}
+</script>
 <section class="hero">
   <h1>{{ title }}</h1>
   <p class="promise">
     Issue mobile driver's licenses and digital IDs that residents truly control —
     verifiable in person or online, with the wallet of their choice, and without
     locking citizens to a government-approved app.
+  </p>
+  <p class="direct-answer">
+    To issue a mobile driver's license, a DMV signs it as a
+    <strong>W3C Verifiable Credential</strong> and delivers it to the resident's
+    wallet of choice over <strong>VCALM</strong> (the VC API). A relying party
+    verifies it cryptographically — in person or online — and with selective
+    disclosure the resident can prove one fact, like "over 21," without
+    revealing name, address, or birthdate.
   </p>
 </section>
 
@@ -130,12 +156,36 @@ permalink: /government/
   </p>
 </section>
 
-<section class="why">
-  <h2>Why VCALM vs. the alternative</h2>
-  <p>
-    The OpenID-based, mdoc-centric approach often pairs with wallet "attestation"
-    and allow-lists — the state, in effect, picks which apps citizens may use.
-    VCALM keeps wallet choice with the resident and works natively with W3C
-    Verifiable Credentials. <a href="/why-vcalm/">See the full comparison.</a>
-  </p>
-</section>
+<article class="prose">
+  <h2>Common questions</h2>
+  <div class="faq">
+    <h3>Can a digital ID prove age without revealing a birthdate?</h3>
+    <p>
+      Yes. With selective disclosure, a resident proves a single fact — "over
+      21," "license valid" — without revealing name, address, or birthdate.
+    </p>
+
+    <h3>Does a mobile driver's license lock residents to a government app?</h3>
+    <p>
+      Not with VCALM — the license works with any conformant wallet. The
+      OpenID/mdoc approach often pairs with attestation and allow-lists that let
+      the state decide which apps are accepted.
+    </p>
+
+    <h3>Is a VCALM mobile driver's license private?</h3>
+    <p>
+      Yes. Data minimization is built into every request, nothing is shared
+      without one-tap consent, and the state can't see where it's used.
+    </p>
+
+    <h3>Why VCALM vs. OID4?</h3>
+    <p>
+      The OID4VCI / OID4VP, mdoc-centric approach often pairs with wallet
+      "attestation" and allow-lists — which means the DMV has to certify, and
+      build and maintain an integration for, every wallet it wants to support.
+      With VCALM, you issue once to an open standard and any conformant wallet
+      works, so there's no per-wallet integration to own. <a href="/why-vcalm/">See
+      the full comparison.</a>
+    </p>
+  </div>
+</article>

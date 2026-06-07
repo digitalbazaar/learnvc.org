@@ -7,7 +7,5 @@ _site/
 .fastembed_cache/
 .claude/
 
-# Internal planning / private material — must NOT land in a public repo
-raw-materials.md
-ia-education-flagship.md
-seo-targets.md
+# Internal planning
+scratchpad/

@@ -40,8 +40,11 @@ To add a page to discovery: just create it. To exclude one, set
 
 ## Adding a vertical
 
-1. Create `src/verticals/<name>/index.njk` with `title`, `summary`,
-   `description`, `order`, and `permalink: /<name>/` front matter.
+1. Create `src/verticals/<name>/index.njk` with `title`, `shortName`,
+   `summary`, `description`, `order`, `chooserIcon`, and
+   `permalink: /<name>/` front matter. `shortName` is the home-page tile
+   label; `chooserIcon` names an icon in `src/_data/flowIcons.js` for the
+   tile (add a new icon there if needed).
 2. Add `<name>.json` in that folder setting `layout` and `tags` (copy
    `education/education.json`).
 3. Clone the Layer 2–4 pages, swapping the anchor scenario.

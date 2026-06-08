@@ -8,19 +8,21 @@
 // inside Nunjucks {% set %} blocks.
 
 export default {
-  educationIssue: `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <rect x="14" y="28" width="52" height="6" rx="1.5" fill="#1b1a17"/>
-    <polygon points="40,16 14,34 66,34" fill="#1b1a17"/>
-    <line x1="66" y1="34" x2="70" y2="46" stroke="#1b1a17" stroke-width="2"/>
-    <circle cx="70" cy="49" r="4" fill="#c0341d"/>
-    <rect x="18" y="44" width="44" height="26" rx="2" fill="#f4f0e6" stroke="#9a7b2e" stroke-width="1.5"/>
-    <rect x="22" y="48" width="10" height="10" rx="1" fill="#c0341d" opacity=".15"/>
-    <text x="27" y="57" text-anchor="middle" font-size="5" fill="#c0341d" font-family="Georgia,serif" font-style="italic">SEAL</text>
-    <line x1="36" y1="50" x2="58" y2="50" stroke="#c9c0ab" stroke-width="1.5"/>
-    <line x1="36" y1="55" x2="56" y2="55" stroke="#c9c0ab" stroke-width="1"/>
-    <line x1="36" y1="60" x2="58" y2="60" stroke="#c9c0ab" stroke-width="1"/>
-    <circle cx="55" cy="65" r="4" fill="none" stroke="#9a7b2e" stroke-width="1.5"/>
-    <text x="55" y="68" text-anchor="middle" font-size="6" fill="#9a7b2e" font-family="Georgia,serif">&#x2713;</text>
+  educationIssue: `<svg viewBox="10 23 60 39" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- diploma certificate (landscape) -->
+    <rect x="14" y="24" width="52" height="32" rx="2" fill="#f4f0e6" stroke="#9a7b2e" stroke-width="1.5"/>
+    <rect x="17" y="27" width="46" height="26" rx="1" fill="none" stroke="#c9c0ab" stroke-width="1"/>
+    <!-- title -->
+    <line x1="22" y1="33" x2="46" y2="33" stroke="#1b1a17" stroke-width="2.5"/>
+    <!-- body text lines -->
+    <line x1="22" y1="40" x2="48" y2="40" stroke="#c9c0ab" stroke-width="1.25"/>
+    <line x1="22" y1="45" x2="48" y2="45" stroke="#c9c0ab" stroke-width="1.25"/>
+    <line x1="22" y1="50" x2="40" y2="50" stroke="#c9c0ab" stroke-width="1.25"/>
+    <!-- wax seal with ribbon -->
+    <path d="M56,49 l-3,8 l3,-2 l3,2 l-3,-8" fill="#c0341d"/>
+    <circle cx="56" cy="47" r="6" fill="#c0341d"/>
+    <circle cx="56" cy="47" r="6" fill="none" stroke="#9a2814" stroke-width="1"/>
+    <text x="56" y="50" text-anchor="middle" font-size="7" fill="#f4f0e6" font-family="Georgia,serif">&#x2605;</text>
   </svg>`,
 
   educationHold: `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -42,7 +44,7 @@ export default {
     <text x="40" y="68" text-anchor="middle" font-size="7" fill="#2f6b4f" font-family="Georgia,serif" letter-spacing=".06em">VERIFIED</text>
   </svg>`,
 
-  supplyIssue: `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  supplyIssue: `<svg viewBox="11 31 62 39" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <rect x="14" y="44" width="52" height="24" rx="0" fill="none" stroke="#1b1a17" stroke-width="1.5"/>
     <rect x="20" y="36" width="10" height="8" fill="#1b1a17"/>
     <rect x="34" y="32" width="10" height="12" fill="#1b1a17"/>
@@ -88,16 +90,18 @@ export default {
     <line x1="36" y1="39" x2="44" y2="39" stroke="#2f6b4f" stroke-width="1" stroke-dasharray="3,2"/>
   </svg>`,
 
-  studentIdIssue: `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <rect x="18" y="48" width="44" height="20" rx="0" fill="none" stroke="#1b1a17" stroke-width="1.5"/>
-    <line x1="26" y1="48" x2="26" y2="68" stroke="#1b1a17" stroke-width="1.5"/>
-    <line x1="36" y1="48" x2="36" y2="68" stroke="#1b1a17" stroke-width="1.5"/>
-    <line x1="44" y1="48" x2="44" y2="68" stroke="#1b1a17" stroke-width="1.5"/>
-    <line x1="54" y1="48" x2="54" y2="68" stroke="#1b1a17" stroke-width="1.5"/>
-    <polygon points="12,48 40,22 68,48" fill="none" stroke="#1b1a17" stroke-width="1.5"/>
-    <text x="40" y="42" text-anchor="middle" font-size="9" fill="#1b1a17" font-family="Georgia,serif">&#x2605;</text>
-    <text x="40" y="62" text-anchor="middle" font-size="7" fill="#514c43" font-family="Georgia,serif" letter-spacing=".06em">UNI</text>
-    <rect x="10" y="68" width="60" height="3" rx="0" fill="#1b1a17" opacity=".15"/>
+  studentIdIssue: `<svg viewBox="10 20 60 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- ID card -->
+    <rect x="14" y="22" width="52" height="36" rx="3" fill="#f4f0e6" stroke="#1b1a17" stroke-width="1.5"/>
+    <!-- portrait -->
+    <rect x="20" y="28" width="18" height="24" rx="1" fill="#ece6d6" stroke="#c9c0ab" stroke-width="1"/>
+    <circle cx="29" cy="37" r="5" fill="#c9c0ab"/>
+    <path d="M21,52 a8,8 0 0,1 16,0 z" fill="#c9c0ab"/>
+    <!-- text lines -->
+    <line x1="44" y1="30" x2="60" y2="30" stroke="#c0341d" stroke-width="2"/>
+    <line x1="44" y1="37" x2="58" y2="37" stroke="#c9c0ab" stroke-width="1.5"/>
+    <line x1="44" y1="43" x2="60" y2="43" stroke="#c9c0ab" stroke-width="1.5"/>
+    <line x1="44" y1="49" x2="56" y2="49" stroke="#c9c0ab" stroke-width="1.5"/>
   </svg>`,
 
   studentIdHold: `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

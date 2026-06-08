@@ -16,13 +16,13 @@ title: false
   <h2>Pick your use case</h2>
   <p>Each guide answers "would this work for us?" — then shows you how to build it.</p>
   <ul class="vertical-grid">
-    {% for v in collections.verticals %}
+    {% for v in collections.verticals | sort(attribute="data.order") %}
     <li>
       <a href="{{ v.url }}">
-        <div class="vert-body">
-          <h3>{{ v.data.cardTitle or v.data.title }}</h3>
-          <p>{{ v.data.summary or v.data.description }}</p>
-        </div>
+        {% if v.data.chooserIcon and flowIcons[v.data.chooserIcon] %}
+        <span class="vert-icon" aria-hidden="true">{{ flowIcons[v.data.chooserIcon] | safe }}</span>
+        {% endif %}
+        <h3>{{ v.data.shortName or v.data.cardTitle or v.data.title }}</h3>
       </a>
     </li>
     {% endfor %}

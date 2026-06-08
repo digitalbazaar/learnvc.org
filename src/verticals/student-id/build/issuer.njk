@@ -1,7 +1,7 @@
 ---
-title: "Build an issuer (DMV) — mobile driver's license"
-description: "Issue a mobile driver's license as a VCALM coordinator: create an exchange, share an interaction URL, poll for the result. A workflow service does the protocol work."
-permalink: /government/build/issuer/
+title: "Build an issuer (school) — digital student ID"
+description: "Issue a digital student ID as a VCALM coordinator: create an exchange, share an interaction URL, poll for the result. A workflow service does the protocol work."
+permalink: /student-id/build/issuer/
 ---
 {# Layer 4 — issuer coordinator. A coordinator is a CLIENT of a workflow
    service; it does not run @bedrock/vc-delivery itself. It only creates
@@ -9,11 +9,11 @@ permalink: /government/build/issuer/
 <article class="prose">
   <h1>Build an issuer</h1>
   <p>
-    You run the DMV side. To issue a mobile license you don't speak VCALM on the
+    You run the school side. To issue a student ID you don't speak VCALM on the
     wire yourself — you drive a <em>workflow service</em> that does. As a
     <strong>coordinator</strong>, your whole job is three calls: create an
-    exchange, share an interaction URL that points the resident's wallet at it,
-    then poll the exchange until the wallet has been issued the license.
+    exchange, share an interaction URL that points the student's wallet at it,
+    then poll the exchange until the wallet has been issued the student ID.
   </p>
 
   <aside class="recommended">
@@ -21,7 +21,7 @@ permalink: /government/build/issuer/
     <h2>Drive a workflow service — don't build the protocol</h2>
     <p>
       The protocol mess — VCALM, OID4VCI, OID4VP, and interoperating with
-      whatever wallet a resident brings — is handled by a <em>workflow
+      whatever wallet a student brings — is handled by a <em>workflow
       service</em>. Digital Bazaar's
       <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>
       is one. <strong>The workflow service runs that library; you don't.</strong>
@@ -29,7 +29,7 @@ permalink: /government/build/issuer/
     <p>
       A goal of VCALM is to let you buy a workflow service off the shelf. An
       administrator loads the <em>workflows</em> you need (a reusable issuance
-      config — what to issue, what to ask for). From then on, whenever a resident
+      config — what to issue, what to ask for). From then on, whenever a student
       action requires a credential exchange, you just create an exchange against
       that workflow and read back the result.
     </p>
@@ -40,7 +40,7 @@ permalink: /government/build/issuer/
     <li><strong>Create an exchange</strong> by POSTing the workflow's variables
         to its <code>exchanges</code> endpoint.</li>
     <li><strong>Host and share an interaction URL</strong> that points the
-        resident's wallet at that exchange.</li>
+        student's wallet at that exchange.</li>
     <li><strong>Poll the exchange</strong> until it completes, then read the
         result.</li>
   </ol>
@@ -54,17 +54,17 @@ permalink: /government/build/issuer/
   <p>
     POST to your workflow's <code>exchanges</code> endpoint. The body carries a
     <code>ttl</code> and the <code>variables</code> the workflow expects — here,
-    who the license is for:
+    who the student ID is for:
   </p>
   {% highlight "bash" %}
-POST https://workflows.example/workflows/mdl-issuance/exchanges
+POST https://workflows.example/workflows/student-id-issuance/exchanges
   {% endhighlight %}
   {% highlight "json" %}
 {
   "ttl": 900,
   "variables": {
-    "subject": "did:example:resident123",
-    "document_number": "D1234567"
+    "subject": "did:example:student123",
+    "student_number": "S1234567"
   }
 }
   {% endhighlight %}
@@ -75,7 +75,7 @@ POST https://workflows.example/workflows/mdl-issuance/exchanges
   </p>
   {% highlight "http" %}
 HTTP/1.1 204 No Content
-Location: https://workflows.example/workflows/mdl-issuance/exchanges/z19xQ...
+Location: https://workflows.example/workflows/student-id-issuance/exchanges/z19xQ...
   {% endhighlight %}
 
   <h2>2. Host and share the interaction URL</h2>
@@ -91,14 +91,14 @@ Location: https://workflows.example/workflows/mdl-issuance/exchanges/z19xQ...
     "interact": {
       "service": [{
         "type": "VerifiableCredentialApiExchangeService",
-        "serviceEndpoint": "https://workflows.example/workflows/mdl-issuance/exchanges/z19xQ..."
+        "serviceEndpoint": "https://workflows.example/workflows/student-id-issuance/exchanges/z19xQ..."
       }]
     }
   }
 }
   {% endhighlight %}
   <p>
-    The resident's wallet POSTs to that endpoint and runs the exchange with the
+    The student's wallet POSTs to that endpoint and runs the exchange with the
     workflow service directly. DID authentication and credential delivery happen
     there — you are not in that loop.
   </p>
@@ -109,7 +109,7 @@ Location: https://workflows.example/workflows/mdl-issuance/exchanges/z19xQ...
     <code>state</code> is <code>complete</code>:
   </p>
   {% highlight "bash" %}
-GET https://workflows.example/workflows/mdl-issuance/exchanges/z19xQ...
+GET https://workflows.example/workflows/student-id-issuance/exchanges/z19xQ...
   {% endhighlight %}
   {% highlight "json" %}
 {
@@ -119,7 +119,7 @@ GET https://workflows.example/workflows/mdl-issuance/exchanges/z19xQ...
     "variables": {
       "results": {
         "didAuthn": {
-          "did": "did:example:resident123",
+          "did": "did:example:student123",
           "verifiablePresentation": { "...": "the wallet's authenticated VP" }
         }
       }
@@ -130,15 +130,15 @@ GET https://workflows.example/workflows/mdl-issuance/exchanges/z19xQ...
   <p>
     Verified per-step results land under
     <code>exchange.variables.results</code>, keyed by the workflow's step names.
-    A <code>complete</code> state means the mobile license was issued into the
-    resident's wallet.
+    A <code>complete</code> state means the student ID was issued into the
+    student's wallet.
   </p>
 
   <h2>That's it</h2>
   <p>
-    A DMV issuer, as a coordinator, is these three calls: <strong>create an
+    A school issuer, as a coordinator, is these three calls: <strong>create an
     exchange, host and share the interaction URL, poll for the result.</strong>
-    Signing the license and speaking every wallet's protocol is the workflow
+    Signing the student ID and speaking every wallet's protocol is the workflow
     service's job — you just create exchanges and read what comes back.
   </p>
 
@@ -158,5 +158,5 @@ GET https://workflows.example/workflows/mdl-issuance/exchanges/z19xQ...
     <li><a href="https://www.w3.org/TR/vcalm/">VCALM specification</a></li>
   </ul>
 
-  <p class="cta"><a class="btn" href="/government/build/">← Back to roles</a></p>
+  <p class="cta"><a class="btn" href="/student-id/build/">← Back to roles</a></p>
 </article>

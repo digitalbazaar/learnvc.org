@@ -1,0 +1,196 @@
+---
+title: "Student IDs & campus credentials with VCALM"
+shortName: "Student IDs"
+cardTitle: "Student IDs & campus credentials"
+summary: "Issue student IDs students control — verifiable across campus and beyond, with any wallet."
+description: "Issue digital student IDs with W3C Verifiable Credentials over VCALM — student-controlled, any wallet, no allow-lists, privacy by design. Prove enrollment without revealing identity."
+order: 3
+permalink: /student-id/
+---
+{# Single-page student-ID vertical. Anchor: digital campus/student ID.
+   Distinct from the education (diploma) vertical — this is identity and
+   entitlement, not transcripts. Lean on wallet-choice / no-allow-list /
+   privacy — the student-liberty angle. #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "How is a digital student ID issued and verified?",
+     "acceptedAnswer": {"@type": "Answer", "text": "The school signs the student ID as a W3C Verifiable Credential and delivers it to the student's wallet of choice over VCALM (the VC API). A campus service or partner verifies it cryptographically in person or online — no callbacks to the registrar — and the student approves each share with one tap."}},
+    {"@type": "Question", "name": "Can a student ID prove enrollment without revealing identity?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Yes. With selective disclosure, a student can prove a single fact — such as 'currently enrolled' or 'valid student' — without revealing name, photo, or student number. Only the field requested is shared."}},
+    {"@type": "Question", "name": "Does a digital student ID lock students to a school app?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Not with VCALM. The student ID works with any conformant wallet, so students keep their choice of app. The OpenID/mdoc approach often pairs with wallet attestation and allow-lists, which let the school decide which apps are accepted."}},
+    {"@type": "Question", "name": "Is a VCALM student ID private?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Yes. Data minimization is built into every request, nothing is shared without explicit one-tap consent, and the school cannot observe where the credential is used."}},
+    {"@type": "Question", "name": "Why VCALM vs. OID4?",
+     "acceptedAnswer": {"@type": "Answer", "text": "The OID4VCI / OID4VP, mdoc-centric approach often pairs with wallet attestation and allow-lists, which means the school has to certify, build, and maintain an integration for every wallet it supports. With VCALM you issue once to an open standard and any conformant wallet works, so there is no per-wallet integration to own."}}
+  ]
+}
+</script>
+<section class="hero">
+  <h1>{{ title }}</h1>
+  <p class="promise">
+    Issue student IDs that students truly control — verifiable across campus and
+    with partners, in person or online, with the wallet of their choice, and
+    without locking students to a school-approved app.
+  </p>
+  <p class="direct-answer">
+    To issue a digital student ID, a school signs it as a
+    <strong>W3C Verifiable Credential</strong> and delivers it to the student's
+    wallet of choice over <strong>VCALM</strong> (the VC API). A campus service
+    or partner verifies it cryptographically — in person or online — and with
+    selective disclosure the student can prove one fact, like "currently
+    enrolled," without revealing their name, photo, or student number.
+  </p>
+</section>
+
+<section class="flow">
+  {% set flowSteps = [
+    {icon: flowIcons.studentIdIssue,    label: "School issues a student ID",      caption: "Student picks their own wallet -- no school-mandated app"},
+    {icon: flowIcons.studentIdHold,     label: "Student holds and controls it",   caption: "Nothing shared without one-tap, explicit consent"},
+    {icon: flowIcons.studentIdDisclose, label: "Proves one fact",                 caption: "Currently enrolled -- no name, photo, or student number revealed"}
+  ] %}
+  {% set flowFooter = "Any conformant wallet -- no school-mandated app -- selective disclosure by design" %}
+  {% include "partials/flow-diagram.njk" %}
+</section>
+
+<article class="prose experience">
+  <h2>What it feels like to use</h2>
+  <p class="lede">
+    The technology is invisible by design. Here's what each person actually
+    does — and what they no longer have to.
+  </p>
+
+  <ol class="journey">
+    <li>
+      <h3>The school issues a student ID</h3>
+      <p>
+        A student requests their digital ID from the registrar portal or campus
+        app. They authenticate once, pick the wallet they already use, and the
+        ID lands in it — alongside their physical card.
+      </p>
+      <p class="aside">No school-mandated app. Their wallet, their choice.</p>
+    </li>
+    <li>
+      <h3>The student holds and controls it</h3>
+      <p>
+        The student ID lives on their phone, under their control. Nothing is
+        shared automatically — every presentation needs an explicit, one-time
+        approval the student sees and consents to.
+      </p>
+      <p class="aside">The school can't watch where it's used.</p>
+    </li>
+    <li>
+      <h3>They prove just one thing, when needed</h3>
+      <p>
+        At the library or a lab door, the student taps to prove <em>"currently
+        enrolled"</em> — and reveals nothing else. No name, no photo, no student
+        number. At a partner venue offering a student discount, they share
+        exactly the field asked for, and no more.
+      </p>
+      <p class="aside">Selective disclosure: minimum data, every time.</p>
+    </li>
+  </ol>
+
+  <div class="benefits-cols">
+    <div class="benefits-col">
+      <h3><span class="benefits-icon">{{ flowIcons.person | safe }}</span>What the student experiences</h3>
+      <ul class="benefits">
+        <li><strong>Their choice of wallet.</strong> Not a single school-approved app.</li>
+        <li><strong>Prove a fact, not your identity.</strong> "Currently enrolled" without your student number.</li>
+        <li><strong>One-tap consent.</strong> Nothing leaves the phone without approval.</li>
+        <li><strong>No tracking.</strong> The school doesn't see each place it's used.</li>
+      </ul>
+    </div>
+    <div class="benefits-col">
+      <h3><span class="benefits-icon">{{ flowIcons.institution | safe }}</span>What the school experiences</h3>
+      <ul class="benefits">
+        <li><strong>Privacy by design.</strong> Data minimization is built into every request.</li>
+        <li><strong>Instant, tamper-evident checks.</strong> No call-backs to the registrar.</li>
+        <li><strong>No vendor or wallet lock-in.</strong> Works with every conformant wallet.</li>
+        <li><strong>Standards-based.</strong> Built on open W3C Verifiable Credentials.</li>
+      </ul>
+    </div>
+  </div>
+</article>
+
+<article class="prose">
+  <h2>How it works</h2>
+  <p>One diagram, three actors, one loop.</p>
+
+  <pre class="diagram">
+     SCHOOL                STUDENT              CAMPUS / PARTNER
+    (issuer)           (wallet of choice)          (verifier)
+     |                      |                          |
+     | -- delivers -->      |                          |
+     |  student ID VC       |                          |
+     |                      | &lt;-- asks for --           |
+     |                      |   proof of enrollment     |
+     |                      | -- presents -->           |
+     |                      |   only what's needed      |
+     |                      |                     verifies (ok)
+  </pre>
+
+  <ul>
+    <li>A student ID is signed JSON the student holds and controls.</li>
+    <li>
+      <strong>Delivery</strong> (school → student) and
+      <strong>presentation</strong> (student → verifier) are the same simple
+      exchange loop: POST, read what the server wants, POST back.
+    </li>
+    <li>
+      With selective disclosure, the student can prove a single fact —
+      "currently enrolled," "valid student" — without revealing name, photo, or
+      student number.
+    </li>
+  </ul>
+</article>
+
+<section class="fit">
+  <h2>A good fit if…</h2>
+  <ul>
+    <li>You issue identity or entitlement credentials to students.</li>
+    <li>You want students to choose their own wallet, not an approved list.</li>
+    <li>You need selective disclosure — prove a fact without revealing everything.</li>
+  </ul>
+  <p class="cta">
+    <a class="btn primary" href="/student-id/build/">Start building</a>
+  </p>
+</section>
+
+<article class="prose">
+  <h2>Common questions</h2>
+  <div class="faq">
+    <h3>Can a student ID prove enrollment without revealing identity?</h3>
+    <p>
+      Yes. With selective disclosure, a student proves a single fact —
+      "currently enrolled," "valid student" — without revealing name, photo, or
+      student number.
+    </p>
+
+    <h3>Does a digital student ID lock students to a school app?</h3>
+    <p>
+      Not with VCALM — the student ID works with any conformant wallet. The
+      OpenID/mdoc approach often pairs with attestation and allow-lists that let
+      the school decide which apps are accepted.
+    </p>
+
+    <h3>Is a VCALM student ID private?</h3>
+    <p>
+      Yes. Data minimization is built into every request, nothing is shared
+      without one-tap consent, and the school can't see where it's used.
+    </p>
+
+    <h3>Why VCALM vs. OID4?</h3>
+    <p>
+      The OID4VCI / OID4VP, mdoc-centric approach often pairs with wallet
+      "attestation" and allow-lists — which means the school has to certify, and
+      build and maintain an integration for, every wallet it wants to support.
+      With VCALM, you issue once to an open standard and any conformant wallet
+      works, so there's no per-wallet integration to own. <a href="/why-vcalm/">See
+      the full comparison.</a>
+    </p>
+  </div>
+</article>

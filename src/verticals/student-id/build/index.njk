@@ -1,7 +1,7 @@
 ---
-title: "What are you building? — mobile driver's license & digital ID"
-description: "Pick your role: wallet, issuer (DMV), or verifier (relying party). You only implement your piece."
-permalink: /government/build/
+title: "What are you building? — digital student ID"
+description: "Pick your role: wallet, issuer (school/registrar), or verifier (campus service or partner). You only implement your piece."
+permalink: /student-id/build/
 ---
 {# Layer 3 — role picker = conformance-class scoping. #}
 <article class="prose">
@@ -10,25 +10,25 @@ permalink: /government/build/
 
   <ul class="role-grid">
     <li>
-      <a href="/government/build/wallet/">
+      <a href="/student-id/build/wallet/">
         <h3>Wallet</h3>
-        <p>The app holding the resident's mobile license.</p>
+        <p>The app holding the student's ID.</p>
         <p><strong>You implement:</strong> an exchange client — POST, handle VPRs, return VPs.</p>
         <p class="effort">~3 things, a few days</p>
       </a>
     </li>
     <li>
-      <a href="/government/build/issuer/">
-        <h3>Issuer (DMV)</h3>
-        <p>The agency issuing the mobile license.</p>
+      <a href="/student-id/build/issuer/">
+        <h3>Issuer (school)</h3>
+        <p>The registrar issuing the student ID.</p>
         <p><strong>You implement:</strong> start an exchange, deliver a signed VC.</p>
         <p class="effort">small, separate piece</p>
       </a>
     </li>
     <li>
-      <a href="/government/build/verifier/">
-        <h3>Verifier (relying party)</h3>
-        <p>Whoever checks the license — bar, airport, website.</p>
+      <a href="/student-id/build/verifier/">
+        <h3>Verifier (campus or partner)</h3>
+        <p>Whoever checks the ID — library, lab door, partner venue.</p>
         <p><strong>You implement:</strong> request a presentation, verify the proof.</p>
         <p class="effort">small, separate piece</p>
       </a>

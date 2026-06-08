@@ -408,32 +408,37 @@ p {
     padding: 0;
     margin: 1.5rem 0 2rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
-    gap: 1px;
-    background: var(--hairline);
-    border: 1px solid var(--hairline);
-    box-shadow: 3px 3px 0 var(--paper-2);
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1.25rem;
 }
 .vertical-grid li a {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 0.7rem;
+    gap: 0.9rem;
     height: 100%;
-    padding: 1.5rem 1rem;
+    padding: 2rem 1.25rem;
     background: var(--paper-2);
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    box-shadow: 3px 3px 0 var(--paper-2);
     text-decoration: none;
     color: var(--ink);
-    transition: background 0.15s ease;
+    transition:
+        background 0.15s ease,
+        box-shadow 0.15s ease,
+        transform 0.15s ease;
 }
 .vertical-grid li a:hover {
     background: var(--paper);
+    box-shadow: 4px 4px 0 var(--seal);
+    transform: translate(-1px, -1px);
 }
 .vertical-grid .vert-icon {
     display: block;
-    width: 4rem;
-    height: 4rem;
+    width: 9rem;
+    height: 9rem;
 }
 .vertical-grid .vert-icon svg {
     width: 100%;

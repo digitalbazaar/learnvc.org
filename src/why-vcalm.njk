@@ -1,14 +1,14 @@
 ---
 layout: layouts/base.njk
-title: "VCALM vs OID4VCI / OID4VP — Why VCALM"
-description: "VCALM vs OID4VP and OID4VCI: a clear comparison for issuing and verifying Verifiable Credentials. Wallet choice, no vendor lock-in, one simple flow, native W3C VC support."
+title: "Why VCALM — vendor-lock-free credentials (works with OID4, too)"
+description: "VCALM resists vendor lock-in across the whole credential lifecycle — and can carry OID4VCI / OID4VP too. Wallet choice, native W3C VCs, real protocol choice."
 permalink: /why-vcalm/
 structuredData:
   "@context": "https://schema.org"
   "@type": "TechArticle"
-  headline: "VCALM vs OID4VCI / OID4VP"
-  about: "Comparison of VCALM (the VC API) with the OpenID4VC protocols"
-  description: "How VCALM compares to OID4VCI and OID4VP for issuing and verifying Verifiable Credentials: wallet choice, vendor lock-in, flow, and W3C VC support."
+  headline: "Why VCALM"
+  about: "How VCALM resists vendor lock-in across the credential lifecycle, and how it complements OID4VCI / OID4VP"
+  description: "VCALM resists vendor lock-in across every phase of the credential lifecycle and can carry OID4VCI / OID4VP, giving real protocol choice, wallet choice, and native W3C Verifiable Credentials."
   author:
     "@type": "Organization"
     name: "Digital Bazaar, Inc."
@@ -18,99 +18,124 @@ structuredData:
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type": "Question", "name": "What is the difference between VCALM and OID4VCI / OID4VP?",
-     "acceptedAnswer": {"@type": "Answer", "text": "OID4VCI handles issuance and OID4VP handles presentation as two separate OpenID-based protocols. VCALM handles both in one exchange loop, lets the user keep their choice of wallet, and carries W3C Verifiable Credentials natively. The OpenID high-assurance profile (HAIP) can restrict which wallets are accepted via attestation and allow-lists."}},
-    {"@type": "Question", "name": "Is VCALM an alternative to OpenID4VP?",
-     "acceptedAnswer": {"@type": "Answer", "text": "Yes. VCALM is a W3C protocol that covers the same ground as OID4VCI and OID4VP for moving credentials between issuers, wallets, and verifiers, while keeping wallet choice with the user and avoiding vendor lock-in across the lifecycle."}},
-    {"@type": "Question", "name": "Does OID4VCI support W3C Verifiable Credentials?",
-     "acceptedAnswer": {"@type": "Answer", "text": "The OpenID4VC high-assurance interoperability profile (HAIP) is scoped to SD-JWT and ISO mdoc credential formats and does not include W3C Verifiable Credentials. VCALM carries standards-compliant W3C Verifiable Credentials natively."}},
-    {"@type": "Question", "name": "Why choose VCALM over the OpenID approach?",
-     "acceptedAnswer": {"@type": "Answer", "text": "Choose VCALM when you want users to keep their choice of wallet, want to swap providers without re-integrating across the stack, want issuance and presentation in one flow, and have standardized on W3C Verifiable Credentials."}}
+    {"@type": "Question", "name": "Can VCALM use OID4VCI and OID4VP?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Yes. VCALM can carry OID4VCI and OID4VP over its exchanges, so you get real protocol choice. Adopting VCALM does not mean giving up OID4 — it means you are no longer locked to it. You can speak OID4 where it fits and other protocols where they fit, within one consistent model."}},
+    {"@type": "Question", "name": "What does VCALM cover that OID4VCI / OID4VP does not?",
+     "acceptedAnswer": {"@type": "Answer", "text": "OID4VCI and OID4VP cover the delivery phase — moving a credential to a wallet or presenting one to a verifier. VCALM is designed for the whole credential lifecycle: issuance, delivery, presentation, status, and refresh. It keeps interoperability across every phase, which is where vendor lock-in is usually introduced."}},
+    {"@type": "Question", "name": "How does VCALM resist vendor lock-in?",
+     "acceptedAnswer": {"@type": "Answer", "text": "VCALM defines interoperability across every phase of the credential lifecycle, not just the wallet hand-off. The user keeps their choice of wallet, and you can swap your software provider without re-integrating with every wallet and counterparty. It is designed to resist vendor lock-in during all phases of the digital credential lifecycle."}},
+    {"@type": "Question", "name": "Does VCALM support W3C Verifiable Credentials?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Yes, natively. VCALM carries standards-compliant W3C Verifiable Credentials. The OpenID4VC high-assurance interoperability profile (HAIP) is scoped to SD-JWT and ISO mdoc formats; VCALM carries those as well as W3C Verifiable Credentials, so you are not forced to choose a format."}}
   ]
 }
 </script>
 <article class="prose why-vcalm">
   <h1>Why VCALM</h1>
   <p class="lede">
-    <strong>VCALM is an alternative to OID4VCI and OID4VP.</strong> All three
-    move credentials between issuers, wallets, and verifiers, but VCALM does it
-    in one exchange loop, keeps the user's choice of wallet, and carries W3C
-    Verifiable Credentials natively — where the OpenID specs split issuance and
-    presentation across two protocols and can restrict which wallets are
-    accepted. The difference is who stays in control: the user, or the vendor.
+    <strong>VCALM is designed to resist vendor lock-in across every phase of the
+    digital credential lifecycle</strong> — and, as far as we know, it's the only
+    protocol that does. It isn't a replacement you have to choose <em>instead</em>
+    of OID4VCI / OID4VP: VCALM can carry those protocols too. So it's a
+    <em>"yes, and…"</em> — yes, you can still do OID4, and you get wallet choice,
+    native W3C Verifiable Credentials, and freedom to switch providers on top.
+    The question isn't VCALM versus OID4. It's who stays in control: you, or the
+    vendor.
   </p>
 
+  <section class="lifecycle">
+    <h2>OID4 covers delivery. VCALM covers the whole lifecycle.</h2>
+    <p>
+      A credential has a life: it gets issued, delivered to a wallet, presented
+      to a verifier, checked for status, and eventually refreshed or replaced.
+      OID4VCI and OID4VP do one slice of that — the delivery hand-off. VCALM is
+      designed for all of it, which is exactly where lock-in tends to creep in.
+    </p>
+    <pre class="diagram">
+   ISSUE  ──▶  DELIVER  ──▶  PRESENT  ──▶  STATUS  ──▶  REFRESH
+
+   |············ OID4VCI / OID4VP ············|
+   |  (the delivery + presentation hand-off)  |
+
+   |·························· VCALM ··························|
+   |        (one consistent model across every phase)        |
+    </pre>
+    <p>
+      Because OID4 standardizes mainly the hand-off, the rest of your stack —
+      issuance, status, refresh, the glue between them — can still tie you to one
+      vendor. VCALM defines interoperability across the whole line, and it can
+      run OID4 within it. You lose nothing; you gain the parts OID4 leaves open.
+    </p>
+  </section>
+
   <section>
-    <h2>1. Users keep their choice of wallet</h2>
+    <h2>You keep your choice of wallet</h2>
     <p>
       <strong>With VCALM:</strong> a credential works with any conformant wallet.
-      The user picks the app they trust; the issuer doesn't get to decide for
-      them.
+      The user picks the app they trust; no one upstream decides for them.
     </p>
     <p>
-      <strong>The OpenID approach:</strong> its high-assurance profile (HAIP)
-      leans on wallet "attestation" and allow-lists — issuers and regulators can
-      restrict which wallet apps are accepted. That recreates the old
-      identity-provider model the technology was meant to replace: if only
-      approved wallets work, the user's choice is gone.
+      It's worth knowing that OID4's high-assurance profile (HAIP) leans on wallet
+      "attestation" and allow-lists, which let issuers or regulators restrict
+      which wallet apps are accepted. That can quietly recreate the gatekeeper
+      model the technology was meant to move past. VCALM keeps the choice with the
+      user by default — and you can still speak OID4 to the wallets that prefer it.
     </p>
   </section>
 
   <section>
-    <h2>2. No vendor lock-in across the stack</h2>
+    <h2>You can switch providers without re-integrating</h2>
     <p>
       <strong>With VCALM:</strong> interoperability is defined across the whole
-      lifecycle — issuance, verification, status, delivery. You can swap your
-      provider (if they raise prices or cause trouble) and keep working with
-      every wallet and every other party.
+      lifecycle — issuance, presentation, status, delivery. If a provider raises
+      prices or causes trouble, you can swap them and keep working with every
+      wallet and every counterparty.
     </p>
     <p>
-      <strong>The OpenID approach:</strong> interoperability is mainly at the
-      wallet layer. The rest of the issuance and verification stack can still
-      lock you to one vendor.
+      OID4 standardizes interoperability mainly at the wallet hand-off, so the
+      surrounding stack can still lock you in. VCALM closes that gap — without
+      taking OID4 away.
     </p>
   </section>
 
   <section>
-    <h2>3. One simple flow, not two protocols</h2>
+    <h2>Real protocol choice — OID4 included</h2>
     <p>
-      <strong>With VCALM:</strong> presentation and delivery are the same simple
-      exchange loop. A real interaction — "prove who you are, then receive a
-      credential" — happens in one continuous flow.
+      <strong>With VCALM:</strong> you aren't forced to pick one delivery
+      protocol forever. VCALM can carry OID4VCI and OID4VP over its exchanges
+      alongside native VC-API delivery, so you can use the right protocol for each
+      wallet and counterparty within one consistent model.
     </p>
     <p>
-      <strong>The OpenID approach:</strong> issuance (OID4VCI) and presentation
-      (OID4VP) are separate protocols. You pick one per interaction, so common
-      "present-then-receive" journeys become awkward and stitched together.
+      This is the heart of the "yes, and…": adopting VCALM doesn't mean leaving
+      OID4 behind. It means you're no longer <em>locked</em> to it.
     </p>
   </section>
 
   <section>
-    <h2>4. Built for credentials, not retrofitted from login</h2>
+    <h2>Built around the credential holder</h2>
     <p>
       <strong>With VCALM:</strong> the model treats the holder as a full
       participant who controls their data and consents to each share.
     </p>
     <p>
-      <strong>The OpenID approach:</strong> it inherits OAuth's shape, where a
-      verifier is treated like an app "acting on your behalf with your data."
-      That's a poor fit for how credentials actually work, and it shows up as
-      friction in the user experience.
+      OID4 inherits OAuth's shape, where a verifier is treated like an app acting
+      on your behalf with your data. That works for login, but it's a looser fit
+      for credentials, and the seams tend to show up as friction. VCALM starts
+      from the credential, not from login.
     </p>
   </section>
 
   <section>
-    <h2>5. Works with real W3C Verifiable Credentials</h2>
+    <h2>Native W3C Verifiable Credentials — and the rest</h2>
     <p>
       <strong>With VCALM:</strong> standards-compliant W3C Verifiable Credentials
-      travel natively — and VCALM can even carry other protocols over its
-      exchanges, so you aren't forced to choose sides.
+      travel natively, and VCALM can carry other formats and protocols too — so
+      you're never forced to choose sides on format.
     </p>
     <p>
-      <strong>The OpenID approach:</strong> its high-assurance profile is scoped
-      to specific credential formats (SD-JWT, ISO mdoc) and does not include W3C
-      Verifiable Credentials. If you've standardized on W3C VCs, that's a hard
-      wall.
+      OID4's high-assurance profile is scoped to SD-JWT and ISO mdoc and does not
+      include W3C Verifiable Credentials. If you've standardized on W3C VCs,
+      that's a wall in OID4 alone — and an open door in VCALM.
     </p>
   </section>
 
@@ -118,14 +143,15 @@ structuredData:
     <h2>At a glance</h2>
     <table>
       <thead>
-        <tr><th>What you care about</th><th>VCALM</th><th>OID4VCI / OID4VP</th></tr>
+        <tr><th>What you care about</th><th>With VCALM</th><th>OID4VCI / OID4VP alone</th></tr>
       </thead>
       <tbody>
-        <tr><td>User picks their wallet</td><td>Yes</td><td>Often restricted by allow-lists (HAIP)</td></tr>
-        <tr><td>Swap providers without re-integrating</td><td>Yes, across the stack</td><td>Mainly at the wallet layer</td></tr>
-        <tr><td>Present and receive in one flow</td><td>One exchange loop</td><td>Two separate protocols</td></tr>
-        <tr><td>Designed around the credential holder</td><td>Yes</td><td>Inherits an OAuth/login shape</td></tr>
-        <tr><td>Carries W3C Verifiable Credentials</td><td>Natively</td><td>Excluded from the high-assurance profile</td></tr>
+        <tr><td>Phases of the lifecycle covered</td><td>Issue → deliver → present → status → refresh</td><td>The delivery hand-off</td></tr>
+        <tr><td>Run OID4VCI / OID4VP</td><td>Yes — carried over VCALM</td><td>Yes (that's all it is)</td></tr>
+        <tr><td>User picks their wallet</td><td>Yes, by default</td><td>Can be restricted by allow-lists (HAIP)</td></tr>
+        <tr><td>Switch providers without re-integrating</td><td>Yes, across the stack</td><td>Mainly at the wallet layer</td></tr>
+        <tr><td>Carries W3C Verifiable Credentials</td><td>Natively (plus SD-JWT, mdoc)</td><td>Excluded from the high-assurance profile</td></tr>
+        <tr><td>Resists vendor lock-in lifecycle-wide</td><td>Yes — by design</td><td>Not its scope</td></tr>
       </tbody>
     </table>
   </section>
@@ -133,36 +159,35 @@ structuredData:
   <section>
     <h2>Common questions</h2>
     <div class="faq">
-      <h3>Is VCALM an alternative to OpenID4VP?</h3>
+      <h3>Can VCALM use OID4VCI and OID4VP?</h3>
       <p>
-        Yes. VCALM covers the same ground as OID4VCI and OID4VP — moving
-        credentials between issuers, wallets, and verifiers — while keeping
-        wallet choice with the user and avoiding vendor lock-in across the
-        lifecycle.
+        Yes. VCALM can carry OID4VCI and OID4VP over its exchanges, so adopting
+        VCALM doesn't mean giving up OID4 — it means you're no longer locked to
+        it. Speak OID4 where it fits, and other protocols where they fit, within
+        one consistent model.
       </p>
 
-      <h3>Does OID4VCI support W3C Verifiable Credentials?</h3>
+      <h3>What does VCALM cover that OID4 doesn't?</h3>
       <p>
-        The OpenID4VC high-assurance profile (HAIP) is scoped to SD-JWT and ISO
-        mdoc formats and does not include W3C Verifiable Credentials. VCALM
-        carries standards-compliant W3C Verifiable Credentials natively.
+        OID4VCI and OID4VP cover the delivery hand-off. VCALM is designed for the
+        whole lifecycle — issuance, delivery, presentation, status, and refresh —
+        which is where vendor lock-in usually gets introduced.
       </p>
 
-      <h3>When should I choose VCALM?</h3>
+      <h3>Does VCALM support W3C Verifiable Credentials?</h3>
       <p>
-        When you want users to keep their choice of wallet, want to swap
-        providers without re-integrating across the stack, want issuance and
-        presentation in one flow, and have standardized on W3C Verifiable
-        Credentials.
+        Yes, natively. The OID4 high-assurance profile (HAIP) is scoped to SD-JWT
+        and ISO mdoc; VCALM carries those <em>and</em> W3C Verifiable Credentials,
+        so you're not forced to choose a format.
       </p>
     </div>
   </section>
 
   <div class="callout">
-    <p>The simplest way to judge for yourself: look at what a developer actually implements.</p>
+    <p>The simplest way to judge for yourself: look at what a developer actually implements — and how little that is.</p>
     <p>
-      <a class="btn primary" href="/education/build/wallet/">See the VCALM delivery flow</a>
-      <a class="btn" href="/education/">See the user experience</a>
+      <a class="btn primary" href="/student-id/build/wallet/">See the VCALM delivery flow</a>
+      <a class="btn" href="/student-id/">See the user experience</a>
     </p>
   </div>
 

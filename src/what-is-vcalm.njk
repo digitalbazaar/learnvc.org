@@ -25,7 +25,7 @@ structuredData:
     {"@type": "Question", "name": "Is VCALM a W3C standard?",
      "acceptedAnswer": {"@type": "Answer", "text": "Yes. VCALM is developed in the W3C Verifiable Credentials Working Group and published as a specification at w3.org/TR/vcalm."}},
     {"@type": "Question", "name": "How is VCALM different from OID4VCI / OID4VP?",
-     "acceptedAnswer": {"@type": "Answer", "text": "OID4VCI (issuance) and OID4VP (presentation) are two separate OpenID-based protocols. VCALM handles both delivery and presentation in one exchange loop, keeps user choice of wallet, and works natively with W3C Verifiable Credentials."}},
+     "acceptedAnswer": {"@type": "Answer", "text": "OID4VCI and OID4VP cover the delivery hand-off. VCALM is designed for the whole credential lifecycle (issuance, delivery, presentation, status, refresh), keeps user choice of wallet, and carries W3C Verifiable Credentials natively. VCALM can also carry OID4VCI / OID4VP over its exchanges, so it complements them rather than replacing them."}},
     {"@type": "Question", "name": "What can you build with VCALM?",
      "acceptedAnswer": {"@type": "Answer", "text": "Anything that issues or verifies credentials: academic diplomas, product authenticity and digital product passports, professional licenses, and more."}},
     {"@type": "Question", "name": "Is VCALM hard to implement?",
@@ -88,13 +88,15 @@ structuredData:
       <a href="https://www.w3.org/TR/vcalm/">w3.org/TR/vcalm</a>.
     </p>
 
-    <h3>How is VCALM different from OID4VCI / OID4VP?</h3>
+    <h3>How does VCALM relate to OID4VCI / OID4VP?</h3>
     <p>
-      OID4VCI (issuance) and OID4VP (presentation) are two separate
-      OpenID-based protocols. VCALM handles both delivery and presentation in one
-      exchange loop, keeps user choice of wallet, and works natively with W3C
-      Verifiable Credentials. See <a href="/why-vcalm/">Why VCALM</a> for a full
-      comparison.
+      OID4VCI and OID4VP cover the delivery hand-off — moving a credential to a
+      wallet or presenting one to a verifier. VCALM is designed for the whole
+      credential lifecycle (issuance, delivery, presentation, status, refresh),
+      keeps the user's choice of wallet, and carries W3C Verifiable Credentials
+      natively. It can even carry OID4VCI / OID4VP over its exchanges, so it
+      complements them rather than replacing them. See
+      <a href="/why-vcalm/">Why VCALM</a> for more.
     </p>
 
     <h3>What can you build with VCALM?</h3>

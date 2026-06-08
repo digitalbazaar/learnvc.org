@@ -1,128 +1,158 @@
 ---
 title: "Build an issuer — academic credentials"
-description: "Issue diplomas over VCALM in 3 steps: start an exchange, deliver a signed VC, confirm. Server-side HTTP quick start."
+description: "Issue diplomas as a VCALM coordinator: create an exchange, share an interaction URL, poll for the result. A workflow service does the protocol work."
 permalink: /education/build/issuer/
 ---
-{# Layer 4 — issuer coordinator quick start. The recommended path is the
-   @bedrock/vc-delivery server; the raw HTTP loop below shows what it runs. #}
+{# Layer 4 — issuer coordinator. A coordinator is a CLIENT of a workflow
+   service; it does not run @bedrock/vc-delivery itself. It only creates
+   exchanges, hosts/shares interaction URLs, and polls for results. #}
 <article class="prose">
   <h1>Build an issuer</h1>
   <p>
-    You run the university side: start an exchange and deliver a signed diploma
-    credential into the graduate's wallet — over the same VCALM exchange loop
-    the wallet speaks.
+    You run the university side. To issue a diploma you don't speak VCALM on the
+    wire yourself — you drive a <em>workflow service</em> that does. As a
+    <strong>coordinator</strong>, your whole job is three calls: create an
+    exchange, share an interaction URL that points the graduate's wallet at it,
+    then poll the exchange until the diploma has been issued.
   </p>
 
   <aside class="recommended">
     <p class="kicker">Recommended</p>
-    <h2>Run the coordinator with @bedrock/vc-delivery</h2>
+    <h2>Drive a workflow service — don't build the protocol</h2>
     <p>
-      You don't have to build the exchange loop by hand. Digital Bazaar's
+      The protocol mess — VCALM, OID4VCI, OID4VP, and interoperating with
+      whatever wallet a graduate brings — is handled by a <em>workflow
+      service</em>. Digital Bazaar's
       <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>
-      runs it for you today and is the supported path for issuers.
+      is one. <strong>The workflow service runs that library; you don't.</strong>
     </p>
-    <p><code class="install">npm install @bedrock/vc-delivery</code></p>
     <p>
-      You define a <em>workflow</em> (a reusable issuance config) and the module
-      handles each <em>exchange</em>. It serves VCALM (<code>vcapi</code>) and
-      also speaks OID4VCI and OID4VP, so one workflow delivers credentials over
-      whichever protocol a wallet selects.
+      A goal of VCALM is to let you buy a workflow service off the shelf. An
+      administrator loads the <em>workflows</em> you need (a reusable issuance
+      config — what to issue, what to ask for). From then on, whenever a graduate
+      action requires a credential exchange, you create an exchange against that
+      workflow and read back the result.
     </p>
   </aside>
 
-  <h2>Under the hood: the raw VCALM exchange</h2>
-  <p>
-    Want to build your own coordinator, or just see exactly what the server does
-    on the wire? It's a short HTTP loop — three things:
-  </p>
+  <h2>What the coordinator does</h2>
   <ol>
-    <li>Expose an interaction URL (in a QR code or link) that advertises
-        <code>vcapi</code>.</li>
-    <li>When the wallet POSTs to your exchange URL, respond with the
-        diploma in a <code>verifiablePresentation</code>.</li>
-    <li>Optionally ask the wallet to authenticate first (DID Auth), then
-        deliver; finish the exchange.</li>
+    <li><strong>Create an exchange</strong> by POSTing the workflow's variables
+        to its <code>exchanges</code> endpoint.</li>
+    <li><strong>Host and share an interaction URL</strong> that points the
+        graduate's wallet at that exchange.</li>
+    <li><strong>Poll the exchange</strong> until it completes, then read the
+        result.</li>
   </ol>
-
-  <h2>1. Advertise the exchange</h2>
   <p>
-    The wallet dereferences your interaction URL (<code>iuv=1</code>) and you
-    return the protocols you support. Offer <code>vcapi</code> for VCALM:
+    The workflow service does everything in between — protocol negotiation,
+    DID authentication, signing, talking to whatever wallet shows up — and hands
+    you back just the result.
   </p>
-  {% highlight "json" %}
-{
-  "protocols": {
-    "vcapi": "https://issuer.university.example/exchanges/diploma-789"
-  }
-}
+
+  <h2>1. Create the exchange</h2>
+  <p>
+    POST to your workflow's <code>exchanges</code> endpoint. The body carries a
+    <code>ttl</code> and the <code>variables</code> the workflow expects — here,
+    who the diploma is for:
+  </p>
+  {% highlight "bash" %}
+POST https://workflows.example/workflows/diploma-issuance/exchanges
   {% endhighlight %}
-
-  <h2>2. Deliver the credential</h2>
-  <p>
-    The wallet POSTs an empty body to start. You respond with the signed diploma
-    wrapped in a <code>verifiablePresentation</code>:
-  </p>
   {% highlight "json" %}
 {
-  "verifiablePresentation": {
-    "@context": ["https://www.w3.org/ns/credentials/v2"],
-    "type": ["VerifiablePresentation"],
-    "verifiableCredential": [{
-      "@context": [
-        "https://www.w3.org/ns/credentials/v2",
-        "https://w3id.org/education/v2"
-      ],
-      "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-      "issuer": "did:web:university.example",
-      "credentialSubject": {
-        "id": "did:example:graduate123",
-        "degree": {"type": "BachelorDegree", "name": "B.Sc. Computer Science"}
-      },
-      "proof": { "...": "issuer signature" }
-    }]
+  "ttl": 900,
+  "variables": {
+    "subject": "did:example:graduate123",
+    "degree": "B.Sc. Computer Science"
   }
 }
   {% endhighlight %}
   <p>
-    The exchange is complete when you return no
-    <code>verifiablePresentationRequest</code>.
+    This call is authenticated (your service uses a capability or OAuth2 token).
+    On success the service returns <code>204 No Content</code> with a
+    <code>Location</code> header — that's your exchange URL:
   </p>
+  {% highlight "http" %}
+HTTP/1.1 204 No Content
+Location: https://workflows.example/workflows/diploma-issuance/exchanges/z19xQ...
+  {% endhighlight %}
 
-  <h2>3. (Optional) Authenticate the holder first</h2>
+  <h2>2. Host and share the interaction URL</h2>
   <p>
-    To bind the diploma to a holder, respond to the wallet's first POST with a
-    <code>verifiablePresentationRequest</code> for DID Authentication, then
-    deliver on the next turn:
+    The exchange URL <em>is</em> the <code>vcapi</code> interaction endpoint.
+    Hosting and sharing it is the coordinator's responsibility — put it in a QR
+    code or a link, typically wrapped in a presentation request the wallet
+    understands:
   </p>
   {% highlight "json" %}
 {
-  "verifiablePresentationRequest": {
-    "query": [{
-      "type": "DIDAuthentication",
-      "acceptedMethods": [{"method": "example"}]
-    }],
-    "challenge": "99612b24-63d9-11ea-b99f-4f66f3e4f81a",
-    "domain": "issuer.university.example"
+  "VerifiablePresentation": {
+    "interact": {
+      "service": [{
+        "type": "VerifiableCredentialApiExchangeService",
+        "serviceEndpoint": "https://workflows.example/workflows/diploma-issuance/exchanges/z19xQ..."
+      }]
+    }
   }
 }
   {% endhighlight %}
+  <p>
+    The graduate's wallet POSTs to that endpoint and runs the exchange with the
+    workflow service directly. DID authentication and credential delivery happen
+    there — you are not in that loop.
+  </p>
+
+  <h2>3. Poll for the result</h2>
+  <p>
+    While the wallet works, GET the exchange URL (authenticated) until its
+    <code>state</code> is <code>complete</code>:
+  </p>
+  {% highlight "bash" %}
+GET https://workflows.example/workflows/diploma-issuance/exchanges/z19xQ...
+  {% endhighlight %}
+  {% highlight "json" %}
+{
+  "exchange": {
+    "id": "z19xQ...",
+    "state": "complete",
+    "variables": {
+      "results": {
+        "didAuthn": {
+          "did": "did:example:graduate123",
+          "verifiablePresentation": { "...": "the wallet's authenticated VP" }
+        }
+      }
+    }
+  }
+}
+  {% endhighlight %}
+  <p>
+    Verified per-step results land under
+    <code>exchange.variables.results</code>, keyed by the workflow's step names.
+    A <code>complete</code> state means the diploma was issued into the
+    graduate's wallet.
+  </p>
 
   <h2>That's it</h2>
   <p>
-    A conformant education issuer is this exchange: advertise, deliver, confirm.
-    The signing of the credential itself is your issuer instance's job — the
-    coordinator just runs the exchange.
+    An education issuer, as a coordinator, is these three calls: <strong>create
+    an exchange, host and share the interaction URL, poll for the result.</strong>
+    Signing the diploma and speaking every wallet's protocol is the workflow
+    service's job — you just create exchanges and read what comes back.
   </p>
 
   <p class="future">
     On the wallet end, a standalone client-side VCALM library is still planned;
-    until it ships, the raw HTTP flow is the supported path there. For the
-    issuer/coordinator side shown here, use
+    until it ships, wallets run the exchange over the raw HTTP flow. The
+    coordinator side shown here works today against any VCALM workflow service,
+    such as one running
     <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>.
   </p>
 
   <h2>Go deeper</h2>
   <ul>
+    <li><a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery — workflow service</a></li>
     <li><a href="https://www.w3.org/TR/vcalm/#did-authentication">VCALM: DID Authentication</a></li>
     <li><a href="https://www.w3.org/TR/vc-data-model-2.0/">W3C Verifiable Credentials Data Model 2.0</a></li>
     <li><a href="https://www.w3.org/TR/vcalm/">VCALM specification</a></li>

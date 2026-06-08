@@ -9,9 +9,10 @@ permalink: /student-id/build/issuer/
 <article class="prose">
   <h1>Build an issuer</h1>
   <p>
-    You run the school side. To issue a student ID you don't speak VCALM on the
-    wire yourself — you drive a <em>workflow service</em> that does. As a
-    <strong>coordinator</strong>, your whole job is three calls: create an
+    You run the school side. As a <strong>coordinator</strong> you speak VCALM —
+    just the coordinator side of it. You don't run <em>VCALM delivery</em>, the
+    on-the-wire exchange with the student's wallet; a <em>workflow service</em>
+    does that. Your whole job is three calls: create an
     exchange, share an interaction URL that points the student's wallet at it,
     then poll the exchange until the wallet has been issued the student ID.
   </p>
@@ -20,7 +21,7 @@ permalink: /student-id/build/issuer/
     <p class="kicker">Recommended</p>
     <h2>Drive a workflow service — don't build the protocol</h2>
     <p>
-      The protocol mess — VCALM, OID4VCI, OID4VP, and interoperating with
+      The protocol mess — VCALM delivery, OID4VCI, OID4VP, and interoperating with
       whatever wallet a student brings — is handled by a <em>workflow
       service</em>. Digital Bazaar's
       <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>

@@ -9,9 +9,11 @@ permalink: /education/build/verifier/
 <article class="prose">
   <h1>Build a verifier</h1>
   <p>
-    You run the admissions side. You don't speak VCALM on the wire yourself; a
-    <em>workflow service</em> does that and verifies the diploma for you. As a
-    <strong>coordinator</strong>, your job is three calls: create an exchange,
+    You run the admissions side. As a <strong>coordinator</strong> you speak
+    VCALM — just the coordinator side of it. You don't run <em>VCALM
+    delivery</em>, the on-the-wire exchange with the applicant's wallet; a
+    <em>workflow service</em> does that and verifies the diploma for you. Your
+    job is three calls: create an exchange,
     share an interaction URL that points the applicant's wallet at it, then poll
     until the verified result comes back.
   </p>
@@ -20,7 +22,7 @@ permalink: /education/build/verifier/
     <p class="kicker">Recommended</p>
     <h2>Drive a workflow service — don't build the protocol</h2>
     <p>
-      The protocol mess — VCALM, OID4VP, replay protection, and interoperating
+      The protocol mess — VCALM delivery, OID4VP, replay protection, and interoperating
       with whatever wallet an applicant brings — is handled by a <em>workflow
       service</em>. Digital Bazaar's
       <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>

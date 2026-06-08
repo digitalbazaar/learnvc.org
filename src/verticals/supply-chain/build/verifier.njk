@@ -9,9 +9,11 @@ permalink: /supply-chain/build/verifier/
 <article class="prose">
   <h1>Build a verifier</h1>
   <p>
-    You run the buyer or retailer side. You don't speak VCALM on the wire
-    yourself; a <em>workflow service</em> does that and verifies the credential
-    for you. As a <strong>coordinator</strong>, your job is three calls: create
+    You run the buyer or retailer side. As a <strong>coordinator</strong> you
+    speak VCALM — just the coordinator side of it. You don't run <em>VCALM
+    delivery</em>, the on-the-wire exchange with the product's wallet; a
+    <em>workflow service</em> does that and verifies the credential
+    for you. Your job is three calls: create
     an exchange, share an interaction URL that points the product's wallet at it,
     then poll until the verified result comes back.
   </p>
@@ -20,7 +22,7 @@ permalink: /supply-chain/build/verifier/
     <p class="kicker">Recommended</p>
     <h2>Drive a workflow service — don't build the protocol</h2>
     <p>
-      The protocol mess — VCALM, OID4VP, replay protection, and interoperating
+      The protocol mess — VCALM delivery, OID4VP, replay protection, and interoperating
       with whatever wallet a product or owner brings — is handled by a
       <em>workflow service</em>. Digital Bazaar's
       <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>

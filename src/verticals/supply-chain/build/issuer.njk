@@ -9,9 +9,10 @@ permalink: /supply-chain/build/issuer/
 <article class="prose">
   <h1>Build an issuer</h1>
   <p>
-    You run the brand side. To issue an authenticity credential you don't speak
-    VCALM on the wire yourself — you drive a <em>workflow service</em> that does.
-    As a <strong>coordinator</strong>, your whole job is three calls: create an
+    You run the brand side. As a <strong>coordinator</strong> you speak VCALM —
+    just the coordinator side of it. You don't run <em>VCALM delivery</em>, the
+    on-the-wire exchange with the product's wallet; a <em>workflow service</em>
+    does that. Your whole job is three calls: create an
     exchange, share an interaction URL that points the product's wallet at it,
     then poll the exchange until the credential has been issued.
   </p>
@@ -20,7 +21,7 @@ permalink: /supply-chain/build/issuer/
     <p class="kicker">Recommended</p>
     <h2>Drive a workflow service — don't build the protocol</h2>
     <p>
-      The protocol mess — VCALM, OID4VCI, OID4VP, and interoperating with
+      The protocol mess — VCALM delivery, OID4VCI, OID4VP, and interoperating with
       whatever wallet a product or owner brings — is handled by a <em>workflow
       service</em>. Digital Bazaar's
       <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>

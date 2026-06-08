@@ -1,7 +1,7 @@
 ---
-title: "Build an issuer — academic credentials"
-description: "Issue diplomas as a VCALM coordinator: create an exchange, share an interaction URL, poll for the result. A workflow service does the protocol work."
-permalink: /education/build/issuer/
+title: "Build an issuer (school) — digital student ID"
+description: "Issue a digital student ID as a VCALM coordinator: create an exchange, share an interaction URL, poll for the result. A workflow service does the protocol work."
+permalink: /student-id/build/issuer/
 ---
 {# Layer 4 — issuer coordinator. A coordinator is a CLIENT of a workflow
    service; it does not run @bedrock/vc-delivery itself. It only creates
@@ -9,12 +9,12 @@ permalink: /education/build/issuer/
 <article class="prose">
   <h1>Build an issuer</h1>
   <p>
-    You run the university side. As a <strong>coordinator</strong> you speak
-    VCALM — just the coordinator side of it. You don't run <em>VCALM
-    delivery</em>, the on-the-wire exchange with the graduate's wallet; a
-    <em>workflow service</em> does that. Your whole job is three calls: create an
-    exchange, share an interaction URL that points the graduate's wallet at it,
-    then poll the exchange until the diploma has been issued.
+    You run the school side. As a <strong>coordinator</strong> you speak VCALM —
+    just the coordinator side of it. You don't run <em>VCALM delivery</em>, the
+    on-the-wire exchange with the student's wallet; a <em>workflow service</em>
+    does that. Your whole job is three calls: create an
+    exchange, share an interaction URL that points the student's wallet at it,
+    then poll the exchange until the wallet has been issued the student ID.
   </p>
 
   <aside class="recommended">
@@ -22,7 +22,7 @@ permalink: /education/build/issuer/
     <h2>Drive a workflow service — don't build the protocol</h2>
     <p>
       The protocol mess — VCALM delivery, OID4VCI, OID4VP, and interoperating with
-      whatever wallet a graduate brings — is handled by a <em>workflow
+      whatever wallet a student brings — is handled by a <em>workflow
       service</em>. Digital Bazaar's
       <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>
       is one. <strong>The workflow service runs that library; you don't.</strong>
@@ -30,9 +30,9 @@ permalink: /education/build/issuer/
     <p>
       A goal of VCALM is to let you use a workflow service off the shelf. An
       administrator loads the <em>workflows</em> you need (a reusable issuance
-      config — what to issue, what to ask for). From then on, whenever a graduate
-      action requires a credential exchange, you create an exchange against that
-      workflow and read back the result.
+      config — what to issue, what to ask for). From then on, whenever a student
+      action requires a credential exchange, you just create an exchange against
+      that workflow and read back the result.
     </p>
   </aside>
 
@@ -41,7 +41,7 @@ permalink: /education/build/issuer/
     <li><strong>Create an exchange</strong> by POSTing the workflow's variables
         to its <code>exchanges</code> endpoint.</li>
     <li><strong>Host and share an interaction URL</strong> that points the
-        graduate's wallet at that exchange.</li>
+        student's wallet at that exchange.</li>
     <li><strong>Poll the exchange</strong> until it completes, then read the
         result.</li>
   </ol>
@@ -55,17 +55,17 @@ permalink: /education/build/issuer/
   <p>
     POST to your workflow's <code>exchanges</code> endpoint. The body carries a
     <code>ttl</code> and the <code>variables</code> the workflow expects — here,
-    who the diploma is for:
+    who the student ID is for:
   </p>
   {% highlight "bash" %}
-POST https://workflows.example/workflows/diploma-issuance/exchanges
+POST https://workflows.example/workflows/student-id-issuance/exchanges
   {% endhighlight %}
   {% highlight "json" %}
 {
   "ttl": 900,
   "variables": {
-    "subject": "did:example:graduate123",
-    "degree": "B.Sc. Computer Science"
+    "subject": "did:example:student123",
+    "student_number": "S1234567"
   }
 }
   {% endhighlight %}
@@ -76,7 +76,7 @@ POST https://workflows.example/workflows/diploma-issuance/exchanges
   </p>
   {% highlight "http" %}
 HTTP/1.1 204 No Content
-Location: https://workflows.example/workflows/diploma-issuance/exchanges/z19xQ...
+Location: https://workflows.example/workflows/student-id-issuance/exchanges/z19xQ...
   {% endhighlight %}
 
   <h2>2. Host and share the interaction URL</h2>
@@ -92,14 +92,14 @@ Location: https://workflows.example/workflows/diploma-issuance/exchanges/z19xQ..
     "interact": {
       "service": [{
         "type": "VerifiableCredentialApiExchangeService",
-        "serviceEndpoint": "https://workflows.example/workflows/diploma-issuance/exchanges/z19xQ..."
+        "serviceEndpoint": "https://workflows.example/workflows/student-id-issuance/exchanges/z19xQ..."
       }]
     }
   }
 }
   {% endhighlight %}
   <p>
-    The graduate's wallet POSTs to that endpoint and runs the exchange with the
+    The student's wallet POSTs to that endpoint and runs the exchange with the
     workflow service directly. DID authentication and credential delivery happen
     there — you are not in that loop.
   </p>
@@ -110,7 +110,7 @@ Location: https://workflows.example/workflows/diploma-issuance/exchanges/z19xQ..
     <code>state</code> is <code>complete</code>:
   </p>
   {% highlight "bash" %}
-GET https://workflows.example/workflows/diploma-issuance/exchanges/z19xQ...
+GET https://workflows.example/workflows/student-id-issuance/exchanges/z19xQ...
   {% endhighlight %}
   {% highlight "json" %}
 {
@@ -120,7 +120,7 @@ GET https://workflows.example/workflows/diploma-issuance/exchanges/z19xQ...
     "variables": {
       "results": {
         "didAuthn": {
-          "did": "did:example:graduate123",
+          "did": "did:example:student123",
           "verifiablePresentation": { "...": "the wallet's authenticated VP" }
         }
       }
@@ -131,15 +131,15 @@ GET https://workflows.example/workflows/diploma-issuance/exchanges/z19xQ...
   <p>
     Verified per-step results land under
     <code>exchange.variables.results</code>, keyed by the workflow's step names.
-    A <code>complete</code> state means the diploma was issued into the
-    graduate's wallet.
+    A <code>complete</code> state means the student ID was issued into the
+    student's wallet.
   </p>
 
   <h2>That's it</h2>
   <p>
-    An education issuer, as a coordinator, is these three calls: <strong>create
-    an exchange, host and share the interaction URL, poll for the result.</strong>
-    Signing the diploma and speaking every wallet's protocol is the workflow
+    A school issuer, as a coordinator, is these three calls: <strong>create an
+    exchange, host and share the interaction URL, poll for the result.</strong>
+    Signing the student ID and speaking every wallet's protocol is the workflow
     service's job — you just create exchanges and read what comes back.
   </p>
 
@@ -159,5 +159,5 @@ GET https://workflows.example/workflows/diploma-issuance/exchanges/z19xQ...
     <li><a href="https://www.w3.org/TR/vcalm/">VCALM specification</a></li>
   </ul>
 
-  <p class="cta"><a class="btn" href="/education/build/">← Back to roles</a></p>
+  <p class="cta"><a class="btn" href="/student-id/build/">← Back to roles</a></p>
 </article>

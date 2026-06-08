@@ -1,21 +1,22 @@
 ---
-title: "Build a verifier — academic credentials"
-description: "Verify diplomas as a VCALM coordinator: create an exchange, share an interaction URL, poll for the verified result. A workflow service does the protocol work."
-permalink: /education/build/verifier/
+title: "Build a verifier (campus or partner) — digital student ID"
+description: "Verify a digital student ID as a VCALM coordinator: create an exchange, share an interaction URL, poll for the verified result. Selective disclosure — prove enrollment without revealing identity."
+permalink: /student-id/build/verifier/
 ---
 {# Layer 4 — verifier coordinator. A coordinator is a CLIENT of a workflow
    service; it does not run @bedrock/vc-delivery itself. It creates exchanges,
-   hosts/shares interaction URLs, and polls for verified results. #}
+   hosts/shares interaction URLs, and polls for verified results. The workflow
+   here requests only "currently enrolled" — selective disclosure. #}
 <article class="prose">
   <h1>Build a verifier</h1>
   <p>
-    You run the admissions side. As a <strong>coordinator</strong> you speak
-    VCALM — just the coordinator side of it. You don't run <em>VCALM
-    delivery</em>, the on-the-wire exchange with the applicant's wallet; a
-    <em>workflow service</em> does that and verifies the diploma for you. Your
-    job is three calls: create an exchange,
-    share an interaction URL that points the applicant's wallet at it, then poll
-    until the verified result comes back.
+    You run the relying-party side — a library, a lab door, a partner venue. As
+    a <strong>coordinator</strong> you speak VCALM — just the coordinator side of
+    it. You don't run <em>VCALM delivery</em>, the on-the-wire exchange with the
+    student's wallet; a <em>workflow service</em> does that and verifies the
+    proof for you. Your job
+    is three calls: create an exchange, share an interaction URL that points the
+    student's wallet at it, then poll until the verified result comes back.
   </p>
 
   <aside class="recommended">
@@ -23,7 +24,7 @@ permalink: /education/build/verifier/
     <h2>Drive a workflow service — don't build the protocol</h2>
     <p>
       The protocol mess — VCALM delivery, OID4VP, replay protection, and interoperating
-      with whatever wallet an applicant brings — is handled by a <em>workflow
+      with whatever wallet a student brings — is handled by a <em>workflow
       service</em>. Digital Bazaar's
       <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>
       is one. <strong>The workflow service runs that library; you don't.</strong>
@@ -31,41 +32,41 @@ permalink: /education/build/verifier/
     <p>
       A goal of VCALM is to let you use a workflow service off the shelf. An
       administrator loads a <em>workflow</em> (a reusable verification config —
-      what to request, which institutions to trust, what counts as valid). From
-      then on, whenever an applicant action needs a check, you create an exchange
-      and read back a verified result.
+      what to request, which schools to trust, what counts as valid). From then
+      on, whenever a student action needs a check, you create an exchange and
+      read back a verified result.
     </p>
   </aside>
 
   <h2>What the coordinator does</h2>
   <ol>
-    <li><strong>Create an exchange</strong> against a workflow that requests the
-        diploma and names the institutions you trust.</li>
+    <li><strong>Create an exchange</strong> against a workflow that requests only
+        what you need — here, proof of enrollment.</li>
     <li><strong>Host and share an interaction URL</strong> that points the
-        applicant's wallet at that exchange.</li>
+        student's wallet at that exchange.</li>
     <li><strong>Poll the exchange</strong> until it completes, then read the
         verified result.</li>
   </ol>
   <p>
     The workflow service does the rest — it sends the presentation request,
     receives the wallet's response, and verifies the proof, challenge, domain,
-    trusted issuer, and status before it ever returns a result to you.
+    issuer, and status before it ever returns a result to you.
   </p>
 
   <h2>1. Create the exchange</h2>
   <p>
     POST to your workflow's <code>exchanges</code> endpoint. The workflow already
-    encodes <em>request a university degree</em> and <em>trust this
-    institution</em>; you pass just the per-exchange variables:
+    encodes <em>request only "currently enrolled"</em> and <em>trust the
+    school</em>; you pass just the per-exchange variables:
   </p>
   {% highlight "bash" %}
-POST https://workflows.example/workflows/diploma-check/exchanges
+POST https://workflows.example/workflows/enrollment-check/exchanges
   {% endhighlight %}
   {% highlight "json" %}
 {
   "ttl": 900,
   "variables": {
-    "reason": "Please present your university degree to continue your application."
+    "reason": "Please prove you are currently enrolled to continue."
   }
 }
   {% endhighlight %}
@@ -76,12 +77,13 @@ POST https://workflows.example/workflows/diploma-check/exchanges
   </p>
   {% highlight "http" %}
 HTTP/1.1 204 No Content
-Location: https://workflows.example/workflows/diploma-check/exchanges/z19xQ...
+Location: https://workflows.example/workflows/enrollment-check/exchanges/z19xQ...
   {% endhighlight %}
   <p>
-    The workflow's <code>challenge</code> and <code>domain</code> stop a captured
-    presentation from being replayed; its <code>trustedIssuer</code> setting
-    requires a degree from a specific institution.
+    Because the workflow asks for a single derived attribute, a well-built wallet
+    returns proof of "currently enrolled" — not the name, photo, or student
+    number. The workflow's <code>challenge</code> and <code>domain</code> stop a
+    captured presentation from being replayed.
   </p>
 
   <h2>2. Host and share the interaction URL</h2>
@@ -96,14 +98,14 @@ Location: https://workflows.example/workflows/diploma-check/exchanges/z19xQ...
     "interact": {
       "service": [{
         "type": "VerifiableCredentialApiExchangeService",
-        "serviceEndpoint": "https://workflows.example/workflows/diploma-check/exchanges/z19xQ..."
+        "serviceEndpoint": "https://workflows.example/workflows/enrollment-check/exchanges/z19xQ..."
       }]
     }
   }
 }
   {% endhighlight %}
   <p>
-    The applicant's wallet POSTs to that endpoint and runs the exchange with the
+    The student's wallet POSTs to that endpoint and runs the exchange with the
     workflow service directly. You are not in that loop.
   </p>
 
@@ -113,7 +115,7 @@ Location: https://workflows.example/workflows/diploma-check/exchanges/z19xQ...
     <code>complete</code>:
   </p>
   {% highlight "bash" %}
-GET https://workflows.example/workflows/diploma-check/exchanges/z19xQ...
+GET https://workflows.example/workflows/enrollment-check/exchanges/z19xQ...
   {% endhighlight %}
   {% highlight "json" %}
 {
@@ -122,9 +124,9 @@ GET https://workflows.example/workflows/diploma-check/exchanges/z19xQ...
     "state": "complete",
     "variables": {
       "results": {
-        "diplomaCheck": {
-          "did": "did:example:graduate123",
-          "verifiablePresentation": { "...": "verified: the diploma VC" }
+        "enrollmentCheck": {
+          "did": "did:example:student123",
+          "verifiablePresentation": { "...": "verified: enrolled = true" }
         }
       }
     }
@@ -140,10 +142,11 @@ GET https://workflows.example/workflows/diploma-check/exchanges/z19xQ...
 
   <h2>That's it</h2>
   <p>
-    An education verifier, as a coordinator, is these three calls: <strong>create
-    an exchange, host and share the interaction URL, poll for the verified
-    result.</strong> The cryptographic verification and protocol interop are the
-    workflow service's job — you create exchanges and read what comes back.
+    A relying-party verifier, as a coordinator, is these three calls:
+    <strong>create an exchange, host and share the interaction URL, poll for the
+    verified result.</strong> The cryptographic verification and protocol interop
+    are the workflow service's job — you create exchanges and read what comes
+    back.
   </p>
 
   <p class="future">
@@ -162,5 +165,5 @@ GET https://workflows.example/workflows/diploma-check/exchanges/z19xQ...
     <li><a href="https://www.w3.org/TR/vcalm/">VCALM specification</a></li>
   </ul>
 
-  <p class="cta"><a class="btn" href="/education/build/">← Back to roles</a></p>
+  <p class="cta"><a class="btn" href="/student-id/build/">← Back to roles</a></p>
 </article>

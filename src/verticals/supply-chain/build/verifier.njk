@@ -1,135 +1,162 @@
 ---
 title: "Build a verifier (buyer/retailer) — product provenance"
-description: "Verify product authenticity over VCALM in 3 steps: request a presentation, receive it, verify the proof. Server-side HTTP quick start."
+description: "Verify product authenticity as a VCALM coordinator: create an exchange, share an interaction URL, poll for the verified result. A workflow service does the protocol work."
 permalink: /supply-chain/build/verifier/
 ---
-{# Layer 4 — verifier coordinator. The recommended path is the
-   @bedrock/vc-delivery server; the raw HTTP loop below shows what it runs. #}
+{# Layer 4 — verifier coordinator. A coordinator is a CLIENT of a workflow
+   service; it does not run @bedrock/vc-delivery itself. It creates exchanges,
+   hosts/shares interaction URLs, and polls for verified results. #}
 <article class="prose">
   <h1>Build a verifier</h1>
   <p>
-    You run the buyer or retailer side: ask the product's wallet to present its
-    authenticity credential, then verify the proof — over the same VCALM
-    exchange loop the wallet speaks.
+    You run the buyer or retailer side. As a <strong>coordinator</strong> you
+    speak VCALM — just the coordinator side of it. You don't run <em>VCALM
+    delivery</em>, the on-the-wire exchange with the product's wallet; a
+    <em>workflow service</em> does that and verifies the credential
+    for you. Your job is three calls: create
+    an exchange, share an interaction URL that points the product's wallet at it,
+    then poll until the verified result comes back.
   </p>
 
   <aside class="recommended">
     <p class="kicker">Recommended</p>
-    <h2>Run the coordinator with @bedrock/vc-delivery</h2>
+    <h2>Drive a workflow service — don't build the protocol</h2>
     <p>
-      You don't have to build the exchange loop by hand. Digital Bazaar's
+      The protocol mess — VCALM delivery, OID4VP, replay protection, and interoperating
+      with whatever wallet a product or owner brings — is handled by a
+      <em>workflow service</em>. Digital Bazaar's
       <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>
-      runs it for you today and is the supported path for verifiers.
+      is one. <strong>The workflow service runs that library; you don't.</strong>
     </p>
-    <p><code class="install">npm install @bedrock/vc-delivery</code></p>
     <p>
-      You define a <em>workflow</em> (a reusable verification config) and the
-      module handles each <em>exchange</em>. It serves VCALM (<code>vcapi</code>)
-      and also speaks OID4VCI and OID4VP, so one workflow requests and verifies
-      presentations over whichever protocol a wallet selects.
+      A goal of VCALM is to let you use a workflow service off the shelf. An
+      administrator loads a <em>workflow</em> (a reusable verification config —
+      what to request, which brands to trust, what counts as valid). From then
+      on, whenever a sale or check needs it, you create an exchange and read back
+      a verified result.
     </p>
   </aside>
 
-  <h2>Under the hood: the raw VCALM exchange</h2>
-  <p>
-    Want to build your own coordinator, or just see exactly what the server does
-    on the wire? It's a short HTTP loop — three things:
-  </p>
+  <h2>What the coordinator does</h2>
   <ol>
-    <li>Expose an interaction URL that advertises <code>vcapi</code>.</li>
-    <li>When the wallet POSTs to start, respond with a
-        <code>verifiablePresentationRequest</code> describing the credential you
-        need.</li>
-    <li>Receive the <code>verifiablePresentation</code> and verify its proof,
-        challenge, and domain.</li>
+    <li><strong>Create an exchange</strong> against a workflow that requests the
+        authenticity credential and names the brands you trust.</li>
+    <li><strong>Host and share an interaction URL</strong> that points the
+        product's wallet at that exchange.</li>
+    <li><strong>Poll the exchange</strong> until it completes, then read the
+        verified result.</li>
   </ol>
-
-  <h2>1. Request the credential</h2>
   <p>
-    When the wallet POSTs an empty body to your exchange URL, respond with a
-    <code>QueryByExample</code> asking for the credential type you need:
+    The workflow service does the rest — it sends the presentation request,
+    receives the wallet's response, and verifies the proof, challenge, domain,
+    trusted issuer, and status before it ever returns a result to you.
   </p>
+
+  <h2>1. Create the exchange</h2>
+  <p>
+    POST to your workflow's <code>exchanges</code> endpoint. The workflow already
+    encodes <em>request a product passport</em> and <em>trust the real
+    brand</em>; you pass just the per-exchange variables:
+  </p>
+  {% highlight "bash" %}
+POST https://workflows.example/workflows/authenticity-check/exchanges
+  {% endhighlight %}
   {% highlight "json" %}
 {
-  "verifiablePresentationRequest": {
-    "query": [{
-      "type": "QueryByExample",
-      "credentialQuery": [{
-        "reason": "Please present this product's authenticity credential.",
-        "example": {
-          "@context": [
-            "https://www.w3.org/ns/credentials/v2",
-            "https://w3id.org/traceability/v1"
-          ],
-          "type": "ProductPassportCredential"
-        },
-        "trustedIssuer": [{
-          "required": true,
-          "issuer": "did:web:brand.example"
-        }]
-      }]
-    }],
-    "challenge": "3182bdea-63d9-11ea-b6de-3b7c1404d57f",
-    "domain": "retailer.example"
+  "ttl": 900,
+  "variables": {
+    "reason": "Please present this product's authenticity credential."
   }
 }
   {% endhighlight %}
   <p>
-    The <code>challenge</code> and <code>domain</code> are what you'll verify in
-    the returned proof — they stop a captured presentation from being replayed.
-    Use <code>trustedIssuer</code> to require the credential come from the real
-    brand.
+    This call is authenticated. On success the service returns
+    <code>204 No Content</code> with a <code>Location</code> header — your
+    exchange URL:
+  </p>
+  {% highlight "http" %}
+HTTP/1.1 204 No Content
+Location: https://workflows.example/workflows/authenticity-check/exchanges/z19xQ...
+  {% endhighlight %}
+  <p>
+    The workflow's <code>challenge</code> and <code>domain</code> stop a captured
+    presentation from being replayed; its <code>trustedIssuer</code> setting
+    requires the credential come from the real brand.
   </p>
 
-  <h2>2. Receive the presentation</h2>
+  <h2>2. Host and share the interaction URL</h2>
   <p>
-    The wallet POSTs the signed presentation back to the same exchange URL:
+    The exchange URL <em>is</em> the <code>vcapi</code> interaction endpoint.
+    Hosting and sharing it is the coordinator's responsibility — put it on a tag,
+    QR code, or link, typically wrapped in a presentation request:
   </p>
   {% highlight "json" %}
 {
-  "verifiablePresentation": {
-    "@context": ["https://www.w3.org/ns/credentials/v2"],
-    "type": ["VerifiablePresentation"],
-    "holder": "did:example:bag-456",
-    "verifiableCredential": [{ "...": "the authenticity VC" }],
-    "proof": {
-      "challenge": "3182bdea-63d9-11ea-b6de-3b7c1404d57f",
-      "domain": "retailer.example",
-      "...": "holder signature"
+  "VerifiablePresentation": {
+    "interact": {
+      "service": [{
+        "type": "VerifiableCredentialApiExchangeService",
+        "serviceEndpoint": "https://workflows.example/workflows/authenticity-check/exchanges/z19xQ..."
+      }]
     }
   }
 }
   {% endhighlight %}
+  <p>
+    The product's wallet POSTs to that endpoint and runs the exchange with the
+    workflow service directly. You are not in that loop.
+  </p>
 
-  <h2>3. Verify the proof</h2>
-  <p>Before you trust the product is genuine, check all of the following:</p>
-  <ul>
-    <li>The presentation <strong>proof</strong> is valid and the
-        <code>challenge</code> / <code>domain</code> match what you sent.</li>
-    <li>The credential's <strong>proof</strong> is valid and the issuer is the
-        brand you trust.</li>
-    <li>The credential is not <strong>revoked</strong> (e.g. reported stolen or
-        recalled) — check its status.</li>
-    <li>The credential is <strong>unexpired</strong> and the type matches your
-        request.</li>
-  </ul>
+  <h2>3. Poll for the verified result</h2>
+  <p>
+    GET the exchange URL (authenticated) until its <code>state</code> is
+    <code>complete</code>:
+  </p>
+  {% highlight "bash" %}
+GET https://workflows.example/workflows/authenticity-check/exchanges/z19xQ...
+  {% endhighlight %}
+  {% highlight "json" %}
+{
+  "exchange": {
+    "id": "z19xQ...",
+    "state": "complete",
+    "variables": {
+      "results": {
+        "authenticityCheck": {
+          "did": "did:example:bag-456",
+          "verifiablePresentation": { "...": "verified: the authenticity VC" }
+        }
+      }
+    }
+  }
+}
+  {% endhighlight %}
+  <p>
+    A <code>complete</code> state means the workflow service already verified the
+    presentation for you — proof, challenge, domain, trusted issuer, and
+    revocation/expiry status. The verified result lands under
+    <code>exchange.variables.results</code>, keyed by the workflow's step names.
+  </p>
 
   <h2>That's it</h2>
   <p>
-    A conformant provenance verifier is this exchange: request, receive, verify.
-    The cryptographic verification is your verifier instance's job — the
-    coordinator just runs the exchange.
+    A provenance verifier, as a coordinator, is these three calls: <strong>create
+    an exchange, host and share the interaction URL, poll for the verified
+    result.</strong> The cryptographic verification and protocol interop are the
+    workflow service's job — you create exchanges and read what comes back.
   </p>
 
   <p class="future">
     On the wallet end, a standalone client-side VCALM library is still planned;
-    until it ships, the raw HTTP flow is the supported path there. For the
-    verifier/coordinator side shown here, use
+    until it ships, wallets run the exchange over the raw HTTP flow. The
+    coordinator side shown here works today against any VCALM workflow service,
+    such as one running
     <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>.
   </p>
 
   <h2>Go deeper</h2>
   <ul>
+    <li><a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery — workflow service</a></li>
     <li><a href="https://www.w3.org/TR/vcalm/#query-by-example">VCALM: QueryByExample</a></li>
     <li><a href="https://www.w3.org/TR/vcalm/#verifiable-presentation-request">VCALM: Verifiable Presentation Request</a></li>
     <li><a href="https://www.w3.org/TR/vcalm/">VCALM specification</a></li>

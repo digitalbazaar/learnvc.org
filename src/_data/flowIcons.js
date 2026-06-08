@@ -88,7 +88,7 @@ export default {
     <line x1="36" y1="39" x2="44" y2="39" stroke="#2f6b4f" stroke-width="1" stroke-dasharray="3,2"/>
   </svg>`,
 
-  govIssue: `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  studentIdIssue: `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <rect x="18" y="48" width="44" height="20" rx="0" fill="none" stroke="#1b1a17" stroke-width="1.5"/>
     <line x1="26" y1="48" x2="26" y2="68" stroke="#1b1a17" stroke-width="1.5"/>
     <line x1="36" y1="48" x2="36" y2="68" stroke="#1b1a17" stroke-width="1.5"/>
@@ -96,11 +96,11 @@ export default {
     <line x1="54" y1="48" x2="54" y2="68" stroke="#1b1a17" stroke-width="1.5"/>
     <polygon points="12,48 40,22 68,48" fill="none" stroke="#1b1a17" stroke-width="1.5"/>
     <text x="40" y="42" text-anchor="middle" font-size="9" fill="#1b1a17" font-family="Georgia,serif">&#x2605;</text>
-    <text x="40" y="62" text-anchor="middle" font-size="7" fill="#514c43" font-family="Georgia,serif" letter-spacing=".06em">DMV</text>
+    <text x="40" y="62" text-anchor="middle" font-size="7" fill="#514c43" font-family="Georgia,serif" letter-spacing=".06em">UNI</text>
     <rect x="10" y="68" width="60" height="3" rx="0" fill="#1b1a17" opacity=".15"/>
   </svg>`,
 
-  govHold: `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  studentIdHold: `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <rect x="26" y="10" width="28" height="50" rx="5" fill="#1b1a17"/>
     <rect x="30" y="16" width="20" height="36" rx="2" fill="#f4f0e6"/>
     <rect x="32" y="18" width="16" height="12" rx="1" fill="#ece6d6" stroke="#1b1a17" stroke-width=".75"/>
@@ -108,13 +108,13 @@ export default {
     <line x1="40" y1="20" x2="46" y2="20" stroke="#c9c0ab" stroke-width="1"/>
     <line x1="40" y1="23" x2="45" y2="23" stroke="#c9c0ab" stroke-width="1"/>
     <line x1="40" y1="26" x2="46" y2="26" stroke="#c9c0ab" stroke-width="1"/>
-    <text x="47" y="30" font-size="5" fill="#c0341d" font-family="Georgia,serif">DL</text>
+    <text x="47" y="30" font-size="5" fill="#c0341d" font-family="Georgia,serif">ID</text>
     <path d="M35,38 l5,-3 l5,3 v6 a5,5 0 0,1 -10,0 z" fill="none" stroke="#9a7b2e" stroke-width="1.5"/>
     <circle cx="40" cy="43" r="1.5" fill="#9a7b2e"/>
     <rect x="34" y="56" width="12" height="2" rx="1" fill="#c9c0ab"/>
   </svg>`,
 
-  govDisclose: `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  studentIdDisclose: `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <rect x="8" y="22" width="36" height="44" rx="2" fill="#ece6d6" stroke="#c9c0ab" stroke-width="1" opacity=".7"/>
     <line x1="14" y1="32" x2="38" y2="32" stroke="#c9c0ab" stroke-width="1"/>
     <line x1="14" y1="38" x2="36" y2="38" stroke="#c9c0ab" stroke-width="1"/>
@@ -124,7 +124,7 @@ export default {
     <line x1="24" y1="32" x2="14" y2="44" stroke="#c0341d" stroke-width="1" opacity=".4"/>
     <text x="22" y="62" text-anchor="middle" font-size="7" fill="#c9c0ab" font-family="Georgia,serif" font-style="italic">full ID</text>
     <rect x="36" y="30" width="38" height="26" rx="2" fill="#f4f0e6" stroke="#2f6b4f" stroke-width="2"/>
-    <text x="55" y="42" text-anchor="middle" font-size="9" fill="#2f6b4f" font-family="Georgia,serif" font-weight="bold">OVER 21</text>
+    <text x="55" y="42" text-anchor="middle" font-size="8" fill="#2f6b4f" font-family="Georgia,serif" font-weight="bold">ENROLLED</text>
     <text x="55" y="52" text-anchor="middle" font-size="8" fill="#2f6b4f" font-family="Georgia,serif">&#x2713; verified</text>
   </svg>`,
 

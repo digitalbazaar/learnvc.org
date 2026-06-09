@@ -129,9 +129,10 @@ structuredData:
     <h2>No format lock-in — bring any credential format</h2>
     <p>
       <strong>With VCALM:</strong> you're not forced to bet on one credential
-      format. It carries W3C Verifiable Credentials, SD-JWT, and ISO mdoc — so
-      you can issue the format each relying party needs, mix them, and change
-      your mind later without re-architecting.
+      format. It carries variations of W3C Verifiable Credentials, SD-JWT, ISO
+      mdoc, and mDL — and speaks protocols like OID4VCI, OID4VP, HAIP, and
+      DIDComm — so you can issue the format each relying party needs, mix them,
+      and change your mind later without re-architecting.
     </p>
     <p>
       OID4's high-assurance profile is scoped to SD-JWT and ISO mdoc and excludes
@@ -151,7 +152,7 @@ structuredData:
         <tr><td>Run OID4VCI / OID4VP</td><td>Yes — carried over VCALM</td><td>Yes (that's all it is)</td></tr>
         <tr><td>User picks their wallet</td><td>Yes, by default</td><td>Can be restricted by allow-lists (HAIP)</td></tr>
         <tr><td>Switch providers without re-integrating</td><td>Yes, across the stack</td><td>Mainly at the wallet layer</td></tr>
-        <tr><td>Freedom to choose credential format</td><td>W3C VCs, SD-JWT, and mdoc — no lock-in</td><td>Locked to SD-JWT / mdoc (no W3C VCs)</td></tr>
+        <tr><td>Freedom to choose credential format</td><td>W3C VCs, SD-JWT, mdoc, mDL, and more — no lock-in</td><td>Locked to SD-JWT / mdoc (no W3C VCs)</td></tr>
         <tr><td>Resists vendor lock-in lifecycle-wide</td><td>Yes — by design</td><td>Not its scope</td></tr>
       </tbody>
     </table>

@@ -19,6 +19,15 @@ export default {
       'Digital Bazaar builds open, standards-based infrastructure for ' +
       'Verifiable Credentials and decentralized identity.'
   },
+  // Inline review comments via Hypothesis (https://web.hypothes.is).
+  // Off by default so production carries no third-party script. Enable on a
+  // review deployment with HYPOTHESIS_COMMENTS=1. Set HYPOTHESIS_GROUP to a
+  // Hypothesis private group id to scope the client to the DB review group;
+  // logged-in members of that group see/post comments, the public does not.
+  comments: {
+    enabled: process.env.HYPOTHESIS_COMMENTS === '1',
+    group: process.env.HYPOTHESIS_GROUP || ''
+  },
   // Top-level nav. Verticals are appended automatically from the collection.
   nav: [
     {text: 'Home', url: '/'},

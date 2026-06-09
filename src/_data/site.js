@@ -10,14 +10,15 @@ export default {
   tagline: 'Issue and verify W3C Verifiable Credentials — without vendor lock-in.',
   description:
     'A guide to issuing and verifying W3C Verifiable ' +
-    'Credentials with VCALM (the VC API). Pick a vertical, see how it ' +
-    'works, ship.',
+    'Credentials with the Verifiable Credential API for Lifecycle Management (VCALM). Pick a vertical, learn how it ' +
+    'works, ship it.',
   company: {
     name: 'Digital Bazaar, Inc.',
     url: 'https://digitalbazaar.com',
     blurb:
-      'Digital Bazaar builds open, standards-based infrastructure for ' +
-      'Verifiable Credentials and decentralized identity.'
+      'Digital Bazaar builds open, standards-based, production-grade digital ' +
+      'credential infrastructure for some of the largest organizations and ' +
+      'governments in the world.'
   },
   // Inline review comments via Hypothesis (https://web.hypothes.is).
   // Off by default so production carries no third-party script. Enable on a
@@ -34,8 +35,8 @@ export default {
   // Top-level nav. Verticals are appended automatically from the collection.
   nav: [
     {text: 'Home', url: '/'},
-    {text: 'What is VCALM', url: '/what-is-vcalm/'},
-    {text: 'Why VCALM', url: '/why-vcalm/'},
+    {text: 'What is VCALM?', url: '/what-is-vcalm/'},
+    // {text: 'Why VCALM', url: '/why-vcalm/'},
     {text: 'About', url: '/company/about/'},
     {text: 'Contact', url: '/company/contact/'}
   ]

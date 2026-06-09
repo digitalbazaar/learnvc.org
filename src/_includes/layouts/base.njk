@@ -59,5 +59,18 @@
     {{ content | safe }}
   </main>
   {% include "partials/footer.njk" %}
+
+  {# Inline review comments (Hypothesis). Loads only when explicitly enabled
+     (HYPOTHESIS_COMMENTS=1) so production ships no third-party script. When a
+     private group id is configured, the client is scoped to it: logged-in DB
+     group members see and post comments; the public does not. #}
+  {% if site.comments.enabled %}
+  {% if site.comments.group %}
+  <script type="application/json" class="js-hypothesis-config">
+  {"openSidebar": false, "focus": {"group": "{{ site.comments.group }}"}}
+  </script>
+  {% endif %}
+  <script src="https://hypothes.is/embed.js" async></script>
+  {% endif %}
 </body>
 </html>

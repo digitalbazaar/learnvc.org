@@ -51,8 +51,35 @@ To add a page to discovery: just create it. To exclude one, set
 
 The home page, sitemap, and `llms.txt` pick it up automatically.
 
+## Inline review comments (Hypothesis)
+
+The site can load [Hypothesis](https://web.hypothes.is) for inline,
+text-anchored review comments. It is **off by default** so production ships no
+third-party script. Enable it only on a review build:
+
+```bash
+HYPOTHESIS_COMMENTS=1 HYPOTHESIS_GROUP=<group-id> npm run build
+```
+
+- `HYPOTHESIS_COMMENTS=1` injects the Hypothesis embed.
+- `HYPOTHESIS_GROUP` scopes the client to a Hypothesis **private group** so only
+  logged-in group members see and post comments; the public sees nothing. Omit
+  it to use public Hypothesis annotations (not recommended for review).
+
+Reviewers join the private group, log in to Hypothesis, highlight text, and
+comment.
+
+**Where it's enabled:** PR previews on Cloudflare Pages only. Set the
+`HYPOTHESIS_GROUP` repository variable to your private group id; the preview
+workflow then builds each PR preview with comments on, scoped to that group.
+Production (GitHub Pages) never loads Hypothesis. Comments stay off until the
+variable is set. To also hide the Hypothesis UI from the public, keep the
+enabled build behind an access gate (e.g. Cloudflare Access) rather than the
+public site.
+
 ## Deployment
 
 Pushes to `main` deploy to GitHub Pages via
 [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml). Set the
 `SITE_URL` repo variable for a custom domain (e.g. `https://learnvc.org`).
+Production builds leave Hypothesis comments off (see above).

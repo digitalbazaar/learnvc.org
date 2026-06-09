@@ -1,4 +1,6 @@
 {
   "layout": "layouts/base.njk",
-  "tags": "supply-chain"
+  "tags": "supply-chain",
+  "_comment": "Hidden from the home chooser, nav, footer, sitemap and llms.txt for now per review (2026-06-09). The page still builds at /supply-chain/. Remove eleventyExcludeFromCollections to relist it.",
+  "eleventyExcludeFromCollections": true
 }

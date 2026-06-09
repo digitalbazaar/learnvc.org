@@ -10,8 +10,11 @@ name: Deploy PR preview to Cloudflare Pages
 #   2. Add repository secrets:
 #        CLOUDFLARE_API_TOKEN   - token scoped to "Cloudflare Pages: Edit".
 #        CLOUDFLARE_ACCOUNT_ID  - your Cloudflare account id.
-# Until both secrets exist the deploy step is skipped, so merging this file
-# changes nothing.
+#   3. (Optional) Add repository variable HYPOTHESIS_GROUP - the Hypothesis
+#        private group id. When set, PR previews load Hypothesis inline review
+#        comments scoped to that group; production (GitHub Pages) never does.
+# Until the Cloudflare secrets exist the deploy step is skipped, so merging this
+# file changes nothing.
 
 on:
   pull_request:
@@ -46,6 +49,13 @@ jobs:
           # Each PR preview is served from its own *.pages.dev root, so
           # absolute URLs resolve correctly. SITE_URL is left at its default.
           SITE_URL: ${{ vars.PREVIEW_SITE_URL || 'https://learnvcorg.pages.dev' }}
+          # Inline review comments (Hypothesis) on previews only — never on
+          # production (GitHub Pages). Enabled only when the HYPOTHESIS_GROUP
+          # repo variable is set, so previews stay clean until the DB private
+          # group id is configured; an unset var means comments stay off rather
+          # than defaulting to public annotations.
+          HYPOTHESIS_COMMENTS: ${{ vars.HYPOTHESIS_GROUP != '' && '1' || '0' }}
+          HYPOTHESIS_GROUP: ${{ vars.HYPOTHESIS_GROUP }}
 
       - name: Check for Cloudflare credentials
         id: creds

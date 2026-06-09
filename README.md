@@ -67,9 +67,15 @@ HYPOTHESIS_COMMENTS=1 HYPOTHESIS_GROUP=<group-id> npm run build
   it to use public Hypothesis annotations (not recommended for review).
 
 Reviewers join the private group, log in to Hypothesis, highlight text, and
-comment. To also hide the Hypothesis UI itself from the public, serve the
-enabled build behind an access gate (e.g. a Cloudflare Access review URL) rather
-than on the public production site.
+comment.
+
+**Where it's enabled:** PR previews on Cloudflare Pages only. Set the
+`HYPOTHESIS_GROUP` repository variable to your private group id; the preview
+workflow then builds each PR preview with comments on, scoped to that group.
+Production (GitHub Pages) never loads Hypothesis. Comments stay off until the
+variable is set. To also hide the Hypothesis UI from the public, keep the
+enabled build behind an access gate (e.g. Cloudflare Access) rather than the
+public site.
 
 ## Deployment
 

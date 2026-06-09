@@ -25,7 +25,10 @@ export default {
   // Hypothesis private group id to scope the client to the DB review group;
   // logged-in members of that group see/post comments, the public does not.
   comments: {
-    enabled: process.env.HYPOTHESIS_COMMENTS === '1',
+    // Require both the flag and a private group id, so comments never load in
+    // public (groupless) mode by accident.
+    enabled:
+      process.env.HYPOTHESIS_COMMENTS === '1' && !!process.env.HYPOTHESIS_GROUP,
     group: process.env.HYPOTHESIS_GROUP || ''
   },
   // Top-level nav. Verticals are appended automatically from the collection.

@@ -1,0 +1,39 @@
+---
+title: "What are you building? — government IDs &amp; licensing"
+description: "Pick your role: wallet (the app the resident uses), issuer (the agency or licensing board), or verifier (a business or service that checks the credential). You only implement your piece."
+permalink: /government/build/
+---
+{# Layer 3 — role picker = conformance-class scoping. #}
+<article class="prose">
+  <h1>What are you building?</h1>
+  <p>Each role sets your scope <em>before</em> you see any code.</p>
+
+  <ul class="role-grid">
+    <li>
+      <a href="/government/build/wallet/">
+        <h3>Wallet</h3>
+        <p>The app the resident uses to hold their license or certificate.</p>
+        <p><strong>You implement:</strong> an exchange client — POST, handle VPRs, return VPs.</p>
+        <p class="effort">~3 things, a few days</p>
+      </a>
+    </li>
+    <li>
+      <a href="/government/build/issuer/">
+        <h3>Issuer (agency or licensing board)</h3>
+        <p>The DMV, state agency, or licensing authority issuing the credential.</p>
+        <p><strong>You implement:</strong> start an exchange, deliver a signed VC.</p>
+        <p class="effort">small, separate piece</p>
+      </a>
+    </li>
+    <li>
+      <a href="/government/build/verifier/">
+        <h3>Verifier (business or service)</h3>
+        <p>Whoever checks the credential — a bar, an employer, a government portal.</p>
+        <p><strong>You implement:</strong> request a presentation, verify the proof.</p>
+        <p class="effort">small, separate piece</p>
+      </a>
+    </li>
+  </ul>
+
+  <p class="note"><strong>You do NOT need to implement the other two.</strong></p>
+</article>

@@ -1,0 +1,167 @@
+---
+title: "Build an issuer (agency) — government IDs &amp; licensing"
+description: "Issue a government credential as a VCALM coordinator: create an exchange, share an interaction URL, poll for the result. A workflow service handles the on-the-wire protocol."
+permalink: /government/build/issuer/
+---
+{# Layer 4 — issuer coordinator. A coordinator is a CLIENT of a workflow
+   service; it does not run @bedrock/vc-delivery itself. It only creates
+   exchanges, hosts/shares interaction URLs, and polls for results. #}
+<article class="prose">
+  <h1>Build an issuer</h1>
+  <p>
+    You run the agency side — a DMV, a licensing board, or a state agency. As a
+    <strong>coordinator</strong> you speak VCALM — just the coordinator side of
+    it. You don't run <em>VCALM delivery</em>, the on-the-wire exchange with the
+    resident's wallet; a <em>workflow service</em> does that. Your whole job is
+    three calls: create an exchange, share an interaction URL that points the
+    resident's wallet at it, then poll the exchange until the wallet has been
+    issued the credential.
+  </p>
+
+  <aside class="recommended">
+    <p class="kicker">Recommended</p>
+    <h2>Drive a workflow service — don't build the protocol</h2>
+    <p>
+      The protocol complexity — VCALM delivery, OID4VCI, OID4VP, and
+      interoperating with whatever wallet a resident brings — is handled by a
+      <em>workflow service</em>. Digital Bazaar's
+      <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>
+      is one. <strong>The workflow service runs that library; you don't.</strong>
+    </p>
+    <p>
+      A goal of VCALM is to let you use a workflow service off the shelf. An
+      administrator loads the <em>workflows</em> you need (a reusable issuance
+      config — what to issue, what to ask for). From then on, whenever a resident
+      action requires a credential exchange, you just create an exchange against
+      that workflow and read back the result.
+    </p>
+  </aside>
+
+  <h2>What the coordinator does</h2>
+  <ol>
+    <li><strong>Create an exchange</strong> by POSTing the workflow's variables
+        to its <code>exchanges</code> endpoint.</li>
+    <li><strong>Host and share an interaction URL</strong> that points the
+        resident's wallet at that exchange.</li>
+    <li><strong>Poll the exchange</strong> until it completes, then read the
+        result.</li>
+  </ol>
+  <p>
+    The workflow service does everything in between — protocol negotiation,
+    DID authentication, signing the credential, talking to whatever wallet shows
+    up — and hands you back just the result.
+  </p>
+
+  <h2>1. Create the exchange</h2>
+  <p>
+    POST to your workflow's <code>exchanges</code> endpoint. The body carries a
+    <code>ttl</code> and the <code>variables</code> the workflow expects — here,
+    who the license is for and its details:
+  </p>
+  {% highlight "bash" %}
+POST https://workflows.example/workflows/ambulance-license-issuance/exchanges
+  {% endhighlight %}
+  {% highlight "json" %}
+{
+  "ttl": 900,
+  "variables": {
+    "subject": "did:example:resident456",
+    "licenseClass": "Ambulance Driver",
+    "licenseNumber": "ADL-2026-00123",
+    "validFrom": "2026-01-15T00:00:00Z",
+    "validUntil": "2028-01-14T23:59:59Z"
+  }
+}
+  {% endhighlight %}
+  <p>
+    This call is authenticated (your service uses a capability or OAuth2 token).
+    On success the service returns <code>204 No Content</code> with a
+    <code>Location</code> header — that's your exchange URL:
+  </p>
+  {% highlight "http" %}
+HTTP/1.1 204 No Content
+Location: https://workflows.example/workflows/ambulance-license-issuance/exchanges/z19xQ...
+  {% endhighlight %}
+
+  <h2>2. Host and share the interaction URL</h2>
+  <p>
+    The exchange URL <em>is</em> the <code>vcapi</code> interaction endpoint.
+    Hosting and sharing it is the coordinator's responsibility — put it in a QR
+    code on a portal confirmation page, typically wrapped in a presentation
+    request the wallet understands:
+  </p>
+  {% highlight "json" %}
+{
+  "VerifiablePresentation": {
+    "interact": {
+      "service": [{
+        "type": "VerifiableCredentialApiExchangeService",
+        "serviceEndpoint": "https://workflows.example/workflows/ambulance-license-issuance/exchanges/z19xQ..."
+      }]
+    }
+  }
+}
+  {% endhighlight %}
+  <p>
+    The resident's wallet POSTs to that endpoint and runs the exchange with the
+    workflow service directly. DID authentication and credential delivery happen
+    there — you are not in that loop.
+  </p>
+
+  <h2>3. Poll for the result</h2>
+  <p>
+    While the wallet works, GET the exchange URL (authenticated) until its
+    <code>state</code> is <code>complete</code>:
+  </p>
+  {% highlight "bash" %}
+GET https://workflows.example/workflows/ambulance-license-issuance/exchanges/z19xQ...
+  {% endhighlight %}
+  {% highlight "json" %}
+{
+  "exchange": {
+    "id": "z19xQ...",
+    "state": "complete",
+    "variables": {
+      "results": {
+        "didAuthn": {
+          "did": "did:example:resident456",
+          "verifiablePresentation": { "...": "the wallet's authenticated VP" }
+        }
+      }
+    }
+  }
+}
+  {% endhighlight %}
+  <p>
+    Verified per-step results land under
+    <code>exchange.variables.results</code>, keyed by the workflow's step names.
+    A <code>complete</code> state means the credential was issued into the
+    resident's wallet.
+  </p>
+
+  <h2>That's it</h2>
+  <p>
+    A government issuer, as a coordinator, is these three calls: <strong>create
+    an exchange, host and share the interaction URL, poll for the result.</strong>
+    Signing the credential and speaking every wallet's protocol is the workflow
+    service's job — you just create exchanges and read what comes back.
+  </p>
+
+  <p class="future">
+    On the wallet end, a standalone client-side VCALM library is still planned;
+    until it ships, wallets run the exchange over the raw HTTP flow. The
+    coordinator side shown here works today against any VCALM workflow service,
+    such as one running
+    <a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery</a>.
+  </p>
+
+  <h2>Go deeper</h2>
+  <ul>
+    <li><a href="https://github.com/digitalbazaar/bedrock-vc-delivery">@bedrock/vc-delivery — workflow service</a></li>
+    <li><a href="https://www.w3.org/TR/vcalm/#did-authentication">VCALM: DID Authentication</a></li>
+    <li><a href="https://www.w3.org/TR/vc-data-model-2.0/">W3C Verifiable Credentials Data Model 2.0</a></li>
+    <li><a href="https://www.w3.org/TR/vcalm/">VCALM specification</a></li>
+  </ul>
+
+  <p class="cta"><a class="btn" href="/government/build/">← Back to roles</a></p>
+</article>

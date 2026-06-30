@@ -1,0 +1,215 @@
+---
+title: "Government IDs &amp; licensing with VCALM"
+shortName: "Government IDs"
+cardTitle: "Government IDs &amp; licensing"
+summary: "Issue driver's licenses, professional licenses, and age credentials residents control — verifiable anywhere, with any wallet, without revealing a full ID."
+description: "Issue government credentials with W3C Verifiable Credentials over VCALM — resident-controlled, any wallet, no per-app certification, privacy by design. Prove over 21 without revealing your home address."
+order: 3
+chooserIcon: governmentIssue
+permalink: /government/
+---
+{# Single-page government-credentials vertical. Anchor: digital government IDs
+   and professional licenses issued by state agencies.
+   Distinct from student-id (campus identity) and education (diplomas) —
+   this is government-issued, high-stakes, real-world enforcement. Lean on
+   selective disclosure / one-fact proof (age, license status) without
+   revealing home address or exact birthdate. Secondary angle: no per-wallet
+   certification burden on the issuing agency. #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "Can I prove I am over 21 without revealing my exact birthdate?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Yes. With selective disclosure, a resident can prove a single derived fact — such as 'age ≥ 21' — without revealing name, exact birthdate, home address, or license number. Only the attribute requested is shared, and the resident consents to each presentation with one tap."}},
+    {"@type": "Question", "name": "Does a digital government ID lock residents to a government-approved app?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Not with VCALM. The credential works with any conformant wallet, so residents keep their choice of app. The mdoc / ISO 18013-5 approach (used for mobile driver's licenses in many US states) often pairs with device attestation and a state-maintained list of certified wallets — which means the agency has to certify and maintain an integration for every app it supports."}},
+    {"@type": "Question", "name": "Is a VCALM government credential private?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Yes. Data minimization is built into every request, nothing is shared without explicit one-tap consent, and the issuing agency cannot observe where or how the credential is used after issuance."}},
+    {"@type": "Question", "name": "What government credentials can be issued with VCALM?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Any government-issued credential can be expressed as a W3C Verifiable Credential: driver's licenses, professional licenses (ambulance driver, contractor, cosmetologist), age verification certificates, vehicle registration, and residency proof. Each is signed JSON the resident holds and controls."}},
+    {"@type": "Question", "name": "Why VCALM vs. mDL / ISO 18013-5?",
+     "acceptedAnswer": {"@type": "Answer", "text": "The ISO 18013-5 mobile driver's license requires device attestation, MDOC encoding, and state certification of every wallet. With VCALM you issue once to an open W3C standard and any conformant wallet works — no per-app certification the agency has to own, no closed ecosystem."}}
+  ]
+}
+</script>
+<section class="hero">
+  <h1>{{ title }}</h1>
+  <p class="promise">
+    Issue government credentials that residents truly control — verifiable at a
+    bar, an employer, a government portal, or a partner service, with the
+    wallet of their choice, and without handing over a photocopy of their full ID.
+  </p>
+  <p class="direct-answer">
+    To issue a digital driver's license or professional license, an agency
+    signs it as a <strong>W3C Verifiable Credential</strong> and delivers it
+    to the resident's wallet of choice over <strong>VCALM</strong> (the VC API).
+    A business or service verifies it cryptographically — no real-time DMV
+    lookup — and with selective disclosure the resident can prove one fact,
+    like "over 21" or "licensed to operate," without revealing home address,
+    exact birthdate, or license number.
+  </p>
+</section>
+
+<section class="flow">
+  {% set flowSteps = [
+    {icon: flowIcons.governmentIssue,    label: "Agency issues a credential",      caption: "Driver's license, professional license, or age certificate"},
+    {icon: flowIcons.governmentHold,     label: "Resident holds and controls it",  caption: "Nothing shared without one-tap, explicit consent"},
+    {icon: flowIcons.governmentDisclose, label: "Proves one fact",                 caption: "Over 21 — no home address, no exact birthdate revealed"}
+  ] %}
+  {% set flowFooter = "Any conformant wallet — no agency-mandated app — selective disclosure by design" %}
+  {% include "partials/flow-diagram.njk" %}
+</section>
+
+<article class="prose experience">
+  <h2>What it feels like to use</h2>
+  <p class="lede">
+    The technology disappears. Here is what each person actually
+    does — and what they no longer have to.
+  </p>
+
+  <ol class="journey">
+    <li>
+      <h3>The agency issues a credential</h3>
+      <p>
+        A resident applies through the agency's portal or in person. They
+        authenticate once, pick the wallet they already use, and the credential
+        lands in it — a digital copy of their license or certificate, signed
+        by the agency.
+      </p>
+      <p class="aside">No government-mandated app. Their wallet, their choice.</p>
+    </li>
+    <li>
+      <h3>The resident holds and controls it</h3>
+      <p>
+        The credential lives on their phone, under their control. Nothing is
+        shared automatically — every presentation needs an explicit, one-time
+        approval the resident sees and consents to.
+      </p>
+      <p class="aside">The agency cannot watch where it is used after issuance.</p>
+    </li>
+    <li>
+      <h3>They prove just one thing, when needed</h3>
+      <p>
+        At a bar, the resident taps to prove <em>"age ≥ 21"</em> — and reveals
+        nothing else. No home address, no exact birthdate, no license number.
+        At a job site, they prove <em>"valid Class A CDL"</em> and the employer
+        gets confirmation — not a full ID scan.
+      </p>
+      <p class="aside">Selective disclosure: minimum data, every time.</p>
+    </li>
+  </ol>
+
+  <div class="benefits-cols">
+    <div class="benefits-col">
+      <h3><span class="benefits-icon">{{ flowIcons.person | safe }}</span>What the resident experiences</h3>
+      <ul class="benefits">
+        <li><strong>Their choice of wallet.</strong> Not a state-approved app.</li>
+        <li><strong>Prove a fact, not your full ID.</strong> "Over 21" without your home address.</li>
+        <li><strong>One-tap consent.</strong> Nothing leaves the phone without approval.</li>
+        <li><strong>No tracking.</strong> The agency doesn't see each use.</li>
+      </ul>
+    </div>
+    <div class="benefits-col">
+      <h3><span class="benefits-icon">{{ flowIcons.institution | safe }}</span>What the agency experiences</h3>
+      <ul class="benefits">
+        <li><strong>Privacy by design.</strong> Data minimization built into every request.</li>
+        <li><strong>Instant, tamper-evident checks.</strong> No real-time DMV lookup.</li>
+        <li><strong>No wallet certification burden.</strong> Any conformant wallet works.</li>
+        <li><strong>Standards-based.</strong> Built on open W3C Verifiable Credentials.</li>
+      </ul>
+    </div>
+  </div>
+</article>
+
+<article class="prose">
+  <h2>Credential types</h2>
+  <p>Any government-issued document can be expressed as a W3C Verifiable Credential:</p>
+  <ul>
+    <li><strong>Driver's licenses</strong> — state-issued, class-coded, with expiry.</li>
+    <li><strong>Professional licenses</strong> — ambulance driver, contractor, cosmetologist, nurse. Prove the license is current without showing the full credential.</li>
+    <li><strong>Age verification</strong> — derived "age ≥ N" without revealing exact birthdate or address.</li>
+    <li><strong>Vehicle registration</strong> — ownership proof that travels with the vehicle, not just in the glove box.</li>
+    <li><strong>Residency certificates</strong> — prove you live in a jurisdiction for benefit eligibility or in-state tuition, without sharing your full address.</li>
+  </ul>
+</article>
+
+<article class="prose">
+  <h2>How it works</h2>
+  <p>One diagram, three actors, one loop.</p>
+
+  <pre class="diagram">
+     AGENCY               RESIDENT              BUSINESS / SERVICE
+    (issuer)          (wallet of choice)           (verifier)
+     |                      |                          |
+     | -- delivers --&gt;      |                          |
+     |  license VC           |                          |
+     |                      | &lt;-- asks for --           |
+     |                      |   "over 21"               |
+     |                      | -- presents --&gt;           |
+     |                      |   only "yes"              |
+     |                      |                     verifies (ok)
+  </pre>
+
+  <ul>
+    <li>A government credential is signed JSON the resident holds and controls.</li>
+    <li>
+      <strong>Delivery</strong> (agency → resident) and
+      <strong>presentation</strong> (resident → verifier) are the same simple
+      exchange loop: POST, read what the server wants, POST back.
+    </li>
+    <li>
+      With selective disclosure, the resident proves a single derived fact —
+      "age ≥ 21," "license is valid and current" — without revealing name, exact
+      birthdate, home address, or license number.
+    </li>
+  </ul>
+</article>
+
+<section class="fit">
+  <h2>A good fit if…</h2>
+  <ul>
+    <li>You issue identity, license, or entitlement credentials to residents.</li>
+    <li>You want residents to use their own wallet, not a state-certified app list.</li>
+    <li>You need selective disclosure — prove a derived fact without a full ID scan.</li>
+    <li>You want cryptographic verification without a real-time registry lookup.</li>
+  </ul>
+  <p class="cta">
+    <a class="btn primary" href="/government/build/">Start building</a>
+  </p>
+</section>
+
+<article class="prose">
+  <h2>Common questions</h2>
+  <div class="faq">
+    <h3>Can I prove I am over 21 without revealing my exact birthdate?</h3>
+    <p>
+      Yes. With selective disclosure, a resident proves a single derived fact —
+      "age ≥ 21," "valid license" — without revealing name, exact birthdate,
+      home address, or license number.
+    </p>
+
+    <h3>Does a digital government ID lock residents to a government app?</h3>
+    <p>
+      Not with VCALM — the credential works with any conformant wallet. The
+      ISO 18013-5 / mDL approach often requires device attestation and a
+      state-maintained list of certified apps.
+    </p>
+
+    <h3>Is a VCALM government credential private?</h3>
+    <p>
+      Yes. Data minimization is built into every request, nothing is shared
+      without one-tap consent, and the agency cannot observe where the
+      credential is used.
+    </p>
+
+    <h3>Why VCALM vs. mDL / ISO 18013-5?</h3>
+    <p>
+      The ISO 18013-5 mobile driver's license requires MDOC encoding, device
+      attestation, and state certification of every wallet. With VCALM, you
+      issue once to an open W3C standard and any conformant wallet works —
+      no per-app certification the agency has to own or maintain.
+      <a href="/why-vcalm/">See the full comparison.</a>
+    </p>
+  </div>
+</article>

@@ -132,6 +132,59 @@ export default {
     <text x="55" y="52" text-anchor="middle" font-size="8" fill="#2f6b4f" font-family="Georgia,serif">&#x2713; verified</text>
   </svg>`,
 
+  governmentIssue: `<svg viewBox="10 20 60 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- Government ID card -->
+    <rect x="14" y="22" width="52" height="36" rx="3" fill="#f4f0e6" stroke="#1b1a17" stroke-width="1.5"/>
+    <!-- portrait area -->
+    <rect x="20" y="28" width="16" height="24" rx="1" fill="#ece6d6" stroke="#c9c0ab" stroke-width="1"/>
+    <circle cx="28" cy="36" r="4" fill="#c9c0ab"/>
+    <path d="M21,52 a7,7 0 0,1 14,0 z" fill="#c9c0ab"/>
+    <!-- state seal in portrait top-right corner -->
+    <circle cx="34" cy="30" r="4" fill="#1b1a17" opacity=".85"/>
+    <text x="34" y="33" text-anchor="middle" font-size="5" fill="#f4f0e6" font-family="Georgia,serif">&#x2605;</text>
+    <!-- text lines right -->
+    <line x1="42" y1="30" x2="60" y2="30" stroke="#1b1a17" stroke-width="2"/>
+    <line x1="42" y1="37" x2="58" y2="37" stroke="#c9c0ab" stroke-width="1.5"/>
+    <line x1="42" y1="43" x2="60" y2="43" stroke="#c9c0ab" stroke-width="1.5"/>
+    <line x1="42" y1="49" x2="56" y2="49" stroke="#c9c0ab" stroke-width="1.5"/>
+  </svg>`,
+
+  governmentHold: `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect x="26" y="10" width="28" height="50" rx="5" fill="#1b1a17"/>
+    <rect x="30" y="16" width="20" height="36" rx="2" fill="#f4f0e6"/>
+    <!-- ID card on screen -->
+    <rect x="32" y="18" width="16" height="12" rx="1" fill="#ece6d6" stroke="#1b1a17" stroke-width=".75"/>
+    <!-- portrait thumbnail -->
+    <rect x="33" y="19" width="5" height="7" rx="1" fill="#c9c0ab"/>
+    <!-- text lines -->
+    <line x1="40" y1="21" x2="47" y2="21" stroke="#c9c0ab" stroke-width="1"/>
+    <line x1="40" y1="24" x2="46" y2="24" stroke="#c9c0ab" stroke-width="1"/>
+    <line x1="40" y1="27" x2="47" y2="27" stroke="#c9c0ab" stroke-width="1"/>
+    <!-- seal dot top-right of card -->
+    <circle cx="46" cy="20" r="2" fill="#1b1a17" opacity=".7"/>
+    <!-- shield icon on screen (below ID card) -->
+    <path d="M38,34 l4,-2 l4,2 v5 a4,4 0 0,1 -8,0 z" fill="none" stroke="#1b1a17" stroke-width="1.5"/>
+    <circle cx="42" cy="39" r="1.25" fill="#1b1a17"/>
+    <rect x="34" y="56" width="12" height="2" rx="1" fill="#c9c0ab"/>
+  </svg>`,
+
+  governmentDisclose: `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- full ID (left, crossed out) -->
+    <rect x="8" y="22" width="34" height="44" rx="2" fill="#ece6d6" stroke="#c9c0ab" stroke-width="1" opacity=".7"/>
+    <line x1="14" y1="30" x2="36" y2="30" stroke="#c9c0ab" stroke-width="1"/>
+    <line x1="14" y1="37" x2="36" y2="37" stroke="#c9c0ab" stroke-width="1"/>
+    <line x1="14" y1="44" x2="36" y2="44" stroke="#c9c0ab" stroke-width="1"/>
+    <line x1="14" y1="51" x2="32" y2="51" stroke="#c9c0ab" stroke-width="1"/>
+    <!-- X over full ID lines -->
+    <line x1="14" y1="30" x2="26" y2="44" stroke="#c0341d" stroke-width="1" opacity=".4"/>
+    <line x1="26" y1="30" x2="14" y2="44" stroke="#c0341d" stroke-width="1" opacity=".4"/>
+    <text x="22" y="62" text-anchor="middle" font-size="7" fill="#c9c0ab" font-family="Georgia,serif" font-style="italic">full ID</text>
+    <!-- derived fact badge (right) -->
+    <rect x="36" y="30" width="36" height="26" rx="2" fill="#f4f0e6" stroke="#2f6b4f" stroke-width="2"/>
+    <text x="54" y="43" text-anchor="middle" font-size="8" fill="#2f6b4f" font-family="Georgia,serif" font-weight="bold">AGE 21+</text>
+    <text x="54" y="52" text-anchor="middle" font-size="8" fill="#2f6b4f" font-family="Georgia,serif">&#x2713; verified</text>
+  </svg>`,
+
   // Small heading glyphs for the "What X experiences" columns.
   // Individual holder (resident / graduate / buyer).
   person: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
